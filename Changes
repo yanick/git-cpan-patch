@@ -1,0 +1,16 @@
+Revision history for Language::l33t
+
+0.03   Jul 3, 2006
+    * Remove depedency to IO::String
+
+0.02   Jul 2, 2006
+    * Promoted to Language::l33t, yay!
+    * opcode CON now working
+    * Fixed nested IF/EIFs
+    * Added support for Makefile.PL
+    * Added module depedencies
+    * Beefed up the pod documentation.
+
+0.01    Jun 25, 2006
+    * First version, released on an unsuspecting world.
+

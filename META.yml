@@ -1,0 +1,18 @@
+---
+name: Language-l33t
+version: 0.03
+author:
+  - 'Yanick Champoux <yanick@cpan.org>'
+abstract: a l33t interpreter
+license: perl
+build_requires:
+  Carp: 0
+  Class::Std: 0
+  IO: 0
+  Readonly: 0
+  Test::More: 0
+provides:
+  Language::l33t:
+    file: lib/Language/l33t.pm
+    version: 0.03
+generated_by: Module::Build version 0.2612
