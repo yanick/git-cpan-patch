@@ -1,11 +1,9 @@
-Build.PL
 Changes
-MANIFEST
-META.yml # Will be created by "make dist"
-README
-lib/Language/l33t.pm
-t/00-load.t
-t/01-general.t
-t/02-samples.t
-t/03-memory.t
+inc/ExtUtils/AutoInstall.pm
+lib/Net/UCP.pm
 Makefile.PL
+MANIFEST
+META.yml
+README
+samples/ucp-sample-1.pl
+t/Net-UCP.t

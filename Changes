@@ -1,16 +1,128 @@
-Revision history for Language::l33t
+Revision history for Perl extension Net::UCP.
 
-0.03   Jul 3, 2006
-    * Remove depedency to IO::String
+0.00_01  Tue Sep 28 13:00:17 CET 2004
+	- Net::UCP was born
 
-0.02   Jul 2, 2006
-    * Promoted to Language::l33t, yay!
-    * opcode CON now working
-    * Fixed nested IF/EIFs
-    * Added support for Makefile.PL
-    * Added module depedencies
-    * Beefed up the pod documentation.
+0.01  Sat Oct 23 11:49:12 CET 2004
+	- Make some test on it
+	- bug fix in login method
+        - add new features on login method
+        - a remake of manual :-)
+        - Thanks to Kumar Arjunan to test it in a production enviroment
 
-0.01    Jun 25, 2006
-    * First version, released on an unsuspecting world.
+0.02  Tue Oct 26 19:28:45 CET 2004
+	- Add read_mo() method to get back Mobile Originated Messages
+	  It's in test...	
+	- remake of Changes file... ;-) in Version 0.01 23 Oct it wasn't Tuesday but Saturday.
 
+0.03  Tue Nov  9 10:23:58 CET 2004
+	- Modify send_sms(). Added FLASH parameter, with this param. is possible to send
+	  class 0 messages.
+	- Add possibility to send messages with international format sender, numeric and
+	  alphanumeric sender text (see man).
+	- Fix make_xser() procedure.
+  
+0.04  Mon Dec 13 16:45:22 CET 2004
+	- Some bug fix
+
+0.05  Fri Dec 17 17:41:51 CET 2004
+	- Fix Makefile.PL, (ExtUtils-AutoInstall) thanks to CPAN Testers.
+
+0.10  Thu Jan 20 15:30:36 CET 2005
+	- Restyling of UCP Module!!!
+	- Add RAW MODE. Using UCP module in raw mode is possible : 
+	  1) make and parse emi/ucp messages. (ALL operation 01..61) 
+	  2) transmit and receive messages from SMSC.
+	  3) Create a fake SMSC Server based on EMI/UCP Protocol 
+	     to test your application. 
+	- Add some little test in t/ directory.
+	- remove read_mo() (bad and unsecure method)
+	Thanks to people contacted me.  
+	Please contact me directly for any suggestion because i haven't time to make good test on it
+	- nemux@cpan.org
+
+0.11  Fri Jan 21 16:04:45 CET 2005
+	- Add an example ucp.pl 
+	- Remake of some part of manual
+
+0.20  Fri Jan 24 11:18:21 CET 2005
+	- Add more flexibility to create_fake_smsc()
+	- Optimized code (login() and submit_sms())
+	- some bug fix.
+	- Jump of quality.... mmmm...
+
+0.21  Wed Mar  2 16:23:40 CET 2005
+	- Patched line 177 (Thanks to Geurt on rt.cpan.org)
+
+0.22  Wed Aug  3 16:16:48 CEST 2005
+	- Patched line 1904 (Thanks to mmspete on rt.cpan.org)
+
+0.23  Mon Oct 31 10:26:16 CET 2005
+	- Add clear_ucp_message() method (remove ETX and STX characters)
+	- add "clear" parameter in wait_in_loop method.
+
+0.25  Fri Jul 28 12:30:51 CEST 2006
+	- wait_in_loop() bug fix
+
+0.26  Wed Aug  9 19:28:24 CEST 2007
+	- fix logical problem in the send_sms() patched _get_info_from() 
+	  there was a double 7bit conversion the firt one in the _get_info_from() 
+	  and the second one in the make_message()
+	- fix documentation, added DATA CODING section it explains (a little bit) 
+  	  how to convert text in GSM 03.38 alphabet using Encode module.
+	  (Thanks to Jonas Pasche - skytel.de) 
+
+0.27  Fri Sep 28 18:58:51 CEST 2007
+	- Net::UCP birthday!!! It was born 3 years ago!
+	- add new method send_sms_multipart() to send multipart messages ( with 
+	  text length > 160 characters )
+	- add more features to SMSCfAKE 
+	- add add_ucp_enclosure();
+        - add remove_ucp_enclosure();
+	- fix doc and add info about these new methods
+	- add new examples in ucp.pl
+	(Thanks to Guillaume Leroux - France Telecom R&D)
+
+0.28  Thu Oct 18 09:42:17 CEST 2007	
+	- Stupid but important bug fix in remove_ucp_enclosure()
+
+0.28-2 Fri Oct 19 09:15:23 CEST 2007
+	- Fix make test during installation
+	  Summary of my perl5 (5.0 patchlevel 5 subversion 5) configuration:
+          Platform:
+          osname=freebsd, osvers=6.1-release, archname=i386-freebsd
+	  Thanks to cpan testers (srezic)
+
+0.29  Wed Oct 31 16:16:45 CET 2007
+	- Force Makefile.PL to work with perl 5.006
+
+0.30 Tue Nov 27 10:53:49 CET 2007
+	- 2 bug fix
+	-- parse_60 checksum field
+	-- decoding oadc when otoa field is set on 5039
+	Thanks to Filippo Dattola 
+
+0.31 Fri Dec 14 09:36:00 CET 2007 
+	- 2 minor bug fix
+	- crate_fake_smsc and using of 
+	  ETX / STX constant in regular expression 
+
+0.32 Fri Mar 28 09:24:39 CET 2008
+	- 1 bug fix
+	-- rt.cpan.org ticket id 34495
+	Thanks to Christopherus Goo
+
+0.33 Tue Apr  8 13:12:46 CEST 2008
+	- refactoring
+
+0.34 Tue Apr 8 23:38:50 CEST 2008
+	- AutoInstall fix
+
+0.35 Thu Apr 10 16:47:38 CEST 2008
+	- Cpan tester bug 
+
+0.38 Thu May  8 17:10:25 CEST 2008
+	- Cpan Tester bug 
+
+0.39 Sat Nov 29 13:01:16 CET 2008
+	- Fixed timeout bug

@@ -1,18 +1,13 @@
----
-name: Language-l33t
-version: 0.03
-author:
-  - 'Yanick Champoux <yanick@cpan.org>'
-abstract: a l33t interpreter
-license: perl
-build_requires:
-  Carp: 0
-  Class::Std: 0
-  IO: 0
-  Readonly: 0
-  Test::More: 0
-provides:
-  Language::l33t:
-    file: lib/Language/l33t.pm
-    version: 0.03
-generated_by: Module::Build version 0.2612
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         Net-UCP
+version:      0.39
+version_from: lib/Net/UCP.pm
+installdirs:  site
+requires:
+    Net::UCP::Common:              0.05
+    Net::UCP::IntTimeout:          0.05
+    Net::UCP::TransactionManager:  0.02
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.30_01
