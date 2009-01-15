@@ -1,0 +1,50 @@
+#!/usr/bin/perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use CPANPLUS;
+
+my $module = shift;
+
+my $location = fetch( $module )
+    or die "couldn't retrieve distribution file for module $module";
+
+say "downloaded distribution at $location";
+
+use Archive::Tar;
+
+my $tar = Archive::Tar->new;
+$tar->read( $location => 1 );
+
+say "extracting distribution in current directory";
+
+for my $file ( $tar->list_files ) {
+    # change root directory
+    ( my $location = $file ) =~ s#^.*?/##;
+    $tar->extract_file( $file, $location );
+}
+
+unlink $location;
+
+use Git;
+
+say "initializing Git repository";
+
+Git::command_oneline('init');
+
+my $repo = Git->repository;
+$repo->command( add => '.'    );
+$repo->command( commit => '--message' => 'original import from CPAN' );
+$repo->command( branch => '-M', master => 'cpan' );
+
+use YAML;
+
+my $meta = YAML::LoadFile( 'META.yml' );
+
+my $version = 'v' . ( $meta->{version} || 'CPAN' );
+$repo->command( 'tag' => $version );

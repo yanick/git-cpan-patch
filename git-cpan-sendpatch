@@ -1,0 +1,37 @@
+#!/usr/bin/perl -s
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use Git;
+use YAML;
+use Email::Send;
+use Email::Simple;
+use autodie;
+
+my $repo = Git->repository;
+my @patches = $repo->command( 'format-patch' => 'cpan' );
+
+if ( @patches > 1 ) {
+    say "more than one patch file, aborting";
+    unlink $_ for @patches;
+}
+
+open my $fh, '<', $patches[0];
+my $patch = Email::Simple->new( join '', <$fh> );
+
+my $meta = YAML::LoadFile( 'META.yml' );
+my $to = 'bug-' . $meta->{name} . '@rt.cpan.org';
+$patch->header_set( To => $to );
+
+my $sender = Email::Send->new({ 
+    mailer => 'SMTP', 
+    mailer_args => [ Host => 'babyl.dyndns.org' ]
+});
+$sender->send( $patch );
+
+say 'patch sent!';
+
+unlink $patches[0];
