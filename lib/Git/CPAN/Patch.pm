@@ -5,10 +5,6 @@ use warnings;
 
 our $VERSION = "0.1.0";
 
-__PACKAGE__->meta->make_immutable;
-
-__PACKAGE__
-
 __END__
 
 =pod
