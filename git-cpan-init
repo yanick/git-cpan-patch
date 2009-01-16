@@ -9,7 +9,7 @@ use autodie;
 
 use CPANPLUS;
 
-my $module = shift;
+my $module = shift || die("Usage: $0 Foo::Bar\n");
 
 my $location = fetch( $module )
     or die "couldn't retrieve distribution file for module $module";
