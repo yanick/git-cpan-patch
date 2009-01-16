@@ -1,0 +1,32 @@
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use Git;
+
+use Parse::BACKPAN::Packages;
+
+my $module = shift || die("Usage: git cpan-init Foo-Bar\n");
+
+say "opening backpan index";
+my $backpan = Parse::BACKPAN::Packages->new;
+
+Git::command_noisy("init");
+
+my $repo = Git->repository;
+
+my @dists = $backpan->distributions($module);
+
+foreach my $dist ( @dists ) {
+     say "importing " . $dist->distvname;
+     my $url  = sprintf 'http://backpan.perl.org/%s', $dist->prefix;
+     $repo->command_noisy("cpan-import", $url);
+}
+
+$repo->command_noisy("checkout", "-t", "-b", "master", "cpan/master");
+

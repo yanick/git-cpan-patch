@@ -11,17 +11,27 @@ use File::Spec::Functions;
 use File::Temp qw(tempdir);
 use version;
 use Git;
+
 use CPANPLUS;
+use Parse::BACKPAN::Packages;
+
+$| = 1;
+
+my $full_hist;
 
 my $repo = Git->repository;
 
 my ( $last_commit, $module, $last_version );
 
+if ( @ARGV ) {
+    $module = shift;
+}
+
 if ( $last_commit = eval { $repo->command_oneline("rev-parse", "-q", "--verify", "cpan/master") } ) {
-    $module       = $repo->command_oneline("cpan-which");
+    $module     ||= $repo->command_oneline("cpan-which");
     $last_version = $repo->command_oneline("cpan-last-version");
 } else {
-    $module = shift || die("Usage: git cpan-import Foo::Bar\n");
+    $module ||= shift || die("Usage: git cpan-import Foo::Bar\n");
 }
 
 my $cpan = CPANPLUS::Backend->new;
@@ -74,6 +84,11 @@ my $tree = do {
 };
 
 
+say "opening backpan index";
+my $backpan = Parse::BACKPAN::Packages->new;
+
+my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->package_name);
+
 {
     my $author_obj = $module_obj->author;
 
@@ -84,6 +99,14 @@ my $tree = do {
     my $version = $module_obj->version;
     my $dist    = $module_obj->package;
     my $dist_name = join("-", $module_obj->package_name, $module_obj->package_version);
+
+    local $ENV{GIT_AUTHOR_DATE};
+
+    if ( my $bp_dist = $dists{$dist} ) {
+        $ENV{GIT_AUTHOR_DATE} = $bp_dist->date;
+    } else {
+        say "Couldn't find upload date for $dist";
+    }
 
     # FIXME $repo->command_bidi_pipe is broken
     my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
