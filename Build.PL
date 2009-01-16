@@ -18,9 +18,9 @@ my $builder = Module::Build->new(
     module_name  => 'Git::CPAN::Patch',
     license      => 'perl',
     dist_author  => 'Yanick Champoux <yanick@cpan.org>',
-    dist_version => '0.1.0',
     requires     => {
         perl                       => '5.10.0',
+        'autodie'                  => 0,
         'Parse::BACKPAN::Packages' => 0,
     },
     script_files => [
