@@ -44,18 +44,18 @@ my $dist_name = join("-", $module_obj->package_name, $module_obj->package_versio
 
 if ( $last_version ) {
     my $imported = version->new($last_version);
-    my $up_to_date = version->new($module_obj->version);
+    my $will_import = version->new($module_obj->version);
 
-    if ( $imported == $up_to_date ) {
-        say $module_obj->package, " has already been imported, can't import earlier version";
+    if ( $imported == $will_import ) {
+        say "$dist_name has already been imported";
         exit;
-    } elsif ( $imported > $up_to_date ) {
-        die "imported version $imported is more recent than $up_to_date, not importing\n";
+    } elsif ( $imported > $will_import ) {
+        die "imported version $imported is more recent than $will_import, can't import\n";
     } else {
         if ( $name ne $module ) {
-            say "updating $name ($module) from $imported to $up_to_date";
+            say "updating $name ($module) from $imported to $will_import";
         } else {
-            say "updating $name from $imported to $up_to_date";
+            say "updating $name from $imported to $will_import";
         }
     }
 } else {
