@@ -31,6 +31,9 @@ for my $file ( $tar->list_files ) {
 
 unlink $location;
 
+use Data::Dumper;
+warn Dumper( $module_obj->author );
+
 use Git;
 
 say "initializing Git repository";
@@ -39,7 +42,11 @@ Git::command_oneline('init');
 
 my $repo = Git->repository;
 $repo->command( add => '.'    );
-$repo->command( commit => '--message' => 'original import from CPAN' );
+
+my $author_obj = $module_obj->author;
+my $author = sprintf "%s <%s>", $author_obj->author, $author_obj->email;
+$repo->command( commit => '--message' => 'original import from CPAN', '--author' => $author );
+
 $repo->command( branch => '-M', master => 'cpan' );
 
 use YAML;

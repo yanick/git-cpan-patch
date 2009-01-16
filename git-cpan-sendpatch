@@ -7,6 +7,7 @@ use warnings;
 
 use Git;
 use YAML;
+use Config::Tiny;
 use Email::Send;
 use Email::Simple;
 use autodie;
@@ -26,12 +27,60 @@ my $meta = YAML::LoadFile( 'META.yml' );
 my $to = 'bug-' . $meta->{name} . '@rt.cpan.org';
 $patch->header_set( To => $to );
 
-my $sender = Email::Send->new({ 
-    mailer => 'SMTP', 
-    mailer_args => [ Host => 'babyl.dyndns.org' ]
-});
-$sender->send( $patch );
+get_sender($repo)->send( $patch );
 
 say 'patch sent!';
 
 unlink $patches[0];
+
+sub config_vars {
+    my ( $repo, %vars ) = @_;
+
+    my @ret;
+
+    foreach my $var ( keys %vars ) {
+        if ( defined( my $value = $repo->config($var) ) ) {
+            push @ret, $vars{$var} => $value;
+        }
+    }
+
+    return @ret;
+}
+
+sub get_sender {
+    my $repo = shift;
+
+    if ( defined( my $smtp_server = $repo->config("sendemail.smtpserver") ) ) {
+        return get_sender_smtp( $repo, Host => $smtp_server );
+    } else {
+        return get_sender_sendmail();
+    }
+}
+
+sub get_sender_smtp {
+    my ( $repo, @mailer_args ) = @_;
+
+    # FIXME handle sendemail.identity
+
+    push @mailer_args, config_vars(
+        $repo,
+        "sendemail.smtpserverport" => "Port",
+        "sendemail.smtpuser" => "username",
+        "sendemail.smtppass" => "password",
+    );
+
+    if ( $repo->config_bool("sendemail.smtpssl") ) {
+        push @mailer_args, ssl => 1;
+    }
+
+    my $sender = Email::Send->new({
+        mailer      => "SMTP",
+        mailer_args => \@mailer_args,
+    });
+}
+
+sub get_sender_sendmail {
+    Email::Send->new({
+        mailer => "Sendmail",
+    });
+}
