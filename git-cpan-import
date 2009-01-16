@@ -127,7 +127,7 @@ my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->pack
         $last_commit ? ( "-p", $last_commit ) : (),
     );
 
-    $out->print( join " ", ( $last_version ? "initial" : ()), "import $name $version from CPAN" );
+    $out->print( join " ", ( $last_version ? "initial" : ()), "import $name $version from CPAN\n" );
     $out->print( join "\n", "", "git-cpan-module: $name", "git-cpan-version: $version", "" );
 
     close $out;
