@@ -20,3 +20,20 @@ my $module_obj = $cpan->parse_module( module => $module ) or die("No such module
 my $to = 'bug-' . $module_obj->package_name . '@rt.cpan.org';
 
 $repo->command_noisy("send-email", "--to", $to, @ARGV);
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-send-email - use C<git-send-email> to submit patches to CPAN RT.
+
+=head1 SYNOPSIS
+
+    % git cpan-send-email
+
+=head1 DESCRIPTION
+
+This command provides a C<--to> parameter to C<git send-email> that corresponds
+to the RT queue of the imported module.

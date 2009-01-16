@@ -30,3 +30,26 @@ foreach my $dist ( @dists ) {
 
 $repo->command_noisy("checkout", "-t", "-b", "master", "cpan/master");
 
+__END__
+
+=pod
+
+=head1 NAME
+
+git-backpan-init - Initialize a repository for a CPAN module with full history
+from the backpan.
+
+=head1 SYNOPSIS
+
+    # this command always takes a dist name
+
+    % mkdir Foo-Bar
+    % cd Foo-Bar
+    % git backpan-init Foo-Bar
+
+=head1 DESCRIPTION
+
+This command is like C<cpan-init> except it imports all the historical versions
+of a module as well, allowing you to run C<git bisect> or to browse history.
+
+=cut

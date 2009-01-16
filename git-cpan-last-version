@@ -22,4 +22,20 @@ if ( $last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx ) {
     die "Couldn't parse message:\n$last\n";
 }
 
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-last-version - Report the last imported version
+
+=head1 SYNOPSIS
+
+    % git cpan-last-version
+
+=head1 DESCRIPTION
+
+This command searches through the history of the C<cpan/master> reference for
+the last imported version.
 

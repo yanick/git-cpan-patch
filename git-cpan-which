@@ -21,3 +21,18 @@ if ( $last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx ) {
     die "Couldn't parse message:\n$last\n";
 }
 
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-last-version - Report the managed module
+
+=head1 SYNOPSIS
+
+    % git cpan-which
+
+=head1 DESCRIPTION
+
+This command prints the name of the module tracked in C<cpan/master>.

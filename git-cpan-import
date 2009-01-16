@@ -182,3 +182,42 @@ my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->pack
     $repo->command( tag => $version, $commit );
 }
 
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-import - Import a module into a git repository
+
+=head1 SYNOPSIS
+
+    # takes any string CPANPLUS handles:
+
+    % git cpan-import Foo::Bar
+    % git cpan-import A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
+    % git cpan-import http://backpan.cpan.org/authors/id/A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
+
+
+
+    # If the repository is already initialized, can be run with no arguments to
+    # import the latest version
+    git cpan-import
+
+
+=head1 DESCRIPTION
+
+This command is used internally by C<git-cpan-init>, C<git-cpan-update> and
+C<git-backpan-init>.
+
+This command takes a tarball, extracts it, and imports it into the repository.
+
+It is only possible to update to a newer version of a module.
+
+The module history is tracked in C<refs/remotes/cpan/master>.
+
+Tags are created for each version of the module.
+
+This command does not touch the working directory, and is safe to run even if
+you have pending work.

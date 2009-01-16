@@ -18,3 +18,23 @@ my $repo = Git->repository;
 $repo->command_noisy("cpan-import", $module);
 
 $repo->command_noisy("checkout", "-t", "-b", "master", "cpan/master");
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-init - Create a git repository for a CPAN module
+
+=head1 SYNOPSIS
+
+    % mkdir Foo
+    % cd Foo
+    % git cpan-init Foo
+
+=head1 DESCRIPTION
+
+This command creates a new git repository, calls C<git-cpan-import> and then
+checks out the code in the C<master> branch.
+

@@ -23,3 +23,30 @@ say "";
 
 say "Changes squashed onto working directory, commit and run git cpan-sendpatch";
 
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-squash - Combine multiple commits into one patch
+
+=head1 SYNOPSIS
+
+    % git cpan-squash temp_submit_branch
+
+    % git ci -m "This is my message"
+
+    % git cpan-sendpatch --compose
+
+    # delete the branch now that we're done
+    % git checkout master
+    % git branch -D temp_submit_branch
+
+=head1 DESCRIPTION
+
+This command creates a new branch from C<cpan/master> runs
+C<git merge --squish> against your head revision. This stages all the files for
+the branch and allows you to create a combined commit in order to send a single
+patch easily.
+
