@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+use File::Temp qw(tempdir tempfile);
+use Path::Class;
+use Git;
+
+my $repo = Git->repository;
+
+my $last_commit = $repo->command_oneline("rev-parse", "--verify", "cpan/master");
+
+my $last = join("\n", $repo->command( log => "--pretty=format:%b", "-n", 1, $last_commit ));
+
+if ( $last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx ) {
+    say $2;
+} else {
+    die "Couldn't parse message:\n$last\n";
+}
+
+

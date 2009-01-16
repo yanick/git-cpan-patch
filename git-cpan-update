@@ -7,57 +7,16 @@ use warnings;
 
 use autodie;
 
-# make sure we are in the right directory
-# as we're going to delete stuff
-die "this isn't a Git root directory, aborting\n" unless -d '.git';
-
 use Git;
+
 my $repo = Git->repository;
-$repo->command( checkout => 'cpan' );
 
-use File::Path;
-use List::MoreUtils 'part';
+my $last_import = $repo->command_oneline("rev-parse", "--verify", "cpan/master");
 
-opendir my $dir, '.'; 
-my @untouchables = qw/ . .. .git /;
--d $_ ? rmtree  $_ : unlink $_ for grep    { not $_ ~~ @untouchables } 
-                                  readdir $dir;
+$repo->command_noisy("cpan-import", @ARGV);
 
-use CPANPLUS;
+my $updated = $repo->command_oneline("rev-parse", "-q", "--verify", "cpan/master");
 
-my $module = shift;
-
-my $location = fetch( $module )
-    or die "couldn't retrieve distribution file for module $module";
-
-say "downloaded distribution at $location";
-
-use Archive::Tar;
-
-my $tar = Archive::Tar->new;
-$tar->read( $location => 1 );
-
-say "extracting distribution in current directory";
-
-for my $file ( $tar->list_files ) {
-    # change root directory
-    ( my $location = $file ) =~ s#^.*?/##;
-    $tar->extract_file( $file, $location );
+if ( $last_import ne $updated ) {
+    $repo->command_noisy("rebase", "cpan/master");
 }
-
-unlink $location;
-
-use Git;
-
-say "updating Git repository";
-
-my $repo = Git->repository;
-$repo->command( add => '--all', '.'    );
-$repo->command( commit => '--message' => 'import from CPAN' );
-
-use YAML;
-
-my $meta = YAML::LoadFile( 'META.yml' );
-
-my $version = 'v' . ( $meta->{version} || 'CPAN' );
-$repo->command( 'tag' => $version );

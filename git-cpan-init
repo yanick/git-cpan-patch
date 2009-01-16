@@ -7,51 +7,14 @@ use warnings;
 
 use autodie;
 
-use CPANPLUS;
+use Git;
 
 my $module = shift || die("Usage: $0 Foo::Bar\n");
 
-my $location = fetch( $module )
-    or die "couldn't retrieve distribution file for module $module";
-
-say "downloaded distribution at $location";
-
-use Archive::Tar;
-
-my $tar = Archive::Tar->new;
-$tar->read( $location => 1 );
-
-say "extracting distribution in current directory";
-
-for my $file ( $tar->list_files ) {
-    # change root directory
-    ( my $location = $file ) =~ s#^.*?/##;
-    $tar->extract_file( $file, $location );
-}
-
-unlink $location;
-
-use Data::Dumper;
-warn Dumper( $module_obj->author );
-
-use Git;
-
-say "initializing Git repository";
-
-Git::command_oneline('init');
+Git::command_noisy("init");
 
 my $repo = Git->repository;
-$repo->command( add => '.'    );
 
-my $author_obj = $module_obj->author;
-my $author = sprintf "%s <%s>", $author_obj->author, $author_obj->email;
-$repo->command( commit => '--message' => 'original import from CPAN', '--author' => $author );
+$repo->command_noisy("cpan-import", $module);
 
-$repo->command( branch => '-M', master => 'cpan' );
-
-use YAML;
-
-my $meta = YAML::LoadFile( 'META.yml' );
-
-my $version = 'v' . ( $meta->{version} || 'CPAN' );
-$repo->command( 'tag' => $version );
+$repo->command_noisy("checkout", "-t", "-b", "master", "cpan/master");

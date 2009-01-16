@@ -1,0 +1,110 @@
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use File::Spec::Functions;
+use File::Temp qw(tempdir);
+use version;
+use Git;
+use CPANPLUS;
+
+my $repo = Git->repository;
+
+my ( $last_commit, $module, $last_version );
+
+if ( $last_commit = eval { $repo->command_oneline("rev-parse", "-q", "--verify", "cpan/master") } ) {
+    $module       = $repo->command_oneline("cpan-which");
+    $last_version = $repo->command_oneline("cpan-last-version");
+} else {
+    $module = shift || die("Usage: $0 Foo::Bar\n");
+}
+
+my $cpan = CPANPLUS::Backend->new;
+my $module_obj = $cpan->parse_module( module => $module ) or die("No such module $module");
+
+if ( $last_version ) {
+    my $imported = version->new($last_version);
+    my $up_to_date = version->new($module_obj->version);
+
+    if ( $imported == $up_to_date ) {
+        say $module_obj->package, " has already been imported";
+        exit;
+    } elsif ( $imported > $up_to_date ) {
+        die "imported version $imported is more recent than $up_to_date, not importing\n";
+    } else {
+        say "updating $module from $imported to $up_to_date";
+    }
+} else {
+    my $name = $module_obj->name;
+    if ( $name ne $module ) {
+        say "importing $name ($module)";
+    } else {
+        say "importing $name";
+    }
+}
+
+my $tmp_dir = tempdir;
+
+say "downloading distribution";
+
+my $location = $module_obj->fetch( fetchdir => $tmp_dir )
+    or die "couldn't retrieve distribution file for module $module";
+
+say "extracting distribution";
+
+my $dir = $module_obj->extract( extractdir => $tmp_dir )
+    or die "couldn't extract distribution file $location";
+
+# create a tree object for the CPAN module
+my $tree = do {
+    # don't overwrite the user's index
+    local $ENV{GIT_INDEX_FILE} = catfile($tmp_dir, "temp_git_index");
+    local $ENV{GIT_DIR} = ".git";
+    local $ENV{GIT_WORK_TREE} = $dir;
+
+    my $write_tree_repo = Git->repository;
+
+    $write_tree_repo->command( add => '.' );
+    $write_tree_repo->command_oneline( "write-tree" );
+};
+
+
+{
+    my $author_obj = $module_obj->author;
+
+    local $ENV{GIT_AUTHOR_NAME} = $author_obj->author;
+    local $ENV{GIT_AUTHOR_EMAIL} = $author_obj->email;
+
+    my $name    = $module_obj->name;
+    my $version = $module_obj->version;
+    my $dist    = $module_obj->package;
+    my $dist_name = join("-", $module_obj->package_name, $module_obj->package_version);
+
+    # FIXME $repo->command_bidi_pipe is broken
+    my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
+        "commit-tree", $tree,
+        $last_commit ? ( "-p", $last_commit ) : (),
+    );
+
+    $out->print( join " ", ( $last_version ? "initial" : ()), "import $name $version from CPAN" );
+    $out->print( join "\n", "", "git-cpan-module: $name", "git-cpan-version: $version", "" );
+
+    close $out;
+    open $out, "<", \my $buf; # kludge to avoid an error from close_bidi_pipe
+
+    chomp(my $commit = <$in>);
+
+    Git::command_close_bidi_pipe($pid, $in, $out, $ctx);
+
+    $repo->command("update-ref", "-m" => "import $dist", "refs/remotes/cpan/master", $commit );
+
+    $repo->command( tag => $version, $commit );
+}
+
+#$repo->command( branch => '-M', master => 'cpan' );
+#$repo->command( 'tag' => $version );

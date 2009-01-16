@@ -1,0 +1,13 @@
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use Git;
+
+Git->repository->command_noisy("format-patch", "cpan/master");
+
