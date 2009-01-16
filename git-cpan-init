@@ -9,7 +9,7 @@ use autodie;
 
 use Git;
 
-my $module = shift || die("Usage: $0 Foo::Bar\n");
+my $module = shift || die("Usage: git cpan-init Foo::Bar\n");
 
 Git::command_noisy("init");
 

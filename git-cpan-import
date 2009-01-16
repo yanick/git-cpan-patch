@@ -21,7 +21,7 @@ if ( $last_commit = eval { $repo->command_oneline("rev-parse", "-q", "--verify",
     $module       = $repo->command_oneline("cpan-which");
     $last_version = $repo->command_oneline("cpan-last-version");
 } else {
-    $module = shift || die("Usage: $0 Foo::Bar\n");
+    $module = shift || die("Usage: git cpan-import Foo::Bar\n");
 }
 
 my $cpan = CPANPLUS::Backend->new;
@@ -106,5 +106,3 @@ my $tree = do {
     $repo->command( tag => $version, $commit );
 }
 
-#$repo->command( branch => '-M', master => 'cpan' );
-#$repo->command( 'tag' => $version );
