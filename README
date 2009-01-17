@@ -1,3 +1,5 @@
+=== WHAT'S THIS ? 
+
 This is a series of scripts developped for the 
 article 'CPAN Patching with Git' that I wrote
 for the Winter 2008 edition (aka issue 5.1) 
@@ -16,3 +18,21 @@ recommend to subscribe to the TPR :-) )
 `/anick, January 2009
 
 [1] http://www.theperlreview.com/
+
+=== INSTALLATION
+
+To install the scripts and their supporting module, do
+
+    $ perl ./Build.PL
+    $ ./Build test
+    $ sudo ./Build install
+
+or a variation thereof.
+
+If you run Build.PL interactively, it'll also
+ask you if you want to install the scripts alongside
+the Git commands for a tighter integration (Git will
+consider all the git-cpan-* commands as being legit
+Git sub-command, which means that shell completion and
+'git <blah>' type of commands will transparently work).  
+
