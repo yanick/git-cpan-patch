@@ -13,8 +13,10 @@ my $builder = Module::Build->new(
         perl                       => '5.10.0',
         'autodie'                  => 0,
         'Parse::BACKPAN::Packages' => 0,
+        'Pod::Usage'               => 0,
     },
     script_files => [
+        'git-backpan-init',
         map "git-cpan-$_" => qw/
           format-patch  init          send-email
           squash        which         sendpatch
