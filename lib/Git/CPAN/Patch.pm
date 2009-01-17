@@ -41,6 +41,34 @@ Git::CPAN::Patch - Patch CPAN modules using Git
 
 =head1 DESCRIPTION
 
+=head1 VERSION
+
+This document describes Git::CPAN::Patch version 0.1.0.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+
+  
+=head1 AUTHORS
+
+Yanick Champoux  C<< <yanick@cpan.org> >>
+
+Yuval Kogman, C<< <nothingmuch@woobling.org> >>
+
+=head1 LICENCE AND COPYRIGHT
+
+Copyright (c) 2009, Yanick Champoux C<< <yanick@cpan.org> >>. 
+All rights reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+
 =cut
 
 
