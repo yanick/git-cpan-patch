@@ -32,9 +32,6 @@ if ( defined $opt{mkdir} ) {
     chdir $dirname;
 }
 
-say "opening backpan index";
-my $backpan = Parse::BACKPAN::Packages->new;
-
 if ( -d '.git' ) {
     unless ( $opt{force} ) {
         die "Aborting: git repository already present.\n",
@@ -46,6 +43,9 @@ else {
 }
 
 my $repo = Git->repository;
+
+say "opening backpan index";
+my $backpan = Parse::BACKPAN::Packages->new;
 
 my @dists = $backpan->distributions($module)
     or die "Error: no distributions found. ",
