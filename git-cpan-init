@@ -30,7 +30,7 @@ my $repo = Git->repository;
 
 $repo->command_noisy("cpan-import", @orig_args);
 
-$repo->command_noisy("checkout", "-t", "-b", "master", "cpan/master");
+$repo->command_noisy("checkout", "-f", "-t", "-b", "master", "cpan/master");
 
 __END__
 
