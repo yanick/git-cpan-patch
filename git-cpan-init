@@ -8,14 +8,27 @@ use warnings;
 use autodie;
 
 use Git;
+use Pod::Usage;
+use Getopt::Long;
 
-my $module = shift || die("Usage: git cpan-init Foo::Bar\n");
+my %opt = (
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+);
+
+my @orig_args = @ARGV;
+
+GetOptions( \%opt,
+    'backpan!',
+) or pod2usage( "for a list of all valid options, do 'git cpan-init --help'" );
+
+my $module = $ARGV[0] || die("Usage: git cpan-init Foo::Bar\n");
 
 Git::command_noisy("init");
 
 my $repo = Git->repository;
 
-$repo->command_noisy("cpan-import", $module);
+$repo->command_noisy("cpan-import", @orig_args);
 
 $repo->command_noisy("checkout", "-t", "-b", "master", "cpan/master");
 
@@ -29,9 +42,7 @@ git-cpan-init - Create a git repository for a CPAN module
 
 =head1 SYNOPSIS
 
-    % mkdir Foo
-    % cd Foo
-    % git cpan-init Foo
+    git cpan-init [ --help | --man ] [ --backpan ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ]
 
 =head1 DESCRIPTION
 
