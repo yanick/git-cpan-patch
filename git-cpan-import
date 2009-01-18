@@ -99,7 +99,7 @@ if ( $last_version ) {
 
 my $tmp_dir = tempdir;
 
-say "downloading distribution";
+say "downloading $dist";
 
 my $location = $module_obj->fetch( fetchdir => $tmp_dir )
     or die "couldn't retrieve distribution file for module $module";
@@ -197,9 +197,11 @@ if ( $opt{backpan} ) {
 
     # finally, update the fake remote branch and create a tag for convenience
 
-    $repo->command("update-ref", "-m" => "import $dist", "refs/remotes/cpan/master", $commit );
+    $repo->command_noisy("update-ref", "-m" => "import $dist", "refs/remotes/cpan/master", $commit );
 
-    $repo->command( tag => $version, $commit );
+    $repo->command_noisy( tag => $version, $commit );
+
+    say "created tag '$version' ($commit)";
 }
 
 
