@@ -18,7 +18,7 @@ my %opt = (
 );
 GetOptions( \%opt, 
     'mkdir:s', 'force!'
-) or pod2usage( "for a list of all valid options, do '$0 -help'" );
+) or pod2usage( "for a list of all valid options, do '$0 --help'" );
 
 my $module = shift or pod2usage( 'module name required' );
 
@@ -70,7 +70,7 @@ from the backpan.
 
 =head1 SYNOPSIS
 
-    git backpan-init [ -help | -man ] [ -mkdir <directory> ] [ -force ] Foo::Bar
+    git backpan-init [ --help | --man ] [ --mkdir <directory> ] [ --force ] Foo::Bar
 
 =head1 DESCRIPTION
 
