@@ -18,7 +18,7 @@ my %opt = (
 );
 GetOptions( \%opt, 
     'mkdir:s', 'force!'
-) or pod2usage( "for a list of all valid options, do '$0 --help'" );
+) or pod2usage( "for a list of all valid options, do 'git backpan-init --help'" );
 
 my $module = shift or pod2usage( 'module name required' );
 
