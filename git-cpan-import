@@ -125,7 +125,7 @@ my $tree = do {
 
     my $write_tree_repo = Git->repository;
 
-    $write_tree_repo->command( add => '.' );
+    $write_tree_repo->command_noisy( qw(add -v .) );
     $write_tree_repo->command_oneline( "write-tree" );
 };
 
