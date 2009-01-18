@@ -54,7 +54,7 @@ my @dists = $backpan->distributions($module)
 foreach my $dist ( @dists ) {
      say "importing " . $dist->distvname;
      my $url  = 'http://backpan.perl.org/' . $dist->prefix;
-     $repo->command_noisy('cpan-import' => $url);
+     $repo->command_noisy('cpan-import' => '--backpan', $url);
 }
 
 $repo->command_noisy('checkout', '-t', '-b', 'master', 'cpan/master');

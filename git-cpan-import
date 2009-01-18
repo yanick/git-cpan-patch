@@ -11,9 +11,24 @@ use File::Spec::Functions;
 use File::Temp qw(tempdir);
 use version;
 use Git;
+use Pod::Usage;
+use Getopt::Long;
 
 use CPANPLUS;
 use Parse::BACKPAN::Packages;
+
+my %opt = (
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+);
+
+GetOptions( \%opt,
+    'backpan!',
+) or pod2usage( "for a list of all valid options, do 'git cpan-import --help'" );
+
+unless ( exists $opt{backpan} ) {
+    $opt{backpan} = Git::config_bool("cpan-import.backpan");
+}
 
 $| = 1;
 
@@ -122,10 +137,13 @@ my $tree = do {
 # refs/remotes/cpan/master
 
 # we need the backpan index for dates
-say "opening backpan index";
-my $backpan = Parse::BACKPAN::Packages->new;
+my ( $backpan, %dists );
 
-my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->package_name);
+if ( $opt{backpan} ) {
+    say "opening backpan index";
+    $backpan = Parse::BACKPAN::Packages->new;
+    %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->package_name);
+}
 
 {
     local $ENV{$_} for qw(GIT_AUTHOR_NAME GIT_AUTHOR_NAME GIT_AUTHOR_DATE);
@@ -147,6 +165,8 @@ my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->pack
         if ( $author_obj->isa("CPANPLUS::Module::Author::Fake") ) {
             say "Couldn't find author for $dist";
         }
+
+        say "Consider specifying --backpan to fetch more metadata" unless $opt{backpan};
     }
 
 
@@ -193,18 +213,7 @@ git-cpan-import - Import a module into a git repository
 
 =head1 SYNOPSIS
 
-    # takes any string CPANPLUS handles:
-
-    % git cpan-import Foo::Bar
-    % git cpan-import A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
-    % git cpan-import http://backpan.cpan.org/authors/id/A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
-
-
-
-    # If the repository is already initialized, can be run with no arguments to
-    # import the latest version
-    git cpan-import
-
+    git cpan-import [ --help | --man ] [ --backpan ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ]
 
 =head1 DESCRIPTION
 
