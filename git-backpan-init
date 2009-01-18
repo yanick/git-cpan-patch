@@ -93,12 +93,12 @@ Creates a sub-directory and create the git repository there instead
 than in the current directory.  If no directory name is given,
 figures one out based on the name of the module.
 
-=item -force
+=item -force, -f
 
 Forces the imports, even if a git repository was
 already present in the directory.
 
-=item -help
+=item -help, -h
 
 Prints the synopsis and valid options and exits.
 
