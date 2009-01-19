@@ -49,3 +49,29 @@ git-cpan-init - Create a git repository for a CPAN module
 This command creates a new git repository, calls C<git-cpan-import> and then
 checks out the code in the C<master> branch.
 
+=head1 VERSION
+
+This document describes git-cpan-init version 0.1.0.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Yanick Champoux C<< <yanick@cpan.org> >>
+
+Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>, L<git-cpan-import>
+
+=cut
