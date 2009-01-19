@@ -9,7 +9,7 @@ use autodie;
 
 use Git;
 
-Git->repository->command_noisy("format-patch", "cpan/master");
+Git->repository->command_noisy('format-patch', 'cpan/master');
 
 __END__
 
@@ -28,3 +28,31 @@ reference.
 
 This is just like running C<git format-patch cpan/master>.
 
+=head1 VERSION
+
+This document describes git-cpan-format-patch version 0.1.0.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+Yanick Champoux C<< <yanick@cpan.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>
+
+L<git-format-patch>
+
+=cut
