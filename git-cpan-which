@@ -11,15 +11,14 @@ use Git;
 
 my $repo = Git->repository;
 
-my $last_commit = $repo->command_oneline("rev-parse", "--verify", "cpan/master");
+my $last_commit = $repo->command_oneline('rev-parse', '--verify', 'cpan/master');
 
-my $last = join("\n", $repo->command( log => "--pretty=format:%b", "-n", 1, $last_commit ));
+my $last = join "\n", $repo->command( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
-if ( $last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx ) {
-    say $1;
-} else {
-    die "Couldn't parse message:\n$last\n";
-}
+$last =~ /git-cpan-module:\ (?<name>.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx
+    or die "Couldn't parse message:\n$last\n";
+
+say $+{name};
 
 __END__
 
@@ -36,3 +35,30 @@ git-cpan-last-version - Report the managed module
 =head1 DESCRIPTION
 
 This command prints the name of the module tracked in C<cpan/master>.
+
+=head1 VERSION
+
+This document describes git-cpan-which version 0.1.0.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Yanick Champoux C<< <yanick@cpan.org> >>
+
+Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>
+
+=cut
