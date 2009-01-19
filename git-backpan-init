@@ -18,7 +18,7 @@ my %opt = (
 );
 GetOptions( \%opt, 
     'mkdir:s', 'force!'
-) or pod2usage( "for a list of all valid options, do 'git backpan-init -help'" );
+) or pod2usage( "for a list of all valid options, do 'git backpan-init --help'" );
 
 my $module = shift or pod2usage( 'module name required' );
 
@@ -70,7 +70,7 @@ from the backpan.
 
 =head1 SYNOPSIS
 
-    git backpan-init [ -help | -man ] [ -mkdir <directory> ] [ -force ] Foo::Bar
+    git backpan-init [ --help | --man ] [ --mkdir <directory> ] [ --force ] Foo::Bar
 
 =head1 DESCRIPTION
 
@@ -87,22 +87,22 @@ is found to be already present in the directory.
 
 =over
 
-=item -mkdir I<directory>
+=item --mkdir I<directory>
 
 Creates a sub-directory and create the git repository there instead 
 than in the current directory.  If no directory name is given,
 figures one out based on the name of the module.
 
-=item -force, -f
+=item --force, -f
 
 Forces the imports, even if a git repository was
 already present in the directory.
 
-=item -help, -h
+=item --help, -h
 
 Prints the synopsis and valid options and exits.
 
-=item -man
+=item --man
 
 Prints the man page and exits.
 
