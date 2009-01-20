@@ -9,6 +9,18 @@ use autodie;
 
 use Git;
 
+use Getopt::Long;
+
+my %opt = ( 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+);
+
+GetOptions( \%opt, ) 
+    or pod2usage( 
+        "for a list of all valid options, do 'git backpan-init --help'" 
+    );
+
 Git->repository->command_noisy('format-patch', 'cpan/master');
 
 __END__

@@ -6,21 +6,19 @@ use strict;
 use warnings;
 
 use autodie;
-use File::Temp qw(tempdir tempfile);
-use Path::Class;
+
 use Git;
 
 my $repo = Git->repository;
 
-my $last_commit = $repo->command_oneline("rev-parse", "--verify", "cpan/master");
+my $last_commit = $repo->command_oneline('rev-parse', '--verify', 'cpan/master');
 
-my $last = join("\n", $repo->command( log => "--pretty=format:%b", "-n", 1, $last_commit ));
+my $last = join "\n", $repo->command( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
-if ( $last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx ) {
-    say $2;
-} else {
-    die "Couldn't parse message:\n$last\n";
-}
+$last =~ /git-cpan-module:\ (?<module>.*?) \s+ git-cpan-version:\ (?<version>.*?) \s*$/sx
+    or die "Couldn't parse message:\n$last\n";
+
+say $+{version};
 
 __END__
 
@@ -39,3 +37,30 @@ git-cpan-last-version - Report the last imported version
 This command searches through the history of the C<cpan/master> reference for
 the last imported version.
 
+
+=head1 VERSION
+
+This document describes git-cpan-last-version version 0.1.0.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+Yanick Champoux C<< <yanick@cpan.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>
+
+=cut

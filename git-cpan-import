@@ -15,6 +15,18 @@ use Git;
 use CPANPLUS;
 use Parse::BACKPAN::Packages;
 
+use Getopt::Long;
+
+my %opt = ( 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+);
+
+GetOptions( \%opt, ) 
+    or pod2usage( 
+        "for a list of all valid options, do 'git cpan-import --help'" 
+    );
+
 $| = 1;
 
 my $full_hist;
@@ -53,29 +65,22 @@ my $version = $module_obj->version;
 my $dist    = $module_obj->package;
 my $dist_name = join("-", $module_obj->package_name, $module_obj->package_version);
 
+my $prettyname = $name . ( " ($module)" x ( $name ne $module ) );
+
 if ( $last_version ) {
     # if last_version is defined this is an update
     my $imported = version->new($last_version);
     my $will_import = version->new($module_obj->version);
 
-    if ( $imported == $will_import ) {
-        say "$dist_name has already been imported";
-        exit;
-    } elsif ( $imported > $will_import ) {
-        die "imported version $imported is more recent than $will_import, can't import\n";
-    } else {
-        if ( $name ne $module ) {
-            say "updating $name ($module) from $imported to $will_import";
-        } else {
-            say "updating $name from $imported to $will_import";
-        }
-    }
+    die "$dist_name has already been imported\n" if $imported == $will_import;
+    
+    die "imported version $imported is more recent than $will_import, can't import\n"
+            if $imported > $will_import;
+
+    say "updating $prettyname from $imported to $will_import";
+    
 } else {
-    if ( $name ne $module ) {
-        say "importing $name ($module)";
-    } else {
-        say "importing $name";
-    }
+    say "importing $prettyname";
 }
 
 
@@ -161,14 +166,14 @@ my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->pack
     );
 
     # commit message
-    $out->print( join " ", ( $last_version ? "import" : "initial import of" ), "$name $version from CPAN\n" );
-    $out->print( join "\n", "", "git-cpan-module: $name", "git-cpan-version: $version", "" );
+    $out->print( join ' ', ( $last_version ? "import" : "initial import of" ), "$name $version from CPAN\n" );
+    $out->print( join "\n", '', "git-cpan-module: $name", "git-cpan-version: $version", '' );
 
 
     # we need to send an EOF to git in order for it to actually finalize the commit
     # this kludge makes command_close_bidi_pipe not barf
     close $out;
-    open $out, "<", \my $buf;
+    open $out, '<', \my $buf;
 
     chomp(my $commit = <$in>);
 
@@ -177,7 +182,7 @@ my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->pack
 
     # finally, update the fake remote branch and create a tag for convenience
 
-    $repo->command_noisy("update-ref", "-m" => "import $dist", "refs/remotes/cpan/master", $commit );
+    $repo->command_noisy('update-ref', '-m' => "import $dist", 'refs/remotes/cpan/master', $commit );
 
     $repo->command_noisy( tag => $version, $commit );
 
@@ -223,3 +228,30 @@ Tags are created for each version of the module.
 
 This command does not touch the working directory, and is safe to run even if
 you have pending work.
+
+=head1 VERSION
+
+This document describes git-cpan-import version 0.1.0.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+Yanick Champoux C<< <yanick@cpan.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>
+
+=cut

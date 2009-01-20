@@ -11,15 +11,14 @@ use Git;
 
 my $repo = Git->repository;
 
-my $last_import = $repo->command_oneline("rev-parse", "--verify", "cpan/master");
+my $last_import = $repo->command_oneline('rev-parse', '--verify', 'cpan/master');
 
-$repo->command_noisy("cpan-import", @ARGV);
+$repo->command_noisy('cpan-import', @ARGV);
 
-my $updated = $repo->command_oneline("rev-parse", "-q", "--verify", "cpan/master");
+my $updated = $repo->command_oneline('rev-parse', '-q', '--verify', 'cpan/master');
 
-if ( $last_import ne $updated ) {
-    $repo->command_noisy("rebase", "cpan/master");
-}
+$repo->command_noisy('rebase', 'cpan/master') 
+    unless $last_import eq $updated;
 
 __END__
 
@@ -39,3 +38,30 @@ branch
 This command runs C<git cpan-import>, and then if C<cpan/master> was updated
 runs C<git rebase cpan/master>, bringing your patches up to date with the
 upstream.
+
+=head1 VERSION
+
+This document describes git-cpan-update version 0.1.0.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+Yanick Champoux C<< <yanick@cpan.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>, L<git-cpan-import>
+
+=cut
