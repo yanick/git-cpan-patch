@@ -9,6 +9,16 @@ use autodie;
 
 use Git;
 
+use Pod::Usage;
+use Getopt::Long;
+
+my %opt;
+GetOptions( \%opt, 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+) or pod2usage( "for a list of all valid options, do 'git cpan-squash --help'" );
+
+
 my $repo = Git->repository;
 
 my $branch = shift || die "Usage: git cpan-squash new-branch-name\n";
