@@ -12,8 +12,16 @@ use File::Temp qw(tempdir);
 use version;
 use Git;
 
+use Getopt::Long;
+
 use CPANPLUS;
 use Parse::BACKPAN::Packages;
+
+my %opt;
+
+GetOptions( \%opt,
+    'backpan!',
+) or pod2usage( "for a list of all valid options, do 'git cpan-init --help'" );
 
 $| = 1;
 
@@ -128,9 +136,10 @@ my $tree = do {
     # URI), get the user object by using the ID from the backpan index
     unless ( $ENV{GIT_AUTHOR_DATE} ) {
         my $mtime = eval {
+            return if $author_obj->isa("CPANPLUS::Module::Author::Fake");
             my $checksums = $module_obj->checksums;
             my $href = $module_obj->_parse_checksums_file( file => $checksums );
-            $href->{$dist}{mtime};
+            return $href->{$dist}{mtime};
         };
 
         warn $@ if $@;
@@ -138,12 +147,15 @@ my $tree = do {
         if ( $mtime ) {
             $ENV{GIT_AUTHOR_DATE} = $mtime;
         } else {
-            # we need the backpan index for dates
-            say "opening backpan index";
-            my $backpan = Parse::BACKPAN::Packages->new;
+            my %dists;
 
-            my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->package_name);
+            if ( $opt{backpan} ) {
+                # we need the backpan index for dates
+                say "opening backpan index";
+                my $backpan = Parse::BACKPAN::Packages->new;
 
+                %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->package_name);
+            }
 
             if ( my $bp_dist = $dists{$dist} ) {
 
