@@ -10,6 +10,16 @@ use autodie;
 use Git;
 use CPANPLUS;
 
+use Pod::Usage;
+use Getopt::Long;
+
+my %opt;
+GetOptions( \%opt, 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+) or pod2usage( "for a list of all valid options, do 'git cpan-last-version --help'" );
+
+
 my $repo = Git->repository;
 
 my $module = $repo->command_oneline("cpan-which");

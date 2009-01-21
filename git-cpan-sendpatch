@@ -1,4 +1,4 @@
-#!/usr/bin/env perl -s
+#!/usr/bin/env perl
 
 use 5.10.0;
 
@@ -8,6 +8,16 @@ use warnings;
 use autodie;
 
 use Git;
+
+use Pod::Usage;
+use Getopt::Long;
+
+my %opt;
+GetOptions( \%opt, 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+) or pod2usage( "for a list of all valid options, do 'git cpan-sendpatch --help'" );
+
 
 my $repo = Git->repository;
 

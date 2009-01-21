@@ -12,12 +12,12 @@ use Pod::Usage;
 use Parse::BACKPAN::Packages;
 use Getopt::Long;
 
-my %opt = ( 
+my %opt;
+GetOptions( \%opt, 
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
-);
-GetOptions( \%opt, 
-    'mkdir:s', 'force!'
+    'mkdir:s', 
+    'force!'
 ) or pod2usage( "for a list of all valid options, do 'git backpan-init --help'" );
 
 my $module = shift or pod2usage( 'module name required' );

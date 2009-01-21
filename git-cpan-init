@@ -11,14 +11,13 @@ use Git;
 use Pod::Usage;
 use Getopt::Long;
 
-my %opt = (
-    'help' => sub { pod2usage(1) },
-    'man'  => sub { pod2usage( verbose => 2 ) },
-);
+my %opt;
 
 my @orig_args = @ARGV;
 
 GetOptions( \%opt,
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
     'backpan!',
 ) or pod2usage( "for a list of all valid options, do 'git cpan-init --help'" );
 

@@ -16,13 +16,15 @@ use CPANPLUS;
 use Parse::BACKPAN::Packages;
 
 use Getopt::Long;
+use Pod::Usage;
 
-my %opt = ( 
+my %opt;
+
+GetOptions( \%opt, 
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
-);
-
-GetOptions( \%opt, 'backpan!', ) 
+    'backpan!', 
+) 
     or pod2usage( 
         "for a list of all valid options, do 'git cpan-import --help'" 
     );
@@ -244,6 +246,16 @@ Tags are created for each version of the module.
 
 This command does not touch the working directory, and is safe to run even if
 you have pending work.
+
+=head1 OPTIONS
+
+=over
+
+=item  --backpan
+
+Enables Backpan index fetching (to get the author and release date).
+
+=back
 
 =head1 VERSION
 

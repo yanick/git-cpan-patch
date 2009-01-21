@@ -9,6 +9,15 @@ use autodie;
 
 use Git;
 
+use Pod::Usage;
+use Getopt::Long;
+
+my %opt;
+GetOptions( \%opt, 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+) or pod2usage( "for a list of all valid options, do 'git cpan-last-version --help'" );
+
 my $repo = Git->repository;
 
 my $last_commit = $repo->command_oneline('rev-parse', '--verify', 'cpan/master');
