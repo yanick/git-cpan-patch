@@ -62,7 +62,6 @@ if ( $last_commit = eval { $repo->command_oneline("rev-parse", "-q", "--verify",
 my $cpan = CPANPLUS::Backend->new;
 my $module_obj = $cpan->parse_module( module => $module ) or die("No such module $module");
 
-use Data::Dumper;
 my $name    = $module_obj->name;
 my $version = $module_obj->version;
 my $dist    = $module_obj->package;
