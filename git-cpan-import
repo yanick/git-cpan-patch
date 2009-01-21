@@ -22,7 +22,7 @@ my %opt = (
     'man'  => sub { pod2usage( verbose => 2 ) },
 );
 
-GetOptions( \%opt, ) 
+GetOptions( \%opt, 'backpan!', ) 
     or pod2usage( 
         "for a list of all valid options, do 'git cpan-import --help'" 
     );
@@ -60,6 +60,7 @@ if ( $last_commit = eval { $repo->command_oneline("rev-parse", "-q", "--verify",
 my $cpan = CPANPLUS::Backend->new;
 my $module_obj = $cpan->parse_module( module => $module ) or die("No such module $module");
 
+use Data::Dumper;
 my $name    = $module_obj->name;
 my $version = $module_obj->version;
 my $dist    = $module_obj->package;
@@ -99,10 +100,6 @@ say "extracting distribution";
 my $dir = $module_obj->extract( extractdir => $tmp_dir )
     or die "couldn't extract distribution file $location";
 
-
-
-
-
 # create a tree object for the CPAN module
 # this imports the source code without touching the user's working directory or
 # index
@@ -126,38 +123,57 @@ my $tree = do {
 # reate a commit for the imported tree object and write it into
 # refs/remotes/cpan/master
 
-# we need the backpan index for dates
-say "opening backpan index";
-my $backpan = Parse::BACKPAN::Packages->new;
-
-my %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->package_name);
-
 {
-    local $ENV{$_} for qw(GIT_AUTHOR_NAME GIT_AUTHOR_NAME GIT_AUTHOR_DATE);
+    local $ENV{$_} = $ENV{$_} for qw(GIT_AUTHOR_NAME GIT_AUTHOR_NAME GIT_AUTHOR_DATE);
 
     my $author_obj = $module_obj->author;
 
     # try to find a date for the version using the backpan index
     # secondly, if the CPANPLUS author object is a fake one (e.g. when importing a
     # URI), get the user object by using the ID from the backpan index
-    if ( my $bp_dist = $dists{$dist} ) {
-        $ENV{GIT_AUTHOR_DATE} = $bp_dist->date;
+    unless ( $ENV{GIT_AUTHOR_DATE} ) {
+        my $mtime = eval {
+            return if $author_obj->isa("CPANPLUS::Module::Author::Fake");
+            my $checksums = $module_obj->checksums;
+            my $href = $module_obj->_parse_checksums_file( file => $checksums );
+            return $href->{$dist}{mtime};
+        };
 
-        if ( $author_obj->isa("CPANPLUS::Module::Author::Fake") ) {
-            $author_obj = $cpan->author_tree($bp_dist->cpanid);
-        }
-    } else {
-        say "Couldn't find upload date for $dist";
+        warn $@ if $@;
 
-        if ( $author_obj->isa("CPANPLUS::Module::Author::Fake") ) {
-            say "Couldn't find author for $dist";
+        if ( $mtime ) {
+            $ENV{GIT_AUTHOR_DATE} = $mtime;
+        } else {
+            my %dists;
+
+            if ( $opt{backpan} ) {
+                # we need the backpan index for dates
+                say "opening backpan index";
+                my $backpan = Parse::BACKPAN::Packages->new;
+
+                %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->package_name);
+            }
+
+            if ( my $bp_dist = $dists{$dist} ) {
+
+                $ENV{GIT_AUTHOR_DATE} = $bp_dist->date;
+
+                if ( $author_obj->isa("CPANPLUS::Module::Author::Fake") ) {
+                    $author_obj = $cpan->author_tree($bp_dist->cpanid);
+                }
+            } else {
+                say "Couldn't find upload date for $dist";
+
+                if ( $author_obj->isa("CPANPLUS::Module::Author::Fake") ) {
+                    say "Couldn't find author for $dist";
+                }
+            }
         }
     }
 
-
     # create the commit object
-    $ENV{GIT_AUTHOR_NAME} = $author_obj->author;
-    $ENV{GIT_AUTHOR_EMAIL} = $author_obj->email;
+    $ENV{GIT_AUTHOR_NAME}  = $author_obj->author unless $ENV{GIT_AUTHOR_NAME};
+    $ENV{GIT_AUTHOR_EMAIL} = $author_obj->email unless $ENV{GIT_AUTHOR_EMAIL};
 
     # FIXME $repo->command_bidi_pipe is broken
     my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
