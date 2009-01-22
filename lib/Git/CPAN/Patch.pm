@@ -3,7 +3,7 @@ package Git::CPAN::Patch;
 use strict;
 use warnings;
 
-our $VERSION = "0.1.0";
+our $VERSION = '0.1.0';
 
 __END__
 
@@ -72,6 +72,35 @@ This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
 
 =head1 SEE ALSO
+
+=head2
+
+=over
+
+=item L<git-backpan-init>       
+
+=item L<git-cpan-import>  
+
+=item L<git-cpan-last-version>
+
+=item L<git-cpan-sendpatch>  
+
+=item L<git-cpan-update>
+
+=item L<git-cpan-format-patch>  
+
+=item L<git-cpan-init>    
+
+=item L<git-cpan-send-email>    
+
+=item L<git-cpan-squash>
+
+=item L<git-cpan-which>
+
+=back 
+
+
+=head2 Articles
 
 The set of scripts that would eventually become 
 L<Git::CPAN::Patch> were first presented in the 
