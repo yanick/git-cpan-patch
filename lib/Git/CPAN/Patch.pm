@@ -49,6 +49,55 @@ in a local git repository and, once gleeful
 hacking has been perpetrated, sending back
 patches to its maintainer.  
 
+=head1 GIT COMMANDS
+
+=over
+
+=item L<git-cpan-init>    
+
+Create a git repository for a CPAN module
+
+=item L<git-backpan-init> 
+
+Initialize a repository for a CPAN module with full history
+from the backpan.
+
+=item L<git-cpan-import>  
+
+Import a module into a git repository.
+
+=item L<git-cpan-last-version>
+
+Report the last imported version
+
+=item L<git-cpan-send-email>    
+
+Use C<git-send-email> to submit patches to CPAN RT
+
+=item L<git-cpan-sendpatch>  
+
+Create patch files and submit then to RT
+
+=item L<git-cpan-update>
+
+Import the latest version of a module and rebase the current branch
+
+=item L<git-cpan-format-patch>  
+
+Format patches using C<cpan/master> as the origin reference
+
+=item L<git-cpan-squash>
+
+Combine multiple commits into one patch
+
+=item L<git-cpan-which> 
+
+Report the managed module
+
+=back
+
+
+
 =head1 VERSION
 
 This document describes Git::CPAN::Patch version 0.1.0.
