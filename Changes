@@ -1,0 +1,11 @@
+Revision history for Git::CPAN::Patch
+
+0.1.0   ???
+    * First CPAN release.
+    * Massive restructuration and explosion of features, thanks to 
+        Yuval Kogman.
+
+0.0.1   ???
+    * Original scripts are published alongside the article
+"CPAN Patching with Git" in issue 5.1 of the Perl Review.
+
