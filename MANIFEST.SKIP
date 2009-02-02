@@ -46,3 +46,4 @@
 \B\._
 # Avoid archives of this distribution
 \bGit-CPAN-Patch-[\d\.\_]+
+distrelease.yml
