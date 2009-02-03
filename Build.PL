@@ -3,8 +3,6 @@ use warnings;
 
 use Module::Build;
 
-use List::MoreUtils qw/ apply uniq /;
-
 my $builder = Module::Build->new(
     module_name => 'Git::CPAN::Patch',
     license     => 'perl',
@@ -68,14 +66,15 @@ END_MESSAGE
     print "\nokay, let's see where that directory could be...\n";
 
     # let's find where the git-* commands are
-    my @dirs = uniq
-      grep { -f "$_/git-init" }
+    my %already_seen;
+    my @dirs = 
+      grep { -f "$_/git-init" and not $already_seen{$_}++ }
       map {
         my $original = $_;
         s#/bin/?$##;
         $_ .= "/libexec/git-core";
         $_ => $original;
-      } apply { y#/#/#s }
+      } map { ( my $x = $_ ) =~ y#/#/#s; $x }   # squish multiple /s
     split( ':' => $ENV{PATH} ), qw( /usr /usr/local );
 
     if (@dirs) {
