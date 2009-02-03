@@ -1,6 +1,6 @@
 ---
 name: Git-CPAN-Patch
-version: 0.1.0
+version: 0.1.1
 author:
   - 'Yanick Champoux <yanick@cpan.org>'
 abstract: Patch CPAN modules using Git
@@ -17,7 +17,7 @@ requires:
 provides:
   Git::CPAN::Patch:
     file: lib/Git/CPAN/Patch.pm
-    version: 0.1.0
+    version: 0.1.1
 generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
