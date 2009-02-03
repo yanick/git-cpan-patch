@@ -1,0 +1,56 @@
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use Git;
+
+use Pod::Usage;
+use Getopt::Long;
+
+my %opt;
+GetOptions( \%opt, 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+) or pod2usage( "for a list of all valid options, do 'git cpan-sendpatch --help'" );
+
+
+my $repo = Git->repository;
+
+my @patches = $repo->command( 'cpan-format-patch' );
+
+if ( @patches > 1 ) {
+    say "Refusing to send more than one patch (each patch email will be in its own RT ticket).";
+    say "Run git-cpan-send-email manually to override, or squash your commits.";
+
+    say and unlink($_) for @patches;
+
+    exit 1;
+}
+
+$repo->command_noisy( "cpan-send-email", @ARGV, @patches );
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-sendpatch - create patch files and submit them to RT
+
+=head1 SYNOPSIS
+
+    % git cpan-sendpatch
+
+=head1 DESCRIPTION
+
+This command runs C<git cpan-format-patch> and then if there is one patch file
+runs C<git cpan-send-email>.
+
+Multiple patches are not sent because C<git send-email> creates a separate
+message for each patch file, resulting in multiple tickets.
+

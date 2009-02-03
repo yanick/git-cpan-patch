@@ -1,0 +1,49 @@
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use Git;
+use CPANPLUS;
+
+use Pod::Usage;
+use Getopt::Long;
+
+my %opt;
+GetOptions( \%opt, 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+) or pod2usage( "for a list of all valid options, do 'git cpan-send-email --help'" );
+
+
+my $repo = Git->repository;
+
+my $module = $repo->command_oneline("cpan-which");
+
+my $cpan = CPANPLUS::Backend->new;
+my $module_obj = $cpan->parse_module( module => $module ) or die("No such module $module");
+
+my $to = 'bug-' . $module_obj->package_name . '@rt.cpan.org';
+
+$repo->command_noisy("send-email", "--to", $to, @ARGV);
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-send-email - use C<git-send-email> to submit patches to CPAN RT
+
+=head1 SYNOPSIS
+
+    % git cpan-send-email
+
+=head1 DESCRIPTION
+
+This command provides a C<--to> parameter to C<git send-email> that corresponds
+to the RT queue of the imported module.

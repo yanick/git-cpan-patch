@@ -1,0 +1,62 @@
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use Git;
+
+use Pod::Usage;
+use Getopt::Long;
+
+my %opt;
+GetOptions( \%opt, 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+) or pod2usage( "for a list of all valid options, do 'git cpan-squash --help'" );
+
+
+my $repo = Git->repository;
+
+my $branch = shift || die "Usage: git cpan-squash new-branch-name\n";
+
+my $head = $repo->command_oneline("rev-parse", "--verify", "HEAD");
+
+$repo->command_noisy("checkout", "-b", $branch, "cpan/master");
+
+$repo->command_noisy("merge", "--squash", $head);
+
+say "";
+
+say "Changes squashed onto working directory, commit and run git cpan-sendpatch";
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-squash - Combine multiple commits into one patch
+
+=head1 SYNOPSIS
+
+    % git cpan-squash temp_submit_branch
+
+    % git ci -m "This is my message"
+
+    % git cpan-sendpatch --compose
+
+    # delete the branch now that we're done
+    % git checkout master
+    % git branch -D temp_submit_branch
+
+=head1 DESCRIPTION
+
+This command creates a new branch from C<cpan/master> runs
+C<git merge --squish> against your head revision. This stages all the files for
+the branch and allows you to create a combined commit in order to send a single
+patch easily.
+

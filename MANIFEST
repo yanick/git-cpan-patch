@@ -1,0 +1,17 @@
+Build.PL
+Changes
+lib/Git/CPAN/Patch.pm
+MANIFEST			This list of files
+README
+scripts/git-backpan-init
+scripts/git-cpan-format-patch
+scripts/git-cpan-import
+scripts/git-cpan-init
+scripts/git-cpan-last-version
+scripts/git-cpan-send-email
+scripts/git-cpan-sendpatch
+scripts/git-cpan-squash
+scripts/git-cpan-update
+scripts/git-cpan-which
+t/00-load.t
+META.yml
