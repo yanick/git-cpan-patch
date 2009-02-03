@@ -1,0 +1,284 @@
+#!/usr/bin/env perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use File::Spec::Functions;
+use File::Temp qw(tempdir);
+use version;
+use Git;
+
+use CPANPLUS;
+use Parse::BACKPAN::Packages;
+
+use Getopt::Long;
+use Pod::Usage;
+
+my %opt;
+
+GetOptions( \%opt, 
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+    'backpan!', 
+) 
+    or pod2usage( 
+        "for a list of all valid options, do 'git cpan-import --help'" 
+    );
+
+$| = 1;
+
+my $full_hist;
+
+my $repo = Git->repository;
+
+my ( $last_commit, $module, $last_version );
+
+if ( @ARGV ) {
+    # if there's an arg explicitly import something (could be an update to an
+    # old version or an initial import)
+    $module = shift;
+}
+
+# figure out if there is already an imported module
+if ( $last_commit = eval { $repo->command_oneline("rev-parse", "-q", "--verify", "cpan/master") } ) {
+    $module     ||= $repo->command_oneline("cpan-which");
+    $last_version = $repo->command_oneline("cpan-last-version");
+} else {
+    $module ||= shift || die("Usage: git cpan-import Foo::Bar\n");
+}
+
+
+
+# first we figure out a module object from the module argument
+# CPANPLUS handles dist names and URIs too
+
+# based on the version number it figured out for us we decide whether or not to
+# actually import.
+
+my $cpan = CPANPLUS::Backend->new;
+my $module_obj = $cpan->parse_module( module => $module ) or die("No such module $module");
+
+my $name    = $module_obj->name;
+my $version = $module_obj->version;
+my $dist    = $module_obj->package;
+my $dist_name = join("-", $module_obj->package_name, $module_obj->package_version);
+
+my $prettyname = $name . ( " ($module)" x ( $name ne $module ) );
+
+if ( $last_version ) {
+    # if last_version is defined this is an update
+    my $imported = version->new($last_version);
+    my $will_import = version->new($module_obj->version);
+
+    die "$dist_name has already been imported\n" if $imported == $will_import;
+    
+    die "imported version $imported is more recent than $will_import, can't import\n"
+            if $imported > $will_import;
+
+    say "updating $prettyname from $imported to $will_import";
+    
+} else {
+    say "importing $prettyname";
+}
+
+
+
+# download the dist and extract into a temporary directory
+
+my $tmp_dir = tempdir;
+
+say "downloading $dist";
+
+my $location = $module_obj->fetch( fetchdir => $tmp_dir )
+    or die "couldn't retrieve distribution file for module $module";
+
+say "extracting distribution";
+
+my $dir = $module_obj->extract( extractdir => $tmp_dir )
+    or die "couldn't extract distribution file $location";
+
+# create a tree object for the CPAN module
+# this imports the source code without touching the user's working directory or
+# index
+
+my $tree = do {
+    # don't overwrite the user's index
+    local $ENV{GIT_INDEX_FILE} = catfile($tmp_dir, "temp_git_index");
+    local $ENV{GIT_DIR} = ".git";
+    local $ENV{GIT_WORK_TREE} = $dir;
+
+    my $write_tree_repo = Git->repository;
+
+    $write_tree_repo->command_noisy( qw(add -v --force .) );
+    $write_tree_repo->command_oneline( "write-tree" );
+};
+
+
+
+
+
+# reate a commit for the imported tree object and write it into
+# refs/remotes/cpan/master
+
+{
+    local $ENV{$_} = $ENV{$_} for qw(GIT_AUTHOR_NAME GIT_AUTHOR_NAME GIT_AUTHOR_DATE);
+
+    my $author_obj = $module_obj->author;
+
+    # try to find a date for the version using the backpan index
+    # secondly, if the CPANPLUS author object is a fake one (e.g. when importing a
+    # URI), get the user object by using the ID from the backpan index
+    unless ( $ENV{GIT_AUTHOR_DATE} ) {
+        my $mtime = eval {
+            return if $author_obj->isa("CPANPLUS::Module::Author::Fake");
+            my $checksums = $module_obj->checksums;
+            my $href = $module_obj->_parse_checksums_file( file => $checksums );
+            return $href->{$dist}{mtime};
+        };
+
+        warn $@ if $@;
+
+        if ( $mtime ) {
+            $ENV{GIT_AUTHOR_DATE} = $mtime;
+        } else {
+            my %dists;
+
+            if ( $opt{backpan} ) {
+                # we need the backpan index for dates
+                say "opening backpan index";
+                my $backpan = Parse::BACKPAN::Packages->new;
+
+                %dists = map { $_->filename => $_ } $backpan->distributions($module_obj->package_name);
+            }
+
+            if ( my $bp_dist = $dists{$dist} ) {
+
+                $ENV{GIT_AUTHOR_DATE} = $bp_dist->date;
+
+                if ( $author_obj->isa("CPANPLUS::Module::Author::Fake") ) {
+                    $author_obj = $cpan->author_tree($bp_dist->cpanid);
+                }
+            } else {
+                say "Couldn't find upload date for $dist";
+
+                if ( $author_obj->isa("CPANPLUS::Module::Author::Fake") ) {
+                    say "Couldn't find author for $dist";
+                }
+            }
+        }
+    }
+
+    # create the commit object
+    $ENV{GIT_AUTHOR_NAME}  = $author_obj->author unless $ENV{GIT_AUTHOR_NAME};
+    $ENV{GIT_AUTHOR_EMAIL} = $author_obj->email unless $ENV{GIT_AUTHOR_EMAIL};
+
+    # FIXME $repo->command_bidi_pipe is broken
+    my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
+        "commit-tree", $tree,
+        $last_commit ? ( "-p", $last_commit ) : (),
+    );
+
+    # commit message
+    $out->print( join ' ', ( $last_version ? "import" : "initial import of" ), "$name $version from CPAN\n" );
+    $out->print( join "\n", '', "git-cpan-module: $name", "git-cpan-version: $version", '' );
+
+
+    # we need to send an EOF to git in order for it to actually finalize the commit
+    # this kludge makes command_close_bidi_pipe not barf
+    close $out;
+    open $out, '<', \my $buf;
+
+    chomp(my $commit = <$in>);
+
+    Git::command_close_bidi_pipe($pid, $in, $out, $ctx);
+
+
+    # finally, update the fake remote branch and create a tag for convenience
+
+    $repo->command_noisy('update-ref', '-m' => "import $dist", 'refs/remotes/cpan/master', $commit );
+
+    $repo->command_noisy( tag => $version, $commit );
+
+    say "created tag '$version' ($commit)";
+}
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-import - Import a module into a git repository
+
+=head1 SYNOPSIS
+
+    # takes any string CPANPLUS handles:
+
+    % git cpan-import Foo::Bar
+    % git cpan-import A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
+    % git cpan-import http://backpan.cpan.org/authors/id/A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
+
+
+
+    # If the repository is already initialized, can be run with no arguments to
+    # import the latest version
+    git cpan-import
+
+
+=head1 DESCRIPTION
+
+This command is used internally by C<git-cpan-init>, C<git-cpan-update> and
+C<git-backpan-init>.
+
+This command takes a tarball, extracts it, and imports it into the repository.
+
+It is only possible to update to a newer version of a module.
+
+The module history is tracked in C<refs/remotes/cpan/master>.
+
+Tags are created for each version of the module.
+
+This command does not touch the working directory, and is safe to run even if
+you have pending work.
+
+=head1 OPTIONS
+
+=over
+
+=item  --backpan
+
+Enables Backpan index fetching (to get the author and release date).
+
+=back
+
+=head1 VERSION
+
+This document describes git-cpan-import version 0.1.0.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+Yanick Champoux C<< <yanick@cpan.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>
+
+=cut
