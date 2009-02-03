@@ -1,5 +1,8 @@
 Revision history for Git::CPAN::Patch
 
+0.1.1   Tue Feb 3 2009
+    * Removed dependency on List::MoreUtils from Build.PL
+
 0.1.0   Mon Feb 2 2009
     * First CPAN release.
     * Massive restructuration and explosion of features, thanks to 
