@@ -1,7 +1,5 @@
 #!/usr/bin/env perl
 
-use 5.10.0;
-
 use strict;
 use warnings;
 
@@ -11,6 +9,8 @@ use Git;
 use Pod::Usage;
 use Parse::BACKPAN::Packages;
 use Getopt::Long;
+
+sub say (@) { print @_, "\n" }
 
 my %opt;
 GetOptions( \%opt, 

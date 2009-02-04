@@ -1,5 +1,8 @@
 Revision history for Git::CPAN::Patch
 
+0.1.2   Tue Feb 3 2009
+    * Made scripts Perl 5.8-compatible
+
 0.1.1   Tue Feb 3 2009
     * Removed dependency on List::MoreUtils from Build.PL
 
