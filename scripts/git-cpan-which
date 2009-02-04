@@ -1,7 +1,5 @@
 #!/usr/bin/env perl
 
-use 5.10.0;
-
 use strict;
 use warnings;
 
@@ -11,6 +9,8 @@ use Git;
 
 use Pod::Usage;
 use Getopt::Long;
+
+sub say (@) { print @_, "\n" }
 
 my %opt;
 GetOptions( \%opt, 
@@ -24,10 +24,10 @@ my $last_commit = $repo->command_oneline('rev-parse', '--verify', 'cpan/master')
 
 my $last = join "\n", $repo->command( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
-$last =~ /git-cpan-module:\ (?<name>.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx
+$last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx
     or die "Couldn't parse message:\n$last\n";
 
-say $+{name};
+say $1;
 
 __END__
 
