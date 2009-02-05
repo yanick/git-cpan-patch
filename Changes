@@ -1,5 +1,8 @@
 Revision history for Git::CPAN::Patch
 
+0.1.3   Thu Feb 5 2009
+    * Of course, removing 5.10 requirements in Build.PL would help... *sigh*
+
 0.1.2   Tue Feb 3 2009
     * Made scripts Perl 5.8-compatible
 
