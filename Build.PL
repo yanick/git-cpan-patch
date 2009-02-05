@@ -8,7 +8,6 @@ my $builder = Module::Build->new(
     license     => 'perl',
     dist_author => 'Yanick Champoux <yanick@cpan.org>',
     requires    => {
-        perl                       => '5.10.0',
         'autodie'                  => 0,
         'Parse::BACKPAN::Packages' => 0,
         'Pod::Usage'               => 0,
