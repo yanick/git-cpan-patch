@@ -30,7 +30,7 @@ Git::CPAN::Patch - Patch CPAN modules using Git
 
     hack lib/Foo/Bar.pm
 
-    % git ci -am "blah"
+    % git commit -am "blah"
     % git cpan-sendpatch --compose
 
 
