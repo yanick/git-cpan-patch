@@ -11,6 +11,7 @@ my $builder = Module::Build->new(
         'autodie'                  => 0,
         'Parse::BACKPAN::Packages' => 0,
         'Pod::Usage'               => 0,
+        'CPANPLUS'                 => 0,
     },
     script_files => [
         map "scripts/$_"  => 'git-backpan-init',
