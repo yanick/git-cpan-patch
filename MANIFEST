@@ -14,3 +14,5 @@ scripts/git-cpan-squash
 scripts/git-cpan-update
 scripts/git-cpan-which
 t/00-load.t
+META.yml
+xt/perlcritic-progressive.t

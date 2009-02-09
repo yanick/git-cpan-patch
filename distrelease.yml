@@ -13,7 +13,7 @@ distversion:
 
         my $module_pattern = [ 
             qr/\$VERSION\s*=\s*'(.*?)';/,
-            qr/This document(?=ation)? (?=refers to|describes) \S+ version (\S*)/ 
+            qr/This document(?:ation)? (?:refers to|describes) \S+ version (\S*)/ 
         ];
 
         ( 
