@@ -56,7 +56,7 @@ git-cpan-squash - Combine multiple commits into one patch
 =head1 DESCRIPTION
 
 This command creates a new branch from C<cpan/master> runs
-C<git merge --squish> against your head revision. This stages all the files for
+C<git merge --squash> against your head revision. This stages all the files for
 the branch and allows you to create a combined commit in order to send a single
 patch easily.
 
