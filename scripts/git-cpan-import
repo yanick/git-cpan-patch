@@ -258,7 +258,7 @@ Enables Backpan index fetching (to get the author and release date).
 
 =head1 VERSION
 
-This document describes git-cpan-import version 0.1.3
+This document describes git-cpan-import version 0.1.4
 
 =head1 BUGS AND LIMITATIONS
 

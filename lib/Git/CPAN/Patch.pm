@@ -3,7 +3,7 @@ package Git::CPAN::Patch;
 use strict;
 use warnings;
 
-our $VERSION = '0.1.3';
+our $VERSION = '0.1.4';
 
 __END__
 
@@ -30,7 +30,7 @@ Git::CPAN::Patch - Patch CPAN modules using Git
 
     hack lib/Foo/Bar.pm
 
-    % git ci -am "blah"
+    % git commit -am "blah"
     % git cpan-sendpatch --compose
 
 
@@ -100,7 +100,7 @@ Report the managed module
 
 =head1 VERSION
 
-This document describes Git::CPAN::Patch version 0.1.3
+This document describes Git::CPAN::Patch version 0.1.4
 
 =head1 BUGS AND LIMITATIONS
 
