@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!perl
 
 use strict;
 use warnings;
@@ -125,7 +125,7 @@ my $tree = do {
 # refs/remotes/cpan/master
 
 {
-    local $ENV{$_} = $ENV{$_} for qw(GIT_AUTHOR_NAME GIT_AUTHOR_NAME GIT_AUTHOR_DATE);
+    local $ENV{$_} = (defined $ENV{$_}? $ENV{$_} : '') for qw(GIT_AUTHOR_NAME GIT_AUTHOR_NAME GIT_AUTHOR_DATE);
 
     my $author_obj = $module_obj->author;
 
@@ -258,7 +258,7 @@ Enables Backpan index fetching (to get the author and release date).
 
 =head1 VERSION
 
-This document describes git-cpan-import version 0.1.4
+This document describes git-cpan-import version 0.1.5
 
 =head1 BUGS AND LIMITATIONS
 
