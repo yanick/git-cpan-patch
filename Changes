@@ -1,5 +1,13 @@
 Revision history for Git::CPAN::Patch
 
+0.1.5   Sat Mar 28 2009
+    * Fixed typo in git-cpan-squash doc (rt bug 43294), 
+        patch by Slaven Rezic
+    * Removed warning from git-cpan-import, 
+        patch by Pedro Melo
+    * scripts' shebang line now set to Perl's interpreter 
+        used by Build.PL (rt bug 43366)
+
 0.1.4   Sat Feb 14 2009
     * backpan-init now calls cpan-import properly (fix by Slaven Rezic)
     * CPANPlUS added as dependency
