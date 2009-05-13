@@ -3,3 +3,5 @@ Build
 _build
 blib
 META.yml
+*.swp
+Makefile.PL
