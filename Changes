@@ -1,5 +1,12 @@
 Revision history for Git::CPAN::Patch
 
+0.1.6   Tue May 12 2009
+    * git-backpan-init doesn't choke on non-monotone version
+        numbers anymore (rt bug 45994)
+    * git-cpan-import gets a new --checkversion option
+    * Adding Module::Build as an explicit dependency and
+        passthrough Makefile.PL
+
 0.1.5   Sat Mar 28 2009
     * Fixed typo in git-cpan-squash doc (rt bug 43294), 
         patch by Slaven Rezic

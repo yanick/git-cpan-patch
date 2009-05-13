@@ -18,12 +18,13 @@ use Pod::Usage;
 
 sub say (@) { print @_, "\n" }
 
-my %opt;
+my %opt = ( checkversion => 1 );
 
 GetOptions( \%opt, 
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
     'backpan!', 
+    'checkversion!',
 ) 
     or pod2usage( 
         "for a list of all valid options, do 'git cpan-import --help'" 
@@ -69,7 +70,7 @@ my $dist_name = join("-", $module_obj->package_name, $module_obj->package_versio
 
 my $prettyname = $name . ( " ($module)" x ( $name ne $module ) );
 
-if ( $last_version ) {
+if ( $last_version and $opt{checkversion} ) {
     # if last_version is defined this is an update
     my $imported = version->new($last_version);
     my $will_import = version->new($module_obj->version);
@@ -254,11 +255,18 @@ you have pending work.
 
 Enables Backpan index fetching (to get the author and release date).
 
+=item --checkversion, --nocheckversion
+
+Explicitly enables/disables version checking.  If version checking is
+enabled, which is the default, git-cpan-import will refuse to import a 
+version of the package
+that has a smaller version number than the HEAD of the branch I<cpan/master>.
+
 =back
 
 =head1 VERSION
 
-This document describes git-cpan-import version 0.1.5
+This document describes git-cpan-import version 0.1.6
 
 =head1 BUGS AND LIMITATIONS
 

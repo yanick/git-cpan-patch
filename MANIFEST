@@ -16,3 +16,4 @@ scripts/git-cpan-which
 t/00-load.t
 META.yml
 xt/perlcritic-progressive.t
+Makefile.PL

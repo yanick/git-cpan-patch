@@ -8,6 +8,7 @@ my $builder = Module::Build->new(
     license     => 'perl',
     dist_author => 'Yanick Champoux <yanick@cpan.org>',
     requires    => {
+        'Module::Build'            => 0,
         'autodie'                  => 0,
         'Parse::BACKPAN::Packages' => 0,
         'Pod::Usage'               => 0,
@@ -29,6 +30,7 @@ my $builder = Module::Build->new(
               'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Git-CPAN-Patch',
         },
     },
+    create_makefile_pl => 'passthrough',
 );
 
 locate_git($builder);
