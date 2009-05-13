@@ -54,7 +54,7 @@ my @dists = $backpan->distributions($module)
 foreach my $dist ( @dists ) {
      say "importing " . $dist->distvname;
      my $url  = 'http://backpan.perl.org/' . $dist->prefix;
-     $repo->command_noisy('cpan-import', '--backpan', $url);
+     $repo->command_noisy('cpan-import', '--backpan', '--nocheckversion', $url);
 }
 
 $repo->command_noisy('checkout', '-t', '-b', 'master', 'cpan/master');
@@ -120,6 +120,14 @@ Most of the time, you want to use I<git backpan-init> like this:
 This document describes git-backpan-init version 0.1.5
 
 =head1 BUGS AND LIMITATIONS
+
+When importing a package history with git-backpan-init, version
+checking will be automatically turned off.  This is to
+circumvent the cases where, e.g., version 0.38.1 (morphed into 0.038001 by the 
+module I<version>) follows version
+0.38.  We are making the (hopefully reasonable) assumption that the
+chronological order reported by the Backpan trumps all.
+
 
 Please report any bugs or feature requests to
 C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
