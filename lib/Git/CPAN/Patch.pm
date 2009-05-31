@@ -3,7 +3,7 @@ package Git::CPAN::Patch;
 use strict;
 use warnings;
 
-our $VERSION = 'devel';
+our $VERSION = '0.1.7';
 
 __END__
 
@@ -100,7 +100,7 @@ Report the managed module
 
 =head1 VERSION
 
-This document describes Git::CPAN::Patch version devel
+This document describes Git::CPAN::Patch version 0.1.7
 
 =head1 BUGS AND LIMITATIONS
 

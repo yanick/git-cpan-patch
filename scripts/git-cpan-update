@@ -52,7 +52,7 @@ upstream.
 
 =head1 VERSION
 
-This document describes git-cpan-update version devel
+This document describes git-cpan-update version 0.1.7
 
 =head1 BUGS AND LIMITATIONS
 

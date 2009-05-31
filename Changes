@@ -1,5 +1,9 @@
 Revision history for Git::CPAN::Patch
 
+0.1.7   Sun May 31 2009
+    * git-backpan-init doesn't choke on bad versions but skip them
+        (rt bug 46469)
+
 0.1.6   Tue May 12 2009
     * git-backpan-init doesn't choke on non-monotone version
         numbers anymore (rt bug 45994)

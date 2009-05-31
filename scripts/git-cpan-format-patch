@@ -42,7 +42,7 @@ This is just like running C<git format-patch cpan/master>.
 
 =head1 VERSION
 
-This document describes git-cpan-format-patch version devel
+This document describes git-cpan-format-patch version 0.1.7
 
 =head1 BUGS AND LIMITATIONS
 
