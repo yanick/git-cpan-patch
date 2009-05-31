@@ -54,7 +54,11 @@ my @dists = $backpan->distributions($module)
 foreach my $dist ( @dists ) {
      say "importing " . $dist->distvname;
      my $url  = 'http://backpan.perl.org/' . $dist->prefix;
-     $repo->command_noisy('cpan-import', '--backpan', '--nocheckversion', $url);
+
+     eval {
+        $repo->command_noisy('cpan-import', '--backpan', '--nocheckversion', $url);
+     };
+     warn "couldn't import $dist" if $@;
 }
 
 $repo->command_noisy('checkout', '-t', '-b', 'master', 'cpan/master');
@@ -127,6 +131,9 @@ circumvent the cases where, e.g., version 0.38.1 (morphed into 0.038001 by the
 module I<version>) follows version
 0.38.  We are making the (hopefully reasonable) assumption that the
 chronological order reported by the Backpan trumps all.
+
+If a version of the package can't be extracted, I<git-backpan-init>
+will issue a warning and skip to the next version.
 
 
 Please report any bugs or feature requests to
