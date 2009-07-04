@@ -25,6 +25,7 @@ GetOptions( \%opt,
     'man'  => sub { pod2usage( verbose => 2 ) },
     'backpan!', 
     'checkversion!',
+    'parent:s@',
 ) 
     or pod2usage( 
         "for a list of all valid options, do 'git cpan-import --help'" 
@@ -177,10 +178,12 @@ my $tree = do {
     $ENV{GIT_AUTHOR_NAME}  = $author_obj->author unless $ENV{GIT_AUTHOR_NAME};
     $ENV{GIT_AUTHOR_EMAIL} = $author_obj->email unless $ENV{GIT_AUTHOR_EMAIL};
 
+    my @parents = ( grep { $_ } $last_commit, @{ $opt{parent} || [] } );
+
     # FIXME $repo->command_bidi_pipe is broken
     my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
         "commit-tree", $tree,
-        $last_commit ? ( "-p", $last_commit ) : (),
+        map { ( -p => $_ ) } @parents,
     );
 
     # commit message
