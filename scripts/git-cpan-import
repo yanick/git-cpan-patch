@@ -266,7 +266,7 @@ that has a smaller version number than the HEAD of the branch I<cpan/master>.
 
 =head1 VERSION
 
-This document describes git-cpan-import version 0.1.7
+This document describes git-cpan-import version 0.2.0
 
 =head1 BUGS AND LIMITATIONS
 

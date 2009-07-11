@@ -1,5 +1,8 @@
 Revision history for Git::CPAN::Patch
 
+0.2.0   Sat Jul 11 2009
+    * New --parent option for git-cpan-import
+
 0.1.7   Sun May 31 2009
     * git-backpan-init doesn't choke on bad versions but skip them
         (rt bug 46469)
