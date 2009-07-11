@@ -25,6 +25,7 @@ GetOptions( \%opt,
     'man'  => sub { pod2usage( verbose => 2 ) },
     'backpan!', 
     'checkversion!',
+    'parent:s@',
 ) 
     or pod2usage( 
         "for a list of all valid options, do 'git cpan-import --help'" 
@@ -177,10 +178,12 @@ my $tree = do {
     $ENV{GIT_AUTHOR_NAME}  = $author_obj->author unless $ENV{GIT_AUTHOR_NAME};
     $ENV{GIT_AUTHOR_EMAIL} = $author_obj->email unless $ENV{GIT_AUTHOR_EMAIL};
 
+    my @parents = ( grep { $_ } $last_commit, @{ $opt{parent} || [] } );
+
     # FIXME $repo->command_bidi_pipe is broken
     my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
         "commit-tree", $tree,
-        $last_commit ? ( "-p", $last_commit ) : (),
+        map { ( -p => $_ ) } @parents,
     );
 
     # commit message
@@ -261,6 +264,21 @@ Explicitly enables/disables version checking.  If version checking is
 enabled, which is the default, git-cpan-import will refuse to import a 
 version of the package
 that has a smaller version number than the HEAD of the branch I<cpan/master>.
+
+=item --parent
+
+Allows adding extra parents when
+importing, so that when a patch has been incorporated into an upstream
+version the generated commit is like a merge commit, incorporating both
+the CPAN history and the user's local history.
+
+For example, this will set the current HEAD of the master branch as a parent of 
+the imported CPAN package:
+
+	$ git checkout master
+	$ git cpan-import --parent HEAD My-Module
+
+More than one '--parent' can be specified.
 
 =back
 
