@@ -26,6 +26,7 @@ GetOptions( \%opt,
     'backpan!', 
     'checkversion!',
     'parent:s@',
+    'debug!',
 ) 
     or pod2usage( 
         "for a list of all valid options, do 'git cpan-import --help'" 
@@ -95,13 +96,25 @@ my $tmp_dir = tempdir;
 
 say "downloading $dist";
 
+say "temporary directory is $tmp_dir" if $opt{debug};
+
 my $location = $module_obj->fetch( fetchdir => $tmp_dir )
     or die "couldn't retrieve distribution file for module $module";
+
+say "archive location is: $location" if $opt{debug};
 
 say "extracting distribution";
 
 my $dir = $module_obj->extract( extractdir => $tmp_dir )
     or die "couldn't extract distribution file $location";
+
+say "distribution extracted to $dir" if $opt{debug};
+
+if ( $opt{debug} ) {
+    say "content of distribution root dir:";
+    opendir my $dir_handle, $dir;
+    say $_ for readdir $dir_handle;
+}
 
 # create a tree object for the CPAN module
 # this imports the source code without touching the user's working directory or
@@ -279,6 +292,11 @@ the imported CPAN package:
 	$ git cpan-import --parent HEAD My-Module
 
 More than one '--parent' can be specified.
+
+=item --debug
+
+Prints out debugging information as the command is being
+executed.
 
 =back
 
