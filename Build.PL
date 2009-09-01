@@ -13,6 +13,7 @@ my $builder = Module::Build->new(
         'Parse::BACKPAN::Packages' => 0,
         'Pod::Usage'               => 0,
         'CPANPLUS'                 => '0.84',
+        'File::chdir'              => 0,
     },
     script_files => [
         map "scripts/$_"  => 'git-backpan-init',
