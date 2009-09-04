@@ -7,6 +7,8 @@ use autodie;
 
 use File::Spec::Functions;
 use File::Temp qw(tempdir);
+use File::chdir;
+use Cwd qw/ getcwd /;
 use version;
 use Git;
 
@@ -110,8 +112,10 @@ my $dir = $module_obj->extract( extractdir => $tmp_dir )
 my $tree = do {
     # don't overwrite the user's index
     local $ENV{GIT_INDEX_FILE} = catfile($tmp_dir, "temp_git_index");
-    local $ENV{GIT_DIR} = ".git";
+    local $ENV{GIT_DIR} = catfile( getcwd(), '.git' );
     local $ENV{GIT_WORK_TREE} = $dir;
+
+    local $CWD = $dir;
 
     my $write_tree_repo = Git->repository;
 
@@ -284,7 +288,7 @@ More than one '--parent' can be specified.
 
 =head1 VERSION
 
-This document describes git-cpan-import version 0.2.0
+This document describes git-cpan-import version 0.2.1
 
 =head1 BUGS AND LIMITATIONS
 
