@@ -1,5 +1,11 @@
 Revision history for Git::CPAN::Patch
 
+0.2.1   Thur Sept 3 2009
+    * git-cpan-import is working with new version of Git. 
+        Thanks to Alexandr Ciornii. (rt#48713)
+    * Require CPANPLUS 0.84 or higher. Thanks to Alexandr Ciornii.
+        (rt#48713)
+
 0.2.0   Sat Jul 11 2009
     * New --parent option for git-cpan-import
 
