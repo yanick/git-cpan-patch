@@ -93,7 +93,7 @@ if ( $last_version and $opt{checkversion} ) {
 
 # download the dist and extract into a temporary directory
 
-my $tmp_dir = tempdir;
+my $tmp_dir = tempdir( CLEANUP => 1 );
 
 say "downloading $dist";
 
