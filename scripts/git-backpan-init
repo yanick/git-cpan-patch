@@ -18,13 +18,16 @@ GetOptions( \%opt,
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
     'mkdir:s', 
-    'force!'
+    'force!',
+    'backpan=s',
 ) or pod2usage( "for a list of all valid options, do 'git backpan-init --help'" );
 
 my $module = shift or pod2usage( 'module name required' );
 
 # Backpan takes its modules with a '-', not '::'s
 $module =~ s/::/-/g;
+
+$opt{backpan} ||= 'http://backpan.perl.org/';
 
 if ( defined $opt{mkdir} ) {
     ( my $dirname = $opt{mkdir} || lc $module ) =~ s/::/-/g;
@@ -54,7 +57,9 @@ my @dists = $backpan->distributions($module)
 
 foreach my $dist ( @dists ) {
      say "importing " . $dist->distvname;
-     my $url  = 'http://backpan.perl.org/' . $dist->prefix;
+     my $url  = $opt{backpan};
+     $url .= "/" unless $url =~ m{/$};
+     $url .= $dist->prefix;
 
      eval {
         $repo->command_noisy('cpan-import', '--backpan', '--nocheckversion', $url);
@@ -75,7 +80,8 @@ from the backpan.
 
 =head1 SYNOPSIS
 
-    git backpan-init [ --help | --man ] [ --mkdir <directory> ] [ --force ] Foo::Bar
+    git backpan-init [ --help | --man ] [ --mkdir <directory> ]
+                     [ --force ] [ --backpan <url> ] Module::Name
 
 =head1 DESCRIPTION
 
@@ -97,6 +103,10 @@ is found to be already present in the directory.
 Creates a sub-directory and create the git repository there instead 
 than in the current directory.  If no directory name is given,
 figures one out based on the name of the module.
+
+=item --backpan I<url>
+
+URL to BackPAN.  If none is given L<http://backpan.perl.org/> will be used.
 
 =item --force, -f
 
