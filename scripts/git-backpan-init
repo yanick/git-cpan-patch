@@ -9,6 +9,7 @@ use Git;
 use Pod::Usage;
 use Parse::BACKPAN::Packages;
 use Getopt::Long;
+use File::Path;
 
 sub say (@) { print @_, "\n" }
 
@@ -28,7 +29,7 @@ $module =~ s/::/-/g;
 if ( defined $opt{mkdir} ) {
     ( my $dirname = $opt{mkdir} || lc $module ) =~ s/::/-/g;
     say "creating directory $dirname";
-    mkdir $dirname;
+    mkpath $dirname;
     chdir $dirname;
 }
 
