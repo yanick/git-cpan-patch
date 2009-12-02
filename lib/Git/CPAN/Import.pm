@@ -109,7 +109,7 @@ sub main {
     # refs/remotes/cpan/master
 
     {
-        local $ENV{$_} = (defined $ENV{$_}? $ENV{$_} : '') for qw(GIT_AUTHOR_NAME GIT_AUTHOR_NAME GIT_AUTHOR_DATE);
+        local %ENV = %ENV;
 
         my $author_obj = $module_obj->author;
 
