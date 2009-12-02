@@ -31,7 +31,7 @@ $module =~ s/::/-/g;
 $opt{backpan} ||= 'http://backpan.perl.org/';
 
 if ( defined $opt{mkdir} ) {
-    ( my $dirname = $opt{mkdir} || lc $module ) =~ s/::/-/g;
+    ( my $dirname = $opt{mkdir} || $module ) =~ s/::/-/g;
     say "creating directory $dirname";
     mkpath $dirname;
     chdir $dirname;
