@@ -5,7 +5,14 @@
 use strict;
 use warnings;
 
+use Getopt::Long;
 use Parse::BACKPAN::Packages;
+
+my %opts;
+GetOptions(
+    \%opts,
+    "backpan:s"
+);
 
 my @dists;
 if( @ARGV ) {
@@ -18,8 +25,11 @@ else {
     @dists = grep !/^[\d._\-]+(\.U)?$/, @{$backpan->distributions};
 }
 
+my %backpan_init_opts;
+$backpan_init_opts{"--backpan"} = $opts{backpan} if $opts{backpan};
+
 for my $dist (@dists) {
-    system "git", "backpan-init" => $dist, "--mkdir";
+    system "git", "backpan-init" => $dist, %backpan_init_opts, "--mkdir";
     chdir $dist;
     system "git", "gc";
     chdir "..";
