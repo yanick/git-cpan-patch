@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+# Do a complete git-ificaiton of BackPAN.  Or give it just a few modules.
+
+use strict;
+use warnings;
+
+use Parse::BACKPAN::Packages;
+
+my @dists;
+if( @ARGV ) {
+    @dists = @ARGV;
+}
+else {
+    my $backpan = Parse::BACKPAN::Packages->new();
+
+    # Filter out some garbage the backpan indexer picks up
+    @dists = grep !/^[\d._\-]+(\.U)?$/, @{$backpan->distributions};
+}
+
+for my $dist (@dists) {
+    system "git", "backpan-init" => $dist, "--mkdir";
+    chdir $dist;
+    system "git", "gc";
+    chdir "..";
+}
