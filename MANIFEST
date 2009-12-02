@@ -1,7 +1,10 @@
 Build.PL
 Changes
+lib/Git/CPAN/Import.pm
 lib/Git/CPAN/Patch.pm
+Makefile.PL
 MANIFEST			This list of files
+META.yml
 README
 scripts/git-backpan-init
 scripts/git-cpan-format-patch
@@ -14,6 +17,4 @@ scripts/git-cpan-squash
 scripts/git-cpan-update
 scripts/git-cpan-which
 t/00-load.t
-META.yml
 xt/perlcritic-progressive.t
-Makefile.PL

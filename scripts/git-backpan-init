@@ -6,6 +6,7 @@ use warnings;
 use autodie;
 
 use Git;
+use Git::CPAN::Import;
 use Pod::Usage;
 use Parse::BACKPAN::Packages;
 use Getopt::Long;
@@ -62,7 +63,14 @@ foreach my $dist ( @dists ) {
      $url .= $dist->prefix;
 
      eval {
-        $repo->command_noisy('cpan-import', '--backpan', '--nocheckversion', $url);
+         Git::CPAN::Import::main(
+             $url,
+             {
+                 backpan          => 1,
+                 checkversion     => 0,
+                 backpan_obj      => $backpan,
+             }
+         );
      };
      warn "couldn't import $dist" if $@;
 }
