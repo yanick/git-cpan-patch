@@ -1,4 +1,4 @@
-package Git::CPAN::Import;
+package Git::CPAN::Patch::Import;
 
 use strict;
 use warnings;
@@ -199,11 +199,11 @@ __END__
 
 =head1 NAME
 
-Git::CPAN::Import - The meat of git-cpan-import
+Git::CPAN::Patch::Import - The meat of git-cpan-import
 
 =head1 DESCRIPTION
 
-This is the guts of Git::CPAN::Import moved here to make it callable
+This is the guts of Git::CPAN::Patch::Import moved here to make it callable
 as a function so git-backpan-init goes faster.
 
 =cut
