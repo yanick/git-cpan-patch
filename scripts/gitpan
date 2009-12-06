@@ -10,17 +10,27 @@ use File::chdir;
 use Getopt::Long;
 use Parse::BACKPAN::Packages;
 
+my %Dists_To_Skip = map { $_ => 1 } qw(
+    perl
+);
+
 my %opts;
 GetOptions(
     \%opts,
     "backpan:s",
     "login=s",
     "token=s",
+    "author=s",
 );
 
 my @dists;
 if( @ARGV ) {
     @dists = @ARGV;
+}
+elsif( $opts{author} ) {
+    my $backpan = Parse::BACKPAN::Packages->new();
+
+    @dists = $backpan->distributions_by($opts{author});
 }
 else {
     my $backpan = Parse::BACKPAN::Packages->new();
@@ -33,6 +43,8 @@ my %backpan_init_opts;
 $backpan_init_opts{"--backpan"} = $opts{backpan} if $opts{backpan};
 
 for my $dist (@dists) {
+    next if $Dists_To_Skip{$dist};
+
     system "git", "backpan-init" => $dist, %backpan_init_opts, "--mkdir";
 
     local $CWD = $dist;
@@ -48,6 +60,7 @@ for my $dist (@dists) {
     });
     system "git", "remote", "add", "origin", "git\@github-gitpan:gitpan/$dist.git";
     system "git", "push", "origin", "master";
+    system "git", "push", "origin", "--tags";
     system "rm .git/hooks/*.sample";
 }
 
