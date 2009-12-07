@@ -45,6 +45,16 @@ $backpan_init_opts{"--backpan"} = $opts{backpan} if $opts{backpan};
 for my $dist (@dists) {
     next if $Dists_To_Skip{$dist};
 
+    # MARCEL has -0.01.tar.gz
+    # Should probably be filtered out by Parse::BACKPAN or
+    # made into a dist called empty string.
+    next if $dist =~ /^-[\d.]+$/;
+
+    if( does_repo_exist("gitpan", $dist) ) {
+        print "Repo already exists on github, skipping\n";
+        next;
+    }
+
     system "git", "backpan-init" => $dist, %backpan_init_opts, "--mkdir";
 
     local $CWD = $dist;
@@ -67,25 +77,45 @@ for my $dist (@dists) {
 
 use LWP::UserAgent;
 use HTTP::Request::Common qw(POST);
+use JSON::XS;
 
 sub github_action {
     state $ua = LWP::UserAgent->new;
 
     state $actions = {
-        create_repo => 'repos/create',
-        delete_repo => 'repos/delete',
+        create_repo => sub { 'repos/create' },
+        delete_repo => sub { 'repos/delete' },
+        repo_info   => sub {
+            my $opts = shift;
+            sprintf 'repos/show/%s/%s',
+              delete $opts->{user},
+              delete $opts->{name}
+        },
     };
 
     my $action = shift;
     my $opts   = shift;
 
     my $url = "http://github.com/api/v2/json/";
-    $url .= $actions->{$action};
+    $url .= $actions->{$action}->($opts);
 
     my $req = POST $url, [
         %$opts
     ];
-    my $response = $ua->request($req)->as_string;
-
+    my $response = $ua->request($req)->content;
     print "Github said: $response\n";
+
+    return decode_json($response);
+}
+
+sub does_repo_exist {
+    my $user = shift;
+    my $repo = shift;
+
+    my $response = github_action("repo_info", {
+        user    => $user,
+        name    => $repo
+    });
+
+    return exists $response->{error} ? 0 : 1;
 }
