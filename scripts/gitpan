@@ -74,7 +74,7 @@ for my $dist (@dists) {
     system "git", "gc";
 
     if( $opts{github} ) {
-        github_action("create_repo", {
+        my $response = github_action("create_repo", {
             login           => $opts{login},
             token           => $opts{token},
             name            => $dist,
@@ -82,8 +82,14 @@ for my $dist (@dists) {
             homepage        => "http://search.cpan.org/dist/$dist/",
             public          => 1,
         });
-        system "git", "remote", "add", "origin", "git\@github-gitpan:gitpan/$dist.git";
-        system "git", "push", "origin", "master";
+        my $repo = $response->{repository}{name};
+        system "git", "remote", "add", "origin", "git\@github-gitpan:gitpan/$repo.git";
+        # sometimes github doesn't have the repo ready immediately after create_repo
+        # returns, so if push fails try it again.
+        for(1..3) {
+            system "git", "push", "origin", "master";
+            last if $? == 0;
+        }
         system "git", "push", "origin", "--tags";
     }
 }
