@@ -21,23 +21,32 @@ GetOptions(
     "login=s",
     "token=s",
     "author=s",
+    "github!",
+    "random=i",
 );
 
 my @dists;
 if( @ARGV ) {
     @dists = @ARGV;
 }
-elsif( $opts{author} ) {
+elsif( $opts{random} ) {
+    my $num = $opts{random};
     my $backpan = Parse::BACKPAN::Packages->new();
 
+    my $all_dists = $backpan->distributions;
+    @dists = map { $all_dists->[rand @$all_dists] } 1..$num;
+}
+elsif( $opts{author} ) {
+    my $backpan = Parse::BACKPAN::Packages->new();
     @dists = $backpan->distributions_by($opts{author});
 }
 else {
     my $backpan = Parse::BACKPAN::Packages->new();
-
-    # Filter out some garbage the backpan indexer picks up
-    @dists = grep !/^[\d._\-]+(\.U)?$/, @{$backpan->distributions};
+    @dists = @{$backpan->distributions};
 }
+
+# Filter out some garbage the backpan indexer picks up
+@dists = grep !/^[\d._\-]+(\.U)?$/, @dists;
 
 my %backpan_init_opts;
 $backpan_init_opts{"--backpan"} = $opts{backpan} if $opts{backpan};
@@ -50,28 +59,33 @@ for my $dist (@dists) {
     # made into a dist called empty string.
     next if $dist =~ /^-[\d.]+$/;
 
-    if( does_repo_exist("gitpan", $dist) ) {
-        print "Repo already exists on github, skipping\n";
-        next;
+    if( $opts{github} ) {
+        if( does_repo_exist("gitpan", $dist) ) {
+            print "Repo already exists on github, skipping\n";
+            next;
+        }
     }
 
     system "git", "backpan-init" => $dist, %backpan_init_opts, "--mkdir";
 
     local $CWD = $dist;
 
-    system "git", "gc";
-    github_action("create_repo", {
-        login           => $opts{login},
-        token           => $opts{token},
-        name            => $dist,
-        description     => "Release history of $dist",
-        homepage        => "http://search.cpan.org/dist/$dist/",
-        public          => 1,
-    });
-    system "git", "remote", "add", "origin", "git\@github-gitpan:gitpan/$dist.git";
-    system "git", "push", "origin", "master";
-    system "git", "push", "origin", "--tags";
     system "rm .git/hooks/*.sample";
+    system "git", "gc";
+
+    if( $opts{github} ) {
+        github_action("create_repo", {
+            login           => $opts{login},
+            token           => $opts{token},
+            name            => $dist,
+            description     => "Release history of $dist",
+            homepage        => "http://search.cpan.org/dist/$dist/",
+            public          => 1,
+        });
+        system "git", "remote", "add", "origin", "git\@github-gitpan:gitpan/$dist.git";
+        system "git", "push", "origin", "master";
+        system "git", "push", "origin", "--tags";
+    }
 }
 
 
