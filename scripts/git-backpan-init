@@ -57,6 +57,8 @@ my @dists = $backpan->distributions($module)
             "Are you sure you spelled the module name correctly?\n";
 
 foreach my $dist ( @dists ) {
+     next if $dist->filename =~ m{\.ppm\b};  # skip .ppm files
+
      say "importing " . $dist->distvname;
      my $url  = $opt{backpan};
      $url .= "/" unless $url =~ m{/$};
