@@ -23,61 +23,13 @@ GetOptions( \%opt,
     'backpan=s',
 ) or pod2usage( "for a list of all valid options, do 'git backpan-init --help'" );
 
-my $module = shift or pod2usage( 'module name required' );
+my $distribution = shift or pod2usage( 'distribution name required' );
 
-# Backpan takes its modules with a '-', not '::'s
-$module =~ s/::/-/g;
-
-$opt{backpan} ||= 'http://backpan.perl.org/';
-
-if ( defined $opt{mkdir} ) {
-    ( my $dirname = $opt{mkdir} || $module ) =~ s/::/-/g;
-    say "creating directory $dirname";
-    mkpath $dirname;
-    chdir $dirname;
-}
-
-if ( -d '.git' ) {
-    unless ( $opt{force} ) {
-        die "Aborting: git repository already present.\n",
-            "use '-force' if it's really what you want to do\n";
-    }
-}
-else {
-    Git::command_noisy('init');
-}
-
-my $repo = Git->repository;
-
-say "opening backpan index";
-my $backpan = Parse::BACKPAN::Packages->new;
-
-my @dists = $backpan->distributions($module)
-    or die "Error: no distributions found. ",
-            "Are you sure you spelled the module name correctly?\n";
-
-foreach my $dist ( @dists ) {
-     next if $dist->filename =~ m{\.ppm\b};  # skip .ppm files
-
-     say "importing " . $dist->distvname;
-     my $url  = $opt{backpan};
-     $url .= "/" unless $url =~ m{/$};
-     $url .= $dist->prefix;
-
-     eval {
-         Git::CPAN::Patch::Import::main(
-             $url,
-             {
-                 backpan          => 1,
-                 checkversion     => 0,
-                 backpan_obj      => $backpan,
-             }
-         );
-     };
-     warn "couldn't import $dist" if $@;
-}
-
-$repo->command_noisy('checkout', '-t', '-b', 'master', 'cpan/master');
+Git::CPAN::Patch::Import::import_from_backpan(
+    $distribution,
+    \%opt
+);
+  
 
 __END__
 
