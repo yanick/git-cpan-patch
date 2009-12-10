@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Git::CPAN::Import;
+use Git::CPAN::Patch::Import;
 
 use Getopt::Long;
 use Pod::Usage;
@@ -30,7 +30,7 @@ if ( @ARGV ) {
     $module = shift;
 }
 
-Git::CPAN::Import::main( $module, \%opt );
+Git::CPAN::Patch::Import::main( $module, \%opt );
 
 
 __END__

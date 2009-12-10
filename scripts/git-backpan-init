@@ -6,7 +6,7 @@ use warnings;
 use autodie;
 
 use Git;
-use Git::CPAN::Import;
+use Git::CPAN::Patch::Import;
 use Pod::Usage;
 use Parse::BACKPAN::Packages;
 use Getopt::Long;
@@ -65,7 +65,7 @@ foreach my $dist ( @dists ) {
      $url .= $dist->prefix;
 
      eval {
-         Git::CPAN::Import::main(
+         Git::CPAN::Patch::Import::main(
              $url,
              {
                  backpan          => 1,

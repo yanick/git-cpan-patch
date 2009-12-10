@@ -1,4 +1,4 @@
-package Git::CPAN::Import;
+package Git::CPAN::Patch::Import;
 
 use strict;
 use warnings;
@@ -172,8 +172,8 @@ sub main {
         $out->print( join ' ', ( $last_version ? "import" : "initial import of" ), "$name $version from CPAN\n" );
         $out->print( <<"END" );
 
-git-cpan-module: $name
-git-cpan-version: $version
+git-cpan-module:   $name
+git-cpan-version:  $version
 git-cpan-authorid: @{[ $author_obj->cpanid ]}
 
 END
@@ -205,11 +205,11 @@ __END__
 
 =head1 NAME
 
-Git::CPAN::Import - The meat of git-cpan-import
+Git::CPAN::Patch::Import - The meat of git-cpan-import
 
 =head1 DESCRIPTION
 
-This is the guts of Git::CPAN::Import moved here to make it callable
+This is the guts of Git::CPAN::Patch::Import moved here to make it callable
 as a function so git-backpan-init goes faster.
 
 =cut

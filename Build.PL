@@ -14,6 +14,7 @@ my $builder = Module::Build->new(
         'Pod::Usage'               => 0,
         'CPANPLUS'                 => '0.84',
         'File::chdir'              => 0,
+        'File::Path'               => 0,
     },
     script_files => [
         map "scripts/$_"  => 'git-backpan-init',
