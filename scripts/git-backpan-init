@@ -6,9 +6,11 @@ use warnings;
 use autodie;
 
 use Git;
+use Git::CPAN::Patch::Import;
 use Pod::Usage;
 use Parse::BACKPAN::Packages;
 use Getopt::Long;
+use File::Path;
 
 sub say (@) { print @_, "\n" }
 
@@ -17,51 +19,17 @@ GetOptions( \%opt,
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
     'mkdir:s', 
-    'force!'
+    'force!',
+    'backpan=s',
 ) or pod2usage( "for a list of all valid options, do 'git backpan-init --help'" );
 
-my $module = shift or pod2usage( 'module name required' );
+my $distribution = shift or pod2usage( 'distribution name required' );
 
-# Backpan takes its modules with a '-', not '::'s
-$module =~ s/::/-/g;
-
-if ( defined $opt{mkdir} ) {
-    ( my $dirname = $opt{mkdir} || lc $module ) =~ s/::/-/g;
-    say "creating directory $dirname";
-    mkdir $dirname;
-    chdir $dirname;
-}
-
-if ( -d '.git' ) {
-    unless ( $opt{force} ) {
-        die "Aborting: git repository already present.\n",
-            "use '-force' if it's really what you want to do\n";
-    }
-}
-else {
-    Git::command_noisy('init');
-}
-
-my $repo = Git->repository;
-
-say "opening backpan index";
-my $backpan = Parse::BACKPAN::Packages->new;
-
-my @dists = $backpan->distributions($module)
-    or die "Error: no distributions found. ",
-            "Are you sure you spelled the module name correctly?\n";
-
-foreach my $dist ( @dists ) {
-     say "importing " . $dist->distvname;
-     my $url  = 'http://backpan.perl.org/' . $dist->prefix;
-
-     eval {
-        $repo->command_noisy('cpan-import', '--backpan', '--nocheckversion', $url);
-     };
-     warn "couldn't import $dist" if $@;
-}
-
-$repo->command_noisy('checkout', '-t', '-b', 'master', 'cpan/master');
+Git::CPAN::Patch::Import::import_from_backpan(
+    $distribution,
+    \%opt
+);
+  
 
 __END__
 
@@ -74,7 +42,8 @@ from the backpan.
 
 =head1 SYNOPSIS
 
-    git backpan-init [ --help | --man ] [ --mkdir <directory> ] [ --force ] Foo::Bar
+    git backpan-init [ --help | --man ] [ --mkdir <directory> ]
+                     [ --force ] [ --backpan <url> ] Module::Name
 
 =head1 DESCRIPTION
 
@@ -96,6 +65,10 @@ is found to be already present in the directory.
 Creates a sub-directory and create the git repository there instead 
 than in the current directory.  If no directory name is given,
 figures one out based on the name of the module.
+
+=item --backpan I<url>
+
+URL to BackPAN.  If none is given L<http://backpan.perl.org/> will be used.
 
 =item --force, -f
 
