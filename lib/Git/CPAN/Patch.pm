@@ -100,7 +100,7 @@ Report the managed module
 
 =head1 VERSION
 
-This document describes Git::CPAN::Patch version 0.2.1
+This document describes Git::CPAN::Patch version 0.3.0
 
 =head1 BUGS AND LIMITATIONS
 
