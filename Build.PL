@@ -10,13 +10,14 @@ my $builder = Module::Build->new(
     requires    => {
         'Module::Build'            => 0,
         'autodie'                  => 0,
-        'Parse::BACKPAN::Packages' => 0,
+        'Parse::BACKPAN::Packages' => '0.36',
         'Pod::Usage'               => 0,
         'CPANPLUS'                 => '0.84',
         'File::chdir'              => 0,
         'File::Path'               => 0,
         'File::chmod'              => 0,
         'CLASS'                    => 0,
+        'File::Temp'                => '0.22',
     },
     script_files => [
         map "scripts/$_"  => 'git-backpan-init',
