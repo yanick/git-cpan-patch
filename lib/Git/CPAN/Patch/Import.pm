@@ -3,6 +3,8 @@ package Git::CPAN::Patch::Import;
 use strict;
 use warnings;
 
+use 5.010;
+
 use autodie;
 
 use Archive::Extract;
@@ -24,11 +26,9 @@ use CLASS;
 use CPANPLUS;
 use Parse::BACKPAN::Packages;
 
-our $VERSION = '0.3.0';
+our $VERSION = '0.3.1';
 
 our $BackPAN_URL = "http://backpan.perl.org/";
-
-sub say (@) { print @_, "\n" }
 
 sub backpan_index {
     state $backpan = do {
@@ -204,17 +204,16 @@ END
 
 
 sub import_from_backpan {
-    my $dist = shift;
-    my $opts = shift;
+    my ( $dist, $opts ) = @_;
 
     $dist =~ s/::/-/g;
 
-    my $repo_dir = init_repo($dist, $opts);
+    my $repo_dir = $opts->{init_repo} ? init_repo($dist, $opts) : $CWD;
 
     local $CWD = $repo_dir;
 
     my $backpan = $CLASS->backpan_index;
-    my @releases = $backpan->releases($dist)
+    my @releases = $backpan->distributions($dist)
       or die "Error: no distributions found. ",
              "Are you sure you spelled the module name correctly?\n";
 
@@ -251,6 +250,10 @@ sub import_from_backpan {
 sub main {
     my $module = shift;
     my $opts   = shift;
+
+    if ( delete $opts->{backpan} ) {
+        return import_from_backpan( $module, $opts );
+    }
 
     my $full_hist;
 
@@ -445,7 +448,7 @@ as a function so git-backpan-init goes faster.
 
 =head1 VERSION
 
-This document describes Git::CPAN::Patch::Import version 0.3.0
+This document describes Git::CPAN::Patch::Import version 0.3.1
 
 =cut
 

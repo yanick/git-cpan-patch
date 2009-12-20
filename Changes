@@ -1,5 +1,11 @@
 Revision history for Git::CPAN::Patch
 
+0.3.1 Sun Dec 20 2009
+    * Getting git cpan-import --backpan to work again
+    * Adding dependencies for Parse::BACKPAN::Packages,
+        File::Temp, CLASS and File::chmod
+    * Adding a 'use 5.010'
+
 0.3.0 (aka Here Comes the Schwern) Sun Dec 20 2009
     * Temporary directory are removed after used. Thanks to
         Slaven Rezic.

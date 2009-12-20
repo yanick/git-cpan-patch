@@ -106,7 +106,7 @@ More than one '--parent' can be specified.
 
 =head1 VERSION
 
-This document describes git-cpan-import version 0.3.0
+This document describes git-cpan-import version 0.3.1
 
 =head1 BUGS AND LIMITATIONS
 
