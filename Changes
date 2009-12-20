@@ -1,6 +1,6 @@
 Revision history for Git::CPAN::Patch
 
-0.3.0 (aka Here Comes the Schwern) 
+0.3.0 (aka Here Comes the Schwern) Sun Dec 20 2009
     * Temporary directory are removed after used. Thanks to
         Slaven Rezic.
     * git-backpan-init, --mkdir make full directory paths.
