@@ -17,7 +17,7 @@ my $builder = Module::Build->new(
         'File::Path'               => 0,
         'File::chmod'              => 0,
         'CLASS'                    => 0,
-        'File::Tmp'                => '0.22',
+        'File::Temp'                => '0.22',
     },
     script_files => [
         map "scripts/$_"  => 'git-backpan-init',
