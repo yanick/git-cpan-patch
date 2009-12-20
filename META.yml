@@ -1,6 +1,6 @@
 ---
 name: Git-CPAN-Patch
-version: 0.2.1
+version: 0.3.1
 author:
   - 'Yanick Champoux <yanick@cpan.org>'
 abstract: Patch CPAN modules using Git
@@ -10,16 +10,23 @@ resources:
   license: http://dev.perl.org/licenses/
   repository: git://github.com/yanick/git-cpan-patch.git
 requires:
+  CLASS: 0
   CPANPLUS: 0.84
+  File::Path: 0
+  File::Temp: 0.22
   File::chdir: 0
+  File::chmod: 0
   Module::Build: 0
-  Parse::BACKPAN::Packages: 0
+  Parse::BACKPAN::Packages: 0.36
   Pod::Usage: 0
   autodie: 0
 provides:
   Git::CPAN::Patch:
     file: lib/Git/CPAN/Patch.pm
-    version: 0.2.1
+    version: 0.3.1
+  Git::CPAN::Patch::Import:
+    file: lib/Git/CPAN/Patch/Import.pm
+    version: 0.3.1
 generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

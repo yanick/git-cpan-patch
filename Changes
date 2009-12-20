@@ -1,5 +1,47 @@
 Revision history for Git::CPAN::Patch
 
+0.3.1 Sun Dec 20 2009
+    * Getting git cpan-import --backpan to work again
+    * Adding dependencies for Parse::BACKPAN::Packages,
+        File::Temp, CLASS and File::chmod
+    * Adding a 'use 5.010'
+
+0.3.0 (aka Here Comes the Schwern) Sun Dec 20 2009
+    * Temporary directory are removed after used. Thanks to
+        Slaven Rezic.
+    * git-backpan-init, --mkdir make full directory paths.
+        Thanks to Schwern.
+    * git-backpan-init, add a --backpan option to supply your 
+        own backpan URL. Thanks to Schwern.
+    * Guts of git-cpan-import moved to Git::CPAN::Patch::Import.
+        Thanks to Schwern.
+    * git-cpan-* just install themselves as regular scripts instead
+        of hunting the git directory, as git will pull commands from
+        anyway in the PATH. Thanks to Schwern.
+    * Distributions no longer lower cased. Thanks to Schwern.
+    * Date bug fixed. Thanks to Schwern.
+    * Adding File::Path to the dependencies.
+    * Include the CPAN id of the author in the commit log.
+        Thanks to Schwern.
+    * PPM files are now skipped. Thanks to Schwern.
+    * Skip perl distributions. Thanks to Schwern.
+    * Have Archive::Extract prefer binary programs for performance.
+        Thanks to Schwern.
+    * Overwrite existing version tags if there's two releases with 
+        the same versions. Thanks to Schwern.
+    * Some archives have broken permissions.  Fix them after extraction.
+        Thanks to Schwern.
+    * Record the file we imported from in the commit message.
+        Thanks to Schwern.
+    * Use File::chmod instead of shell chmod to avoid shell quoting problems.
+        Thanks to Schwern.
+    * Don't try to tag releases with no versions.  Thanks to Schwern.
+    * Tag .1 as 0.1.  git doesn't like a tag named .1
+        Thanks to Schwern.
+    * Skip empty tarballs.  Thanks to Schwern.
+    * Skip bad archives.  Thanks to Schwern.
+    
+
 0.2.1   Thur Sept 3 2009
     * git-cpan-import is working with new version of Git. 
         Thanks to Alexandr Ciornii. (rt#48713)

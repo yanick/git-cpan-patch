@@ -47,7 +47,7 @@ This command prints the name of the module tracked in C<cpan/master>.
 
 =head1 VERSION
 
-This document describes git-cpan-which version 0.2.1
+This document describes git-cpan-which version 0.3.1
 
 =head1 BUGS AND LIMITATIONS
 
