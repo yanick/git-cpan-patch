@@ -15,6 +15,8 @@ my $builder = Module::Build->new(
         'CPANPLUS'                 => '0.84',
         'File::chdir'              => 0,
         'File::Path'               => 0,
+        'File::chmod'              => 0,
+        'CLASS'                    => 0,
     },
     script_files => [
         map "scripts/$_"  => 'git-backpan-init',
