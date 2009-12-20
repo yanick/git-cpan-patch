@@ -48,7 +48,7 @@ checks out the code in the C<master> branch.
 
 =head1 VERSION
 
-This document describes git-cpan-init version 0.2.1
+This document describes git-cpan-init version 0.3.0
 
 =head1 BUGS AND LIMITATIONS
 
