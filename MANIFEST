@@ -17,3 +17,4 @@ scripts/git-cpan-update
 scripts/git-cpan-which
 t/00-load.t
 xt/perlcritic-progressive.t
+lib/Git/CPAN/Patch/Import.pm
