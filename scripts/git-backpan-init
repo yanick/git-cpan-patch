@@ -8,7 +8,6 @@ use autodie;
 use Git;
 use Git::CPAN::Patch::Import;
 use Pod::Usage;
-use Parse::BACKPAN::Packages;
 use Getopt::Long;
 use File::Path;
 
