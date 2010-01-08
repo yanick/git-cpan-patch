@@ -3,7 +3,7 @@ package Git::CPAN::Patch;
 use strict;
 use warnings;
 
-our $VERSION = 'devel';
+our $VERSION = '0.0_0';
 
 __END__
 
