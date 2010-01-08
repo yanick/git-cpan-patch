@@ -35,7 +35,7 @@ my $builder = Module::Build->new(
               'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Git-CPAN-Patch',
         },
     },
-    create_makefile_pl => 'passthrough',
+    create_makefile_pl => 'small',
 );
 
 $builder->create_build_script();
