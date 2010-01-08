@@ -122,6 +122,12 @@ sub import_one_backpan_release {
     my $opts         = shift;
     my $backpan_urls = $opts->{backpan} || $BackPAN_URL;
 
+    # on windows, some Git.pm have been reported to
+    # be command_bidi_pipe-less 
+    # rt46715
+    die "your Git.pm doesn't have a command_bidi_pipe()"
+        unless defined &Git::command_bidi_pipe;
+
     my $repo = Git->repository;
 
     my( $last_commit, $last_version );
@@ -198,6 +204,7 @@ sub import_one_backpan_release {
     $ENV{GIT_AUTHOR_EMAIL} ||= $author->email;
 
     my @parents = grep { $_ } $last_commit;
+
 
     # FIXME $repo->command_bidi_pipe is broken
     my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
