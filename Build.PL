@@ -9,7 +9,6 @@ my $builder = Module::Build->new(
     dist_author => 'Yanick Champoux <yanick@cpan.org>',
     requires    => {
         perl                       => '5.010',
-        'Module::Build'            => 0,
         'autodie'                  => 0,
         'BackPAN::Index'           => 0,
         'Pod::Usage'               => 0,
@@ -19,6 +18,9 @@ my $builder = Module::Build->new(
         'File::chmod'              => 0,
         'CLASS'                    => 0,
         'File::Temp'                => '0.22',
+    },
+    configure_requires => {
+        'Module::Build'            => 0,
     },
     script_files => [
         map "scripts/$_"  => 'git-backpan-init',
