@@ -19,7 +19,10 @@ my %Dists_To_Skip = map { $_ => 1 } qw(
     parrot-cfg
 );
 
-my %opts;
+# Defaults
+my %opts = (
+    update      => 1,
+);
 GetOptions(
     \%opts,
     "backpan:s",
@@ -32,6 +35,8 @@ GetOptions(
     "sort!",
     "repodir=s",
     "tempdir=s",
+    "update",
+    "since=s"
 );
 
 my @dists;
@@ -41,20 +46,30 @@ if( @ARGV ) {
 else {
     my $backpan = Git::CPAN::Patch::Import->backpan_index;
 
+    my $dists = $backpan->dists;
+
+    if( $opts{since} ) {
+        $dists = $dists->search( latest_date => \">= $opts{since}" );
+    }
+
     if( $opts{random} ) {
         my $num = $opts{random};
 
-        my $all_dists = $backpan->distributions;
-        @dists = map { $all_dists->[rand @$all_dists] } 1..$num;
+        $dists = $dists->search( undef, { order_by => \'random()', rows => $num } );
     }
-    elsif( $opts{author} ) {
-        @dists = $backpan->distributions_by($opts{author});
+    elsif( $opts{sort} ) {
+        $dists = $dists->search( undef, { order_by => 'name' } );
     }
-    elsif( $opts{pattern} ) {
-        @dists = grep /$opts{pattern}/, @{$backpan->distributions};
+
+    if( $opts{author} ) {
+        $dists = $dists->search({ "releases.cpanid" => $opts{author} },
+                                { join => "releases", distinct => 1 });
     }
-    else {
-        @dists = @{$backpan->distributions};
+
+    @dists = $dists->all;
+
+    if( $opts{pattern} ) {
+        @dists = grep /$opts{pattern}/, @dists;
     }
 }
 
@@ -64,8 +79,11 @@ else {
 @dists = sort { lc $a cmp lc $b } @dists if $opts{sort};
 
 my %backpan_init_opts;
-$backpan_init_opts{"backpan"} = $opts{backpan} if $opts{backpan};
+$backpan_init_opts{"backpan"} = [split /,/, $opts{backpan}] if $opts{backpan};
 $backpan_init_opts{"tempdir"} = $opts{tempdir} if $opts{tempdir};
+$backpan_init_opts{"update"}  = $opts{update};
+
+say "Looking at @{[ scalar @dists ]} dists";
 
 local $CWD = $opts{repodir} if defined $opts{repodir};
 for my $dist (@dists) {
@@ -77,7 +95,7 @@ for my $dist (@dists) {
     next if $dist =~ /^-[\d.]+$/;
 
     if( $opts{github} ) {
-        if( does_repo_exist("gitpan", $dist) ) {
+        if( !$opts{update} and does_repo_exist("gitpan", $dist) ) {
             print "$dist already exists on github, skipping\n";
             next;
         }
@@ -99,16 +117,24 @@ for my $dist (@dists) {
     system "git", "gc";
 
     if( $opts{github} ) {
-        my $response = github_action("create_repo", {
-            login           => $opts{login},
-            token           => $opts{token},
-            name            => $dist,
-            description     => "Release history of $dist",
-            homepage        => "http://search.cpan.org/dist/$dist/",
-            public          => 1,
-        });
-        my $repo = $response->{repository}{name};
+        my $repo = "$dist";
+        if( !$opts{update} or !does_repo_exist_on_github($opts{login}, $dist) ) {
+            my $response = github_action("create_repo", {
+                login           => $opts{login},
+                token           => $opts{token},
+                name            => $dist,
+                description     => "Release history of $dist",
+                homepage        => "http://search.cpan.org/dist/$dist/",
+                public          => 1,
+            });
+
+            $repo = $response->{repository}{name};
+        }
+
+        # Sometimes we re-clone from gitpan and so the origin is wrong
+        system "git", "remote", "rm", "origin";
         system "git", "remote", "add", "origin", "git\@github-gitpan:gitpan/$repo.git";
+
         # sometimes github doesn't have the repo ready immediately after create_repo
         # returns, so if push fails try it again.
         do_with_back_off(6, sub {
@@ -194,6 +220,13 @@ sub does_repo_exist {
     # This is far faster than asking github about every one
     return 1 if -e "$repo/.git/refs/remotes/origin/";
 
+    return does_repo_exist_on_github($user, $repo);
+}
+
+sub does_repo_exist_on_github {
+    my $user = shift;
+    my $repo = shift;
+
     my $response = github_action("repo_info", {
         user    => $user,
         name    => $repo
@@ -278,6 +311,14 @@ Pick all distributions matching the given pattern.
 
 Sort the distributions before processing
 
+=head3 --since
+
+Pick only distributions which have changed since the given time.
+
+Time is given in Unix epoch time.
+
+    gitpan --since=1200000000
+
 
 =head2 Github
 
@@ -294,25 +335,39 @@ Your github login name, only necessary if --github is set.
 
 Your github API token, only necessary if --github is set.
 
+
 =head2 BackPAN
 
 =head3 --backpan
 
-URL to BackPAN.
+A comma seperated list of URLs to BackPAN.  Handy to have a URL to a
+local mirror for fast retrieval and one to a remote mirror for
+completeness.
+
+For example
+
+    --backpan=file:///var/local/backpan,http://backpan.perl.org
 
 Defaults to http://backpan.perl.org/
 
 =head2 Building
 
-=head3 tempdir
+=head3 --tempdir
 
 The temporary directory gitpan uses.
 
 Defaults to whatever L<File::Temp> does.
 
-=head3 repodir
+=head3 --repodir
 
 Where gitpan will look for and place local copies of the repositories.
+
+=head3 --update
+
+Whether or not to update existing repositories.
+
+Defaults to true.
+
 
 =head1 EXAMPLE
 
