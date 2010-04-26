@@ -8,6 +8,7 @@ my $builder = Module::Build->new(
     license     => 'perl',
     dist_author => 'Yanick Champoux <yanick@cpan.org>',
     requires    => {
+        perl                       => '5.010',
         'Module::Build'            => 0,
         'autodie'                  => 0,
         'BackPAN::Index'           => 0,
