@@ -25,7 +25,7 @@ use CLASS;
 use CPANPLUS;
 use BackPAN::Index;
 
-our $VERSION = '0.3.1';
+our $VERSION = '0.3.2';
 
 our $BackPAN_URL = "http://backpan.perl.org/";
 
@@ -542,7 +542,7 @@ as a function so git-backpan-init goes faster.
 
 =head1 VERSION
 
-This document describes Git::CPAN::Patch::Import version 0.3.1
+This document describes Git::CPAN::Patch::Import version 0.3.2
 
 =cut
 

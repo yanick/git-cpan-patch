@@ -93,7 +93,7 @@ Most of the time, you want to use I<git backpan-init> like this:
 
 =head1 VERSION
 
-This document describes git-backpan-init version 0.3.1
+This document describes git-backpan-init version 0.3.2
 
 =head1 BUGS AND LIMITATIONS
 
