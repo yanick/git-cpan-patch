@@ -1,5 +1,13 @@
 Revision history for Git::CPAN::Patch
 
+0.3.2 Sun Apr 25, 2010
+    * Explicitly requires perl 5.10. (rt-54368, reported by Jesse Vincent)
+    * Preventive dying if we don't see the body_* functions. (rt-46715,
+        reported by Alexandr Ciornii)
+    * Moved Module::Build to 'configure_requires'. (rt-44925, reported by
+        Jesse Vincent)
+    * create_makefile_pl now set to small
+
 0.3.1 Sun Dec 20 2009
     * Getting git cpan-import --backpan to work again
     * Adding dependencies for Parse::BACKPAN::Packages,

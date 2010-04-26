@@ -8,9 +8,9 @@ my $builder = Module::Build->new(
     license     => 'perl',
     dist_author => 'Yanick Champoux <yanick@cpan.org>',
     requires    => {
-        'Module::Build'            => 0,
+        perl                       => '5.010',
         'autodie'                  => 0,
-        'Parse::BACKPAN::Packages' => '0.36',
+        'BackPAN::Index'           => '0.39',
         'Pod::Usage'               => 0,
         'CPANPLUS'                 => '0.84',
         'File::chdir'              => 0,
@@ -18,6 +18,9 @@ my $builder = Module::Build->new(
         'File::chmod'              => 0,
         'CLASS'                    => 0,
         'File::Temp'                => '0.22',
+    },
+    configure_requires => {
+        'Module::Build'            => 0,
     },
     script_files => [
         map "scripts/$_"  => 'git-backpan-init',
@@ -35,7 +38,7 @@ my $builder = Module::Build->new(
               'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Git-CPAN-Patch',
         },
     },
-    create_makefile_pl => 'passthrough',
+    create_makefile_pl => 'small',
 );
 
 $builder->create_build_script();
