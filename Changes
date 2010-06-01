@@ -1,5 +1,7 @@
 Revision history for Git::CPAN::Patch
 
+{{$NEXT}}
+
 0.1.6   Tue May 12 2009
     * git-backpan-init doesn't choke on non-monotone version
         numbers anymore (rt bug 45994)

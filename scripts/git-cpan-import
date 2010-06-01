@@ -111,10 +111,6 @@ More than one '--parent' can be specified.
 
 =back
 
-=head1 VERSION
-
-This document describes git-cpan-import version devel
-
 =head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to
