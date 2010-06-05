@@ -3,6 +3,8 @@ package Git::CPAN::Patch;
 use strict;
 use warnings;
 
+'end of module Git::CPAN::Patch';
+
 __END__
 
 =pod
