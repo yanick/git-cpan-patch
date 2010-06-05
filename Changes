@@ -1,6 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+
+0.4.0     2010-06-05 18:54:32 America/Montreal
     * Fix git-cpan-which so that it doesn't return a leading space. Thanks
         to Tim Bunce. (rt-58001)
     * Check at install time if Git.pm (and thus Git) is present.
