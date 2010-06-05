@@ -6,5 +6,5 @@ blib
 META.yml
 *.swp
 Makefile.PL
-Git-CPAN-Patch-*.tar.gz
 gitpan-build
+Git-CPAN-Patch-*
