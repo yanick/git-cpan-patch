@@ -37,6 +37,10 @@ __END__
 
 git-cpan-init - Create a git repository for a CPAN module
 
+=head1 VERSION
+
+version 0.4.0
+
 =head1 SYNOPSIS
 
     git cpan-init [ --help | --man ] [ --backpan ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ]
@@ -45,10 +49,6 @@ git-cpan-init - Create a git repository for a CPAN module
 
 This command creates a new git repository, calls C<git-cpan-import> and then
 checks out the code in the C<master> branch.
-
-=head1 VERSION
-
-This document describes git-cpan-init version 0.3.2
 
 =head1 BUGS AND LIMITATIONS
 

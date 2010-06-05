@@ -29,6 +29,10 @@ __END__
 
 =head1 NAME
 
+
+=head1 VERSION
+
+version 0.4.0
 git-cpan-format-patch - Format patches using C<cpan/master> as the origin
 reference
 
@@ -39,10 +43,6 @@ reference
 =head1 DESCRIPTION
 
 This is just like running C<git format-patch cpan/master>.
-
-=head1 VERSION
-
-This document describes git-cpan-format-patch version 0.3.2
 
 =head1 BUGS AND LIMITATIONS
 

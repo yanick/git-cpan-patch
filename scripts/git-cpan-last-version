@@ -37,6 +37,10 @@ __END__
 
 git-cpan-last-version - Report the last imported version
 
+=head1 VERSION
+
+version 0.4.0
+
 =head1 SYNOPSIS
 
     % git cpan-last-version
@@ -46,10 +50,6 @@ git-cpan-last-version - Report the last imported version
 This command searches through the history of the C<cpan/master> reference for
 the last imported version.
 
-
-=head1 VERSION
-
-This document describes git-cpan-last-version version 0.3.2
 
 =head1 BUGS AND LIMITATIONS
 

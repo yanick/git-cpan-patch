@@ -1,4 +1,7 @@
 package Git::CPAN::Patch::Import;
+BEGIN {
+  $Git::CPAN::Patch::Import::VERSION = '0.4.0';
+}
 
 use strict;
 use warnings;
@@ -24,8 +27,6 @@ use CLASS;
 
 use CPANPLUS;
 use BackPAN::Index;
-
-our $VERSION = '0.3.2';
 
 our $BackPAN_URL = "http://backpan.perl.org/";
 
@@ -346,6 +347,8 @@ sub main {
     my $module = shift;
     my $opts   = shift;
 
+    return import_from_gitpan( $module, $opts ) if $opts->{gitpan};
+
     if ( delete $opts->{backpan} ) {
         return import_from_backpan( $module, $opts );
     }
@@ -527,6 +530,37 @@ END
     }
 }
 
+sub import_from_gitpan {
+    my ( $module, $opts ) = @_;
+
+    die "Usage: git cpan-import --gitpan Foo::Bar\n" unless $module;
+
+    my $cpan = CPANPLUS::Backend->new;
+    my $module_obj = $cpan->parse_module( module => $module )
+      or die "no such module $module\n";
+
+    my $dist = $module_obj->name;
+    $dist =~ s/::/-/g;
+
+    my $repo = Git->repository;
+    my $url  = "git://github.com/gitpan/${dist}.git";
+
+    unless ( "gitpan\n" ~~ $repo->command('remote') ) {
+
+        # no gitpan remote? create it!
+
+        # but first, does it exist?
+
+        die "no repo found at $url\n"
+          unless eval { $repo->command( 'ls-remote', $url ) };
+
+        $repo->command_noisy( 'remote', 'add', 'gitpan', $url );
+    }
+
+    $repo->command_noisy(qw/ fetch gitpan /);
+
+}
+
 1;
 
 __END__
@@ -535,14 +569,15 @@ __END__
 
 Git::CPAN::Patch::Import - The meat of git-cpan-import
 
+=head1 VERSION
+
+version 0.4.0
+
 =head1 DESCRIPTION
 
 This is the guts of Git::CPAN::Patch::Import moved here to make it callable
 as a function so git-backpan-init goes faster.
 
-=head1 VERSION
-
-This document describes Git::CPAN::Patch::Import version 0.3.2
-
 =cut
 
+1;
