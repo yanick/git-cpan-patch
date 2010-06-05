@@ -50,10 +50,6 @@ This command runs C<git cpan-import>, and then if C<cpan/master> was updated
 runs C<git rebase cpan/master>, bringing your patches up to date with the
 upstream.
 
-=head1 VERSION
-
-This document describes git-cpan-update version devel
-
 =head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to

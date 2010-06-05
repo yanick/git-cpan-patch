@@ -91,10 +91,6 @@ Most of the time, you want to use I<git backpan-init> like this:
     % cd ~/work/
     % git backpan-init -mkdir Foo::Bar
 
-=head1 VERSION
-
-This document describes git-backpan-init version devel
-
 =head1 BUGS AND LIMITATIONS
 
 When importing a package history with git-backpan-init, version

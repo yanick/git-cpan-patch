@@ -47,10 +47,6 @@ This command searches through the history of the C<cpan/master> reference for
 the last imported version.
 
 
-=head1 VERSION
-
-This document describes git-cpan-last-version version devel
-
 =head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to

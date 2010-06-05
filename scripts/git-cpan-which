@@ -45,10 +45,6 @@ git-cpan-last-version - Report the managed module
 
 This command prints the name of the module tracked in C<cpan/master>.
 
-=head1 VERSION
-
-This document describes git-cpan-which version devel
-
 =head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to

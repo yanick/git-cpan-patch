@@ -3,8 +3,6 @@ package Git::CPAN::Patch;
 use strict;
 use warnings;
 
-our $VERSION = '0.0_0';
-
 __END__
 
 =pod
@@ -96,11 +94,6 @@ Report the managed module
 
 =back
 
-
-
-=head1 VERSION
-
-This document describes Git::CPAN::Patch version devel
 
 =head1 BUGS AND LIMITATIONS
 
