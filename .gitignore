@@ -8,3 +8,4 @@ META.yml
 Makefile.PL
 gitpan-build
 Git-CPAN-Patch-*
+MYMETA.yml
