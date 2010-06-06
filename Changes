@@ -1,6 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+
+0.4.2     2010-06-06 18:25:41 America/Montreal
     * Return to the format vx.y.z to keep the CPAN indexer happy. Bleh.
 
 0.4.1     2010-06-06 17:48:56 America/Montreal
