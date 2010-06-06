@@ -1,5 +1,8 @@
 Revision history for Git::CPAN::Patch
 
+0.4.1     2010-06-06 17:48:56 America/Montreal
+    * Fix the META.yml so that the version is correct.
+
 0.4.0     2010-06-05 18:54:32 America/Montreal
     * Fix git-cpan-which so that it doesn't return a leading space. Thanks
         to Tim Bunce. (rt-58001)

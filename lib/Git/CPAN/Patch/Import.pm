@@ -1,6 +1,6 @@
 package Git::CPAN::Patch::Import;
 BEGIN {
-  $Git::CPAN::Patch::Import::VERSION = '0.4.0';
+  $Git::CPAN::Patch::Import::VERSION = '0.4.1';
 }
 
 use strict;
@@ -571,7 +571,7 @@ Git::CPAN::Patch::Import - The meat of git-cpan-import
 
 =head1 VERSION
 
-version 0.4.0
+version 0.4.1
 
 =head1 DESCRIPTION
 
