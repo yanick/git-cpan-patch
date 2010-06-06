@@ -3,7 +3,6 @@ Build
 *.bak
 _build
 blib
-META.yml
 *.swp
 Makefile.PL
 gitpan-build

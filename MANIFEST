@@ -3,7 +3,6 @@ Changes
 LICENSE
 MANIFEST
 META.yml
-MYMETA.yml
 Makefile.PL
 README
 lib/Git/CPAN/Patch.pm
