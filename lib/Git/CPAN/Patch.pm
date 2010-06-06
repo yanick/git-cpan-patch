@@ -1,6 +1,6 @@
 package Git::CPAN::Patch;
 BEGIN {
-  $Git::CPAN::Patch::VERSION = '0.4.2';
+  $Git::CPAN::Patch::VERSION = '0.4.3';
 }
 
 use strict;
@@ -18,7 +18,7 @@ Git::CPAN::Patch - Patch CPAN modules using Git
 
 =head1 VERSION
 
-version 0.4.2
+version 0.4.3
 
 =head1 SYNOPSIS
 
