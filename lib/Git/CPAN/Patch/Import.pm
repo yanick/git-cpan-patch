@@ -273,7 +273,8 @@ sub import_from_backpan {
 
     $distname =~ s/::/-/g;
 
-    my $repo_dir = $opts->{init_repo} ? init_repo($distname, $opts) : $CWD;
+    # handle --mkdir and raise an error if the target directory has already been git-initialized
+    my $repo_dir = init_repo($distname, $opts);
 
     local $CWD = $repo_dir;
 
