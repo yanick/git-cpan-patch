@@ -122,6 +122,9 @@ sub import_one_backpan_release {
     my $opts         = shift;
     my $backpan_urls = $opts->{backpan} || $BackPAN_URL;
 
+    # allow multiple backpan URLs to be supplied
+    $backpan_urls = [ $backpan_urls ] unless (ref($backpan_urls) eq 'ARRAY');
+
     # on windows, some Git.pm have been reported to
     # be command_bidi_pipe-less 
     # rt46715
