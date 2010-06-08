@@ -1,6 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+
+0.4.4     2010-06-07 21:03:35 America/Montreal
     * Small doc fix for git-backpan-init. Thanks to chocolateboy.
     * Fix "Can't use string as an ARRAY ref" error introduced in 0.3.2. 
         Thanks to chocolateboy.
