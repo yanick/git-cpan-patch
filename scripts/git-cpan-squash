@@ -43,7 +43,7 @@ git-cpan-squash - Combine multiple commits into one patch
 
 =head1 VERSION
 
-version 0.4.3
+version 0.4.4
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Git::CPAN::Patch::Import;
 BEGIN {
-  $Git::CPAN::Patch::Import::VERSION = '0.4.3';
+  $Git::CPAN::Patch::Import::VERSION = '0.4.4';
 }
 
 use strict;
@@ -124,6 +124,9 @@ sub import_one_backpan_release {
     my $release      = shift;
     my $opts         = shift;
     my $backpan_urls = $opts->{backpan} || $BackPAN_URL;
+
+    # allow multiple backpan URLs to be supplied
+    $backpan_urls = [ $backpan_urls ] unless (ref($backpan_urls) eq 'ARRAY');
 
     # on windows, some Git.pm have been reported to
     # be command_bidi_pipe-less 
@@ -273,7 +276,8 @@ sub import_from_backpan {
 
     $distname =~ s/::/-/g;
 
-    my $repo_dir = $opts->{init_repo} ? init_repo($distname, $opts) : $CWD;
+    # handle --mkdir and raise an error if the target directory has already been git-initialized
+    my $repo_dir = init_repo($distname, $opts);
 
     local $CWD = $repo_dir;
 
@@ -571,7 +575,7 @@ Git::CPAN::Patch::Import - The meat of git-cpan-import
 
 =head1 VERSION
 
-version 0.4.3
+version 0.4.4
 
 =head1 DESCRIPTION
 
