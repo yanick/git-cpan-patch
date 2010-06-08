@@ -37,6 +37,10 @@ __END__
 
 =head1 NAME
 
+
+=head1 VERSION
+
+version 0.4.0
 git-cpan-update - Import the latest version of a module and rebase the current
 branch
 
@@ -49,10 +53,6 @@ branch
 This command runs C<git cpan-import>, and then if C<cpan/master> was updated
 runs C<git rebase cpan/master>, bringing your patches up to date with the
 upstream.
-
-=head1 VERSION
-
-This document describes git-cpan-update version 0.3.2
 
 =head1 BUGS AND LIMITATIONS
 

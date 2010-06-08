@@ -16,6 +16,7 @@ GetOptions( \%opt,
     'backpan!', 
     'checkversion!',
     'parent:s@',
+    'gitpan!',
 ) 
     or pod2usage( 
         "for a list of all valid options, do 'git cpan-import --help'" 
@@ -40,6 +41,10 @@ __END__
 =head1 NAME
 
 git-cpan-import - Import a module into a git repository
+
+=head1 VERSION
+
+version 0.4.0
 
 =head1 SYNOPSIS
 
@@ -80,6 +85,12 @@ you have pending work.
 
 Enables Backpan index fetching (to get the author and release date).
 
+=item --gitpan
+
+Imports the distribution's gitpan repository 
+under the remote branch I<gitpan>.  Subsequent calls with this option are
+equivalent to a simple C<git fetch gitpan>.
+
 =item --checkversion, --nocheckversion
 
 Explicitly enables/disables version checking.  If version checking is
@@ -104,10 +115,6 @@ More than one '--parent' can be specified.
 
 =back
 
-=head1 VERSION
-
-This document describes git-cpan-import version 0.3.2
-
 =head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to
@@ -128,5 +135,7 @@ modify it under the same terms as Perl itself. See L<perlartistic>.
 =head1 SEE ALSO
 
 L<Git::CPAN::Patch>
+
+The gitpan GitHub account at L<http://github.com/gitpan>.
 
 =cut

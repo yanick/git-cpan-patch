@@ -1,0 +1,13 @@
+---
+abstract: 'Patch CPAN modules using Git'
+author:
+  - 'Yanick Champoux <yanick@cpan.org>'
+build_requires: {}
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 3.101510, CPAN::Meta::Converter version 2.101461'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Git-CPAN-Patch
+version: 0.4.0

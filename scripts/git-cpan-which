@@ -24,7 +24,7 @@ my $last_commit = $repo->command_oneline('rev-parse', '--verify', 'cpan/master')
 
 my $last = join "\n", $repo->command( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
-$last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version:\ (.*?) \s*$/sx
+$last =~ /git-cpan-module: \s+ (.*?) \s+ git-cpan-version: \s+ (.*?) \s*$/sx
     or die "Couldn't parse message:\n$last\n";
 
 say $1;
@@ -37,6 +37,10 @@ __END__
 
 git-cpan-last-version - Report the managed module
 
+=head1 VERSION
+
+version 0.4.0
+
 =head1 SYNOPSIS
 
     % git cpan-which
@@ -44,10 +48,6 @@ git-cpan-last-version - Report the managed module
 =head1 DESCRIPTION
 
 This command prints the name of the module tracked in C<cpan/master>.
-
-=head1 VERSION
-
-This document describes git-cpan-which version 0.3.2
 
 =head1 BUGS AND LIMITATIONS
 

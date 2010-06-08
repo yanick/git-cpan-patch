@@ -42,6 +42,10 @@ __END__
 
 git-cpan-sendpatch - create patch files and submit them to RT
 
+=head1 VERSION
+
+version 0.4.0
+
 =head1 SYNOPSIS
 
     % git cpan-sendpatch
@@ -53,4 +57,3 @@ runs C<git cpan-send-email>.
 
 Multiple patches are not sent because C<git send-email> creates a separate
 message for each patch file, resulting in multiple tickets.
-

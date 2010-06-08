@@ -1,9 +1,12 @@
 package Git::CPAN::Patch;
+BEGIN {
+  $Git::CPAN::Patch::VERSION = '0.4.0';
+}
 
 use strict;
 use warnings;
 
-our $VERSION = '0.3.2';
+'end of module Git::CPAN::Patch';
 
 __END__
 
@@ -12,6 +15,10 @@ __END__
 =head1 NAME
 
 Git::CPAN::Patch - Patch CPAN modules using Git
+
+=head1 VERSION
+
+version 0.4.0
 
 =head1 SYNOPSIS
 
@@ -97,11 +104,6 @@ Report the managed module
 =back
 
 
-
-=head1 VERSION
-
-This document describes Git::CPAN::Patch version 0.3.2
-
 =head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to
@@ -180,5 +182,3 @@ to clone:
 
 
 =cut
-
-

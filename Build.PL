@@ -3,6 +3,15 @@ use warnings;
 
 use Module::Build;
 
+unless ( eval "use Git; 1" ) {
+    print "\t!!!!!!!!!! WARNING: 'Git.pm' not found. !!!!!!!!!!\n",
+        "\tIt seems that you don't have Git installed on your system.\n",
+        "\tGit::CPAN::Patch will not be able to work without it.\n";
+
+        # prevent the smokers to test and send a report for nothing
+        exit 0 if $ENV{AUTOMATED_TESTING};
+}
+
 my $builder = Module::Build->new(
     module_name => 'Git::CPAN::Patch',
     license     => 'perl',
