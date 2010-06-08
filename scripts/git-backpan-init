@@ -36,6 +36,10 @@ __END__
 
 =head1 NAME
 
+
+=head1 VERSION
+
+version 0.4.2
 git-backpan-init - Initialize a repository for a CPAN module with full history
 from the backpan.
 
