@@ -37,6 +37,10 @@ __END__
 
 =head1 NAME
 
+
+=head1 VERSION
+
+version 0.4.1
 git-cpan-update - Import the latest version of a module and rebase the current
 branch
 

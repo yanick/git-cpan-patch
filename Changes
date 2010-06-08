@@ -1,7 +1,5 @@
 Revision history for Git::CPAN::Patch
 
-{{$NEXT}}
-
 0.4.1     2010-06-06 17:48:56 America/Montreal
     * Fix the META.yml so that the version is correct.
 

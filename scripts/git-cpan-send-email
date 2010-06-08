@@ -39,6 +39,10 @@ __END__
 
 git-cpan-send-email - use C<git-send-email> to submit patches to CPAN RT
 
+=head1 VERSION
+
+version 0.4.1
+
 =head1 SYNOPSIS
 
     % git cpan-send-email
