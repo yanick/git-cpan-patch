@@ -1,4 +1,7 @@
 package Git::CPAN::Patch;
+BEGIN {
+  $Git::CPAN::Patch::VERSION = '0.4.3';
+}
 
 use strict;
 use warnings;
@@ -12,6 +15,10 @@ __END__
 =head1 NAME
 
 Git::CPAN::Patch - Patch CPAN modules using Git
+
+=head1 VERSION
+
+version 0.4.3
 
 =head1 SYNOPSIS
 
@@ -175,5 +182,3 @@ to clone:
 
 
 =cut
-
-
