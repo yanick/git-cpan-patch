@@ -44,7 +44,7 @@ git-cpan-sendpatch - create patch files and submit them to RT
 
 =head1 VERSION
 
-version 0.4.3
+version 0.4.4
 
 =head1 SYNOPSIS
 

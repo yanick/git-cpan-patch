@@ -1,6 +1,14 @@
 Revision history for Git::CPAN::Patch
 
+0.4.4     2010-06-07 21:03:35 America/Montreal
+    * Small doc fix for git-backpan-init. Thanks to chocolateboy.
+    * Fix "Can't use string as an ARRAY ref" error introduced in 0.3.2. 
+        Thanks to chocolateboy.
+    * Fix repo initialization as per the documentation. 
+        Thanks to chocolateboy.
+
 0.4.3     2010-06-06 18:45:02 America/Montreal
+    * Still have troubles with the version number and the indexer.
 
 0.4.2     2010-06-06 18:25:41 America/Montreal
     * Return to the format vx.y.z to keep the CPAN indexer happy. Bleh.
