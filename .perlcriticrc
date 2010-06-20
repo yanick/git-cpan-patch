@@ -1,0 +1,11 @@
+severity  = brutal
+
+[-Miscellanea::RequireRcsKeywords]
+
+[-ControlStructures::ProhibitUnlessBlocks]
+
+add_themes=pulp,tics
+
+
+
+

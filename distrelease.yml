@@ -1,0 +1,23 @@
+checks:
+    - SaneVersion
+    - VCS::WorkingDirClean
+    - Manifest
+actions:
+    - GenerateDistribution
+    - CPANUpload
+    - VCS::Tag
+    - Github
+distversion:
+    code: |
+        use File::Find::Rule;
+
+        my $module_pattern = [ 
+            qr/\$VERSION\s*=\s*'(.*?)';/,
+            qr/This document(?:ation)? (?:refers to|describes) \S+ version (\S*)/ 
+        ];
+
+        ( 
+            README => qr/Dist-Release version (\S+)/,
+            map { $_ => $module_pattern }  File::Find::Rule->file->name('*.pm')->in('lib'),
+                                           File::Find::Rule->file->name('git-*')->in('scripts'),
+        );

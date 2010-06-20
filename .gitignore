@@ -1,0 +1,10 @@
+Makefile
+Build
+*.bak
+_build
+blib
+*.swp
+Makefile.PL
+gitpan-build
+Git-CPAN-Patch-*
+MYMETA.yml

@@ -37,6 +37,10 @@ __END__
 
 git-cpan-init - Create a git repository for a CPAN module
 
+=head1 VERSION
+
+version 0.4.4
+
 =head1 SYNOPSIS
 
     git cpan-init [ --help | --man ] [ --backpan ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ]
