@@ -95,6 +95,13 @@ enabled, which is the default, git-cpan-import will refuse to import a
 version of the package
 that has a smaller version number than the HEAD of the branch I<cpan/master>.
 
+=item --force
+
+Force an import into an existing repository. This can be used to import a renamed distribution e.g.
+
+    $ git cpan-import --backpan Old::Name
+    $ git cpan-import --force --backpan New::Name
+
 =item --parent
 
 Allows adding extra parents when
@@ -105,14 +112,10 @@ the CPAN history and the user's local history.
 For example, this will set the current HEAD of the master branch as a parent of 
 the imported CPAN package:
 
-	$ git checkout master
-	$ git cpan-import --parent HEAD My-Module
+    $ git checkout master
+    $ git cpan-import --parent HEAD My-Module
 
 More than one '--parent' can be specified.
-
-=item --force
-
-Force an import into an existing repository.
 
 =back
 
