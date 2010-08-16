@@ -1,8 +1,9 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
-
-0.4.4     2010-06-20 15:30:52 America/Montreal
+0.4.5
+    * fix --force documentation/error message/support for git-cpan-import.
+        Thanks to chocolateboy.
 
 0.4.4     2010-06-07 21:03:35 America/Montreal
     * Small doc fix for git-backpan-init. Thanks to chocolateboy.
