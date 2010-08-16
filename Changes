@@ -1,7 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
-0.4.5
+
+0.4.5     2010-08-16 19:30:23 America/Montreal
     * fix --force documentation/error message/support for git-cpan-import.
         Thanks to chocolateboy.
 
