@@ -17,6 +17,7 @@ GetOptions( \%opt,
     'checkversion!',
     'parent:s@',
     'gitpan!',
+    'force!',
 ) 
     or pod2usage( 
         "for a list of all valid options, do 'git cpan-import --help'" 
@@ -108,6 +109,10 @@ the imported CPAN package:
 	$ git cpan-import --parent HEAD My-Module
 
 More than one '--parent' can be specified.
+
+=item --force
+
+Force an import into an existing repository.
 
 =back
 

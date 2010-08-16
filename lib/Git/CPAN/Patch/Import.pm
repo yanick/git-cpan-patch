@@ -75,7 +75,7 @@ sub init_repo {
         if ( -d '.git' ) {
             if ( !$opts->{force} and !$opts->{update} ) {
                 die "Aborting: git repository already present.\n",
-                    "use '-force' if it's really what you want to do\n";
+                    "use '--force' if it's really what you want to do\n";
             }
         }
         else {
