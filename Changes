@@ -1,5 +1,9 @@
 Revision history for Git::CPAN::Patch
 
+0.4.5     2010-08-16 19:30:23 America/Montreal
+    * fix --force documentation/error message/support for git-cpan-import.
+        Thanks to chocolateboy.
+
 0.4.4     2010-06-07 21:03:35 America/Montreal
     * Small doc fix for git-backpan-init. Thanks to chocolateboy.
     * Fix "Can't use string as an ARRAY ref" error introduced in 0.3.2. 

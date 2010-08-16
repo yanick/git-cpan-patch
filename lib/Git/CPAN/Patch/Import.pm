@@ -1,6 +1,6 @@
 package Git::CPAN::Patch::Import;
 BEGIN {
-  $Git::CPAN::Patch::Import::VERSION = '0.4.4';
+  $Git::CPAN::Patch::Import::VERSION = '0.4.5';
 }
 
 use strict;
@@ -78,7 +78,7 @@ sub init_repo {
         if ( -d '.git' ) {
             if ( !$opts->{force} and !$opts->{update} ) {
                 die "Aborting: git repository already present.\n",
-                    "use '-force' if it's really what you want to do\n";
+                    "use '--force' if it's really what you want to do\n";
             }
         }
         else {
@@ -575,7 +575,7 @@ Git::CPAN::Patch::Import - The meat of git-cpan-import
 
 =head1 VERSION
 
-version 0.4.4
+version 0.4.5
 
 =head1 DESCRIPTION
 
