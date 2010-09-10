@@ -1,6 +1,7 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+    * move 'File::chmod' before 'autodie' to hush the warnings. (RT#61034)
 
 0.4.5     2010-08-16 19:30:23 America/Montreal
     * fix --force documentation/error message/support for git-cpan-import.

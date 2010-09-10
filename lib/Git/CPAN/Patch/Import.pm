@@ -5,12 +5,13 @@ use warnings;
 
 use 5.010;
 
+use File::chmod;  # must be before 'autodie' to hush the warnings
+
 use autodie;
 
 use Archive::Extract;
 $Archive::Extract::PREFER_BIN = 1;
 
-use File::chmod;
 use File::Find;
 use File::Basename;
 use File::Spec::Functions;
