@@ -1,6 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+
+0.4.6     2010-10-11 21:34:18 America/Montreal
     * move 'File::chmod' before 'autodie' to hush the warnings. (RT#61034)
 
 0.4.5     2010-08-16 19:30:23 America/Montreal
