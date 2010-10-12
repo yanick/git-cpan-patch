@@ -1,6 +1,6 @@
 package Git::CPAN::Patch::Import;
 BEGIN {
-  $Git::CPAN::Patch::Import::VERSION = '0.4.5';
+  $Git::CPAN::Patch::Import::VERSION = '0.4.6';
 }
 
 use strict;
@@ -8,12 +8,13 @@ use warnings;
 
 use 5.010;
 
+use File::chmod;  # must be before 'autodie' to hush the warnings
+
 use autodie;
 
 use Archive::Extract;
 $Archive::Extract::PREFER_BIN = 1;
 
-use File::chmod;
 use File::Find;
 use File::Basename;
 use File::Spec::Functions;
@@ -575,7 +576,7 @@ Git::CPAN::Patch::Import - The meat of git-cpan-import
 
 =head1 VERSION
 
-version 0.4.5
+version 0.4.6
 
 =head1 DESCRIPTION
 
