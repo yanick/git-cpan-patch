@@ -32,7 +32,7 @@ __END__
 
 =head1 VERSION
 
-version 0.4.5
+version 0.4.6
 git-cpan-format-patch - Format patches using C<cpan/master> as the origin
 reference
 
