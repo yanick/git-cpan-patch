@@ -457,7 +457,11 @@ sub main {
                 my $href = $module_obj->_parse_checksums_file( file => $checksums );
                 return $href->{$dist}{mtime};
             };
-
+			
+			# CPAN::Checksums makes YYYY-MM-DD dates, but GIT_AUTHOR_DATE
+			# doesn't support that. It does support YYYY.MM.DD though.
+			$mtime =~ s/\A (\d\d\d\d) - (\d\d?) - (\d\d?) \z/./x;
+			
             warn $@ if $@;
 
             if ( $mtime ) {
