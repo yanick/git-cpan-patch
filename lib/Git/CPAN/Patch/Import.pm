@@ -321,6 +321,7 @@ sub import_from_backpan {
 
     my $repo = Git->repository;
     if( !rev_exists("master") ) {
+    print STDERR "Line 324: about to checkout\n";
         $repo->command_noisy('checkout', '-t', '-b', 'master', 'cpan/master');
     }
     else {
@@ -458,6 +459,12 @@ sub main {
                 return $href->{$dist}{mtime};
             };
 
+            # CPAN::Checksums makes YYYY-MM-DD dates, but GIT_AUTHOR_DATE
+            # doesn't support that. It does support YYYY.MM.DD though.
+            if( $mtime =~ m/\A (\d\d\d\d) - (\d\d?) - (\d\d?) \z/x ) {
+                $mtime = "${mtime}T00:00::00";
+            }
+
             warn $@ if $@;
 
             if ( $mtime ) {
@@ -517,7 +524,7 @@ END
         close $out;
         open $out, '<', \my $buf;
 
-        chomp(my $commit = <$in>);
+        chomp(my $commit = <$in> || '');
 
         Git::command_close_bidi_pipe($pid, $in, $out, $ctx);
 
