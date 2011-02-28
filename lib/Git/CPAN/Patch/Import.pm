@@ -321,6 +321,7 @@ sub import_from_backpan {
 
     my $repo = Git->repository;
     if( !rev_exists("master") ) {
+    print STDERR "Line 324: about to checkout\n";
         $repo->command_noisy('checkout', '-t', '-b', 'master', 'cpan/master');
     }
     else {
@@ -439,7 +440,7 @@ sub main {
 
 
 
-    # reate a commit for the imported tree object and write it into
+    # create a commit for the imported tree object and write it into
     # refs/heads/cpan/master
 
     {
@@ -459,6 +460,11 @@ sub main {
             };
 
             warn $@ if $@;
+
+            # CPAN::Checksums makes YYYY-MM-DD dates, but GIT_AUTHOR_DATE
+            # doesn't support that. 
+            $mtime .= 'T00:00::00' 
+                if $mtime =~ m/\A (\d\d\d\d) - (\d\d?) - (\d\d?) \z/x;
 
             if ( $mtime ) {
                 $ENV{GIT_AUTHOR_DATE} = $mtime;
@@ -517,7 +523,7 @@ END
         close $out;
         open $out, '<', \my $buf;
 
-        chomp(my $commit = <$in>);
+        chomp(my $commit = <$in> || '');
 
         Git::command_close_bidi_pipe($pid, $in, $out, $ctx);
 
