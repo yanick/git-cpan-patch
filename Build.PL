@@ -19,6 +19,7 @@ my $builder = Module::Build->new(
         'CLASS'                    => 0,
         'File::Temp'               => '0.22',
         'Git'                      => '1.007004',
+        'Git::Repository'          => '1.17',
     },
     configure_requires => {
         'Module::Build'            => 0,
