@@ -5,7 +5,7 @@ use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 use Pod::Usage;
 use Getopt::Long;
 
@@ -21,13 +21,13 @@ GetOptions( \%opt,
 
 my $module = $ARGV[0] || die("Usage: git cpan-init Foo::Bar\n");
 
-Git::command_noisy("init");
+Git::Repository->run("init");
 
-my $repo = Git->repository;
+my $repo = Git::Repository->new;
 
-$repo->command_noisy("cpan-import", @orig_args);
+print $repo->run("cpan-import", @orig_args);
 
-$repo->command_noisy("checkout", "-f", "-t", "-b", "master", "cpan/master");
+print $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
 
 __END__
 

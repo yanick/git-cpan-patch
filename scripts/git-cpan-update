@@ -5,7 +5,7 @@ use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 
 
 use Pod::Usage;
@@ -20,15 +20,15 @@ GetOptions( \%opt,
 ) or pod2usage( "for a list of all valid options, do 'git cpan-update --help'" );
 
 
-my $repo = Git->repository;
+my $repo = Git::Repository->new;
 
-my $last_import = $repo->command_oneline('rev-parse', '--verify', 'cpan/master');
+my $last_import = $repo->run('rev-parse', '--verify', 'cpan/master');
 
-$repo->command_noisy('cpan-import', @ARGV);
+print $repo->run('cpan-import', @ARGV);
 
-my $updated = $repo->command_oneline('rev-parse', '-q', '--verify', 'cpan/master');
+my $updated = $repo->run('rev-parse', '-q', '--verify', 'cpan/master');
 
-$repo->command_noisy('rebase', 'cpan/master') 
+print $repo->run('rebase', 'cpan/master') 
     unless $last_import eq $updated;
 
 __END__

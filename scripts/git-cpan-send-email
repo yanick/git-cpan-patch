@@ -5,7 +5,7 @@ use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 use CPANPLUS;
 
 use Pod::Usage;
@@ -20,9 +20,9 @@ GetOptions( \%opt,
 ) or pod2usage( "for a list of all valid options, do 'git cpan-send-email --help'" );
 
 
-my $repo = Git->repository;
+my $repo = Git::Repository->new;
 
-my $module = $repo->command_oneline("cpan-which");
+my $module = $repo->run("cpan-which");
 
 my $cpan = CPANPLUS::Backend->new;
 my $module_obj = $cpan->parse_module( module => $module ) or die("No such module $module");

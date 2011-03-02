@@ -5,7 +5,7 @@ use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 
 use Getopt::Long;
 use Pod::Usage;
@@ -21,7 +21,7 @@ GetOptions( \%opt,
         "for a list of all valid options, do 'git cpan-format-patch --help'" 
     );
 
-Git->repository->command_noisy('format-patch', 'cpan/master');
+print Git::Repository->new->run('format-patch', 'cpan/master');
 
 __END__
 

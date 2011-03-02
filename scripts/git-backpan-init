@@ -5,7 +5,6 @@ use warnings;
 
 use autodie;
 
-use Git;
 use Git::CPAN::Patch::Import;
 use Pod::Usage;
 use Getopt::Long;
