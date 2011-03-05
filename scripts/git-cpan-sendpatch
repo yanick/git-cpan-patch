@@ -1,11 +1,13 @@
 #!perl
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 
 use Pod::Usage;
 use Getopt::Long;
@@ -19,9 +21,9 @@ GetOptions( \%opt,
 ) or pod2usage( "for a list of all valid options, do 'git cpan-sendpatch --help'" );
 
 
-my $repo = Git->repository;
+my $repo = Git::Repository->new;
 
-my @patches = $repo->command( 'cpan-format-patch' );
+my @patches = $repo->run( 'cpan-format-patch' );
 
 if ( @patches > 1 ) {
     say "Refusing to send more than one patch (each patch email will be in its own RT ticket).";
@@ -32,7 +34,7 @@ if ( @patches > 1 ) {
     exit 1;
 }
 
-$repo->command_noisy( "cpan-send-email", @ARGV, @patches );
+say for $repo->run( "cpan-send-email", @ARGV, @patches );
 
 __END__
 
@@ -44,7 +46,7 @@ git-cpan-sendpatch - create patch files and submit them to RT
 
 =head1 VERSION
 
-version 0.4.6
+version 0.5.0
 
 =head1 SYNOPSIS
 

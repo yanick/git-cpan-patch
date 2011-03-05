@@ -1,14 +1,18 @@
 package Git::CPAN::Patch::Import;
 BEGIN {
-  $Git::CPAN::Patch::Import::VERSION = '0.4.6';
+  $Git::CPAN::Patch::Import::VERSION = '0.5.0';
 }
+
+use 5.10.0;
 
 use strict;
 use warnings;
 
+{ 
+    no warnings;
 use 5.010;
 
-use File::chmod;  # must be before 'autodie' to hush the warnings
+use File::chmod ();  # must be before 'autodie' to hush the warnings
 
 use autodie;
 
@@ -23,11 +27,12 @@ use File::Path;
 use File::chdir;
 use Cwd qw/ getcwd /;
 use version;
-use Git;
+use Git::Repository;
 use CLASS;
 
 use CPANPLUS;
 use BackPAN::Index;
+}
 
 our $BackPAN_URL = "http://backpan.perl.org/";
 
@@ -48,9 +53,9 @@ sub cpanplus {
 sub _fix_permissions {
     my $dir = shift;
 
-    chmod "u+rx", $dir;
+    File::chmod::chmod "u+rx", $dir;
     find(sub {
-        -d $_ ? chmod "u+rx", $_ : chmod "u+r", $_;
+        -d $_ ? File::chmod::chmod "u+rx", $_ : File::chmod::chmod "u+r", $_;
     }, $dir);
 }
 
@@ -83,7 +88,7 @@ sub init_repo {
             }
         }
         else {
-            Git::command_noisy('init');
+            Git::Repository->run('init');
         }
     }
 
@@ -92,30 +97,24 @@ sub init_repo {
 
 
 sub releases_in_git {
-    my $repo = Git->repository;
+    my $repo = Git::Repository->new;
     return unless contains_git_revisions();
     my @releases = map  { m{\bgit-cpan-version:\s*(\S+)}x; $1 }
                    grep /^\s*git-cpan-version:/,
-                     $repo->command(log => '--pretty=format:%b');
+                     $repo->run(log => '--pretty=format:%b');
     return @releases;
 }
 
 
 sub rev_exists {
     my $rev = shift;
-    my $repo = Git->repository;
+    my $repo = Git::Repository->new;
 
-    return eval {
-        git_cmd_try {
-            $repo->command(["rev-parse", $rev], {STDERR=>1});
-        } "fail"
-    };
+    return eval { $repo->run( 'rev-parse', $rev ); };
 }
 
 
 sub contains_git_revisions {
-    my $repo = Git->repository;
-
     return unless -d ".git";
     return rev_exists("HEAD");
 }
@@ -129,19 +128,13 @@ sub import_one_backpan_release {
     # allow multiple backpan URLs to be supplied
     $backpan_urls = [ $backpan_urls ] unless (ref($backpan_urls) eq 'ARRAY');
 
-    # on windows, some Git.pm have been reported to
-    # be command_bidi_pipe-less 
-    # rt46715
-    die "your Git.pm doesn't have a command_bidi_pipe()"
-        unless defined &Git::command_bidi_pipe;
-
-    my $repo = Git->repository;
+    my $repo = Git::Repository->new;
 
     my( $last_commit, $last_version );
 
     # figure out if there is already an imported module
-    if ( $last_commit = eval { $repo->command_oneline("rev-parse", "-q", "--verify", "cpan/master") } ) {
-        $last_version = $repo->command_oneline("cpan-last-version");
+    if ( $last_commit = eval { $repo->run("rev-parse", "-q", "--verify", "cpan/master") } ) {
+        $last_version = $repo->run("cpan-last-version");
     }
 
     my $tmp_dir = File::Temp->newdir(
@@ -195,10 +188,10 @@ sub import_one_backpan_release {
 
         local $CWD = $dir;
 
-        my $write_tree_repo = Git->repository;
+        my $write_tree_repo = Git::Repository->new( work_tree => $dir ) ;
 
-        $write_tree_repo->command_noisy( qw(add -v --force .) );
-        $write_tree_repo->command_oneline( "write-tree" );
+        $write_tree_repo->run( qw(add -v --force .) );
+        $write_tree_repo->run( "write-tree" );
     };
 
     # Create a commit for the imported tree object and write it into
@@ -213,17 +206,11 @@ sub import_one_backpan_release {
     my @parents = grep { $_ } $last_commit;
 
 
-    # FIXME $repo->command_bidi_pipe is broken
-    my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
-        "commit-tree", $tree,
-        map { ( -p => $_ ) } @parents,
-    );
-
     # commit message
     my $name    = $release->dist;
     my $version = $release->version || '';
-    $out->print( join ' ', ( $last_version ? "import" : "initial import of" ), "$name $version from CPAN\n" );
-    $out->print( <<"END" );
+    my $message = join ' ', ( $last_version ? "import" : "initial import of"), "$name $version from CPAN\n";
+    $message .= <<"END";
 
 git-cpan-module:   $name
 git-cpan-version:  $version
@@ -232,28 +219,21 @@ git-cpan-file:     @{[ $release->prefix ]}
 
 END
 
-    # we need to send an EOF to git in order for it to actually finalize the commit
-    # this kludge makes command_close_bidi_pipe not barf
-    close $out;
-    open $out, '<', \my $buf;
-
-    chomp(my $commit = <$in>);
-
-    Git::command_close_bidi_pipe($pid, $in, $out, $ctx);
-
+    my $commit = $repo->run( { input => $message }, 'commit-tree', $tree,
+           map { ( -p => $_ ) } @parents );
 
     # finally, update the fake branch and create a tag for convenience
     my $dist = $release->dist;
-    $repo->command_noisy('update-ref', '-m' => "import $dist", 'refs/heads/cpan/master', $commit );
+    print $repo->run('update-ref', '-m' => "import $dist", 'refs/heads/cpan/master', $commit );
 
     if( $version ) {
         my $tag = $version;
         $tag =~ s{^\.}{0.};  # git does not like a leading . as a tag name
         $tag =~ s{\.$}{};    # nor a trailing one
-        if( $repo->command( "tag", "-l" => $tag ) ) {
+        if( $repo->run( "tag", "-l" => $tag ) ) {
             say "Tag $tag already exists, overwriting";
         }
-        $repo->command_noisy( "tag", "-f" => $tag, $commit );
+        print $repo->run( "tag", "-f" => $tag, $commit );
         say "created tag '$tag' ($commit)";
     }
 }
@@ -322,13 +302,13 @@ sub import_from_backpan {
         }
     }
 
-    my $repo = Git->repository;
+    my $repo = Git::Repository->new;
     if( !rev_exists("master") ) {
-        $repo->command_noisy('checkout', '-t', '-b', 'master', 'cpan/master');
+        print $repo->run('checkout', '-t', '-b', 'master', 'cpan/master');
     }
     else {
-        $repo->command_noisy('checkout', 'master', '.');
-        $repo->command_noisy('merge', 'cpan/master');
+        print $repo->run('checkout', 'master', '.'),
+        $repo->run('merge', 'cpan/master');
     }
 
     return $repo_dir;
@@ -336,14 +316,14 @@ sub import_from_backpan {
 
 
 sub fixup_repository {
-    my $repo = Git->repository;
+    my $repo = Git::Repository->new;
 
     return unless -d ".git";
 
     # We do our work in cpan/master, it might not exist if this
     # repo was cloned from gitpan.
     if( !rev_exists("cpan/master") and rev_exists("master") ) {
-        $repo->command_noisy('branch', '-t', 'cpan/master', 'master');
+        print $repo->run('branch', '-t', 'cpan/master', 'master');
     }
 }
 
@@ -360,14 +340,14 @@ sub main {
 
     my $full_hist;
 
-    my $repo = Git->repository;
+    my $repo = Git::Repository->new;
 
     my ( $last_commit, $last_version );
 
     # figure out if there is already an imported module
-    if ( $last_commit = eval { $repo->command_oneline("rev-parse", "-q", "--verify", "cpan/master") } ) {
-        $module     ||= $repo->command_oneline("cpan-which");
-        $last_version = $repo->command_oneline("cpan-last-version");
+    if ( $last_commit = eval { $repo->run("rev-parse", "-q", "--verify", "cpan/master") } ) {
+        $module     ||= $repo->run("cpan-which");
+        $last_version = $repo->run("cpan-last-version");
     }
 
     die("Usage: git cpan-import Foo::Bar\n") unless $module;
@@ -432,17 +412,14 @@ sub main {
 
         local $CWD = $dir;
 
-        my $write_tree_repo = Git->repository;
+        my $write_tree_repo = Git::Repository->new( work_tree => $dir );
 
-        $write_tree_repo->command_noisy( qw(add -v --force .) );
-        $write_tree_repo->command_oneline( "write-tree" );
+        $write_tree_repo->run( qw(add -v --force .) );
+        $write_tree_repo->run( "write-tree" );
     };
 
 
-
-
-
-    # reate a commit for the imported tree object and write it into
+    # create a commit for the imported tree object and write it into
     # refs/heads/cpan/master
 
     {
@@ -462,6 +439,11 @@ sub main {
             };
 
             warn $@ if $@;
+
+            # CPAN::Checksums makes YYYY-MM-DD dates, but GIT_AUTHOR_DATE
+            # doesn't support that. 
+            $mtime .= 'T00:00::00' 
+                if $mtime =~ m/\A (\d\d\d\d) - (\d\d?) - (\d\d?) \z/x;
 
             if ( $mtime ) {
                 $ENV{GIT_AUTHOR_DATE} = $mtime;
@@ -498,15 +480,10 @@ sub main {
 
         my @parents = ( grep { $_ } $last_commit, @{ $opts->{parent} || [] } );
 
-        # FIXME $repo->command_bidi_pipe is broken
-        my ( $pid, $in, $out, $ctx ) = Git::command_bidi_pipe(
-            "commit-tree", $tree,
-            map { ( -p => $_ ) } @parents,
-        );
-
-        # commit message
-        $out->print( join ' ', ( $last_version ? "import" : "initial import of" ), "$name $version from CPAN\n" );
-        $out->print( <<"END" );
+        my $message = join ' ', 
+            ( $last_version ? "import" : "initial import of" ), 
+            "$name $version from CPAN\n";
+        $message .= <<"END";
 
 git-cpan-module:   $name
 git-cpan-version:  $version
@@ -514,22 +491,15 @@ git-cpan-authorid: @{[ $author_obj->cpanid ]}
 
 END
 
-
-        # we need to send an EOF to git in order for it to actually finalize the commit
-        # this kludge makes command_close_bidi_pipe not barf
-        close $out;
-        open $out, '<', \my $buf;
-
-        chomp(my $commit = <$in>);
-
-        Git::command_close_bidi_pipe($pid, $in, $out, $ctx);
-
+        my $commit = $repo->run(
+            { input => $message },
+            'commit-tree', $tree, map { ( -p => $_ ) } @parents );
 
         # finally, update the fake remote branch and create a tag for convenience
 
-        $repo->command_noisy('update-ref', '-m' => "import $dist", 'refs/remotes/cpan/master', $commit );
+        print $repo->run('update-ref', '-m' => "import $dist", 'refs/remotes/cpan/master', $commit );
 
-        $repo->command_noisy( tag => $version, $commit );
+        print $repo->run( tag => $version, $commit );
 
         say "created tag '$version' ($commit)";
     }
@@ -547,22 +517,22 @@ sub import_from_gitpan {
     my $dist = $module_obj->name;
     $dist =~ s/::/-/g;
 
-    my $repo = Git->repository;
+    my $repo = Git::Repository->new;
     my $url  = "git://github.com/gitpan/${dist}.git";
 
-    unless ( "gitpan\n" ~~ $repo->command('remote') ) {
+    unless ( "gitpan\n" ~~ $repo->run('remote') ) {
 
         # no gitpan remote? create it!
 
         # but first, does it exist?
 
         die "no repo found at $url\n"
-          unless eval { $repo->command( 'ls-remote', $url ) };
+          unless eval { $repo->run( 'ls-remote', $url ) };
 
-        $repo->command_noisy( 'remote', 'add', 'gitpan', $url );
+        print $repo->run( 'remote', 'add', 'gitpan', $url );
     }
 
-    $repo->command_noisy(qw/ fetch gitpan /);
+    print $repo->run(qw/ fetch gitpan /);
 
 }
 
@@ -576,7 +546,7 @@ Git::CPAN::Patch::Import - The meat of git-cpan-import
 
 =head1 VERSION
 
-version 0.4.6
+version 0.5.0
 
 =head1 DESCRIPTION
 
