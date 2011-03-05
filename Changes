@@ -1,6 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+    * use Git::Repository instead of Git for the git interactions.
+        Thanks to brian d foy and Philippe Bruhat for the patches.
 
 0.4.6     2010-10-11 21:34:18 America/Montreal
     * move 'File::chmod' before 'autodie' to hush the warnings. (RT#61034)
