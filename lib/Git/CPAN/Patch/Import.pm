@@ -1,11 +1,15 @@
 package Git::CPAN::Patch::Import;
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
+{ 
+    no warnings;
 use 5.010;
 
-use File::chmod;  # must be before 'autodie' to hush the warnings
+use File::chmod ();  # must be before 'autodie' to hush the warnings
 
 use autodie;
 
@@ -25,6 +29,7 @@ use CLASS;
 
 use CPANPLUS;
 use BackPAN::Index;
+}
 
 our $BackPAN_URL = "http://backpan.perl.org/";
 
@@ -45,9 +50,9 @@ sub cpanplus {
 sub _fix_permissions {
     my $dir = shift;
 
-    chmod "u+rx", $dir;
+    File::chmod::chmod "u+rx", $dir;
     find(sub {
-        -d $_ ? chmod "u+rx", $_ : chmod "u+r", $_;
+        -d $_ ? File::chmod::chmod "u+rx", $_ : File::chmod::chmod "u+r", $_;
     }, $dir);
 }
 
@@ -80,7 +85,7 @@ sub init_repo {
             }
         }
         else {
-            Git::command_noisy('init');
+            Git::Repository->run('init');
         }
     }
 
@@ -89,7 +94,7 @@ sub init_repo {
 
 
 sub releases_in_git {
-    my $repo = Git::repository->new;
+    my $repo = Git::Repository->new;
     return unless contains_git_revisions();
     my @releases = map  { m{\bgit-cpan-version:\s*(\S+)}x; $1 }
                    grep /^\s*git-cpan-version:/,
@@ -100,7 +105,7 @@ sub releases_in_git {
 
 sub rev_exists {
     my $rev = shift;
-    my $repo = Git::repository->new;
+    my $repo = Git::Repository->new;
 
     return eval { $repo->run( 'rev-parse', $rev ); };
 }
@@ -120,13 +125,7 @@ sub import_one_backpan_release {
     # allow multiple backpan URLs to be supplied
     $backpan_urls = [ $backpan_urls ] unless (ref($backpan_urls) eq 'ARRAY');
 
-    # on windows, some Git.pm have been reported to
-    # be command_bidi_pipe-less 
-    # rt46715
-    die "your Git.pm doesn't have a command_bidi_pipe()"
-        unless defined &Git::command_bidi_pipe;
-
-    my $repo = Git::repository->new;
+    my $repo = Git::Repository->new;
 
     my( $last_commit, $last_version );
 
@@ -186,9 +185,9 @@ sub import_one_backpan_release {
 
         local $CWD = $dir;
 
-        my $write_tree_repo = Git::repository->new;
+        my $write_tree_repo = Git::Repository->new( work_tree => $dir ) ;
 
-        print $write_tree_repo->run( qw(add -v --force .) );
+        $write_tree_repo->run( qw(add -v --force .) );
         $write_tree_repo->run( "write-tree" );
     };
 
@@ -208,7 +207,7 @@ sub import_one_backpan_release {
     my $name    = $release->dist;
     my $version = $release->version || '';
     my $message = join ' ', ( $last_version ? "import" : "initial import of"), "$name $version from CPAN\n";
-    $message .- <<"END";
+    $message .= <<"END";
 
 git-cpan-module:   $name
 git-cpan-version:  $version
@@ -302,7 +301,6 @@ sub import_from_backpan {
 
     my $repo = Git::Repository->new;
     if( !rev_exists("master") ) {
-    print STDERR "Line 324: about to checkout\n";
         print $repo->run('checkout', '-t', '-b', 'master', 'cpan/master');
     }
     else {
@@ -411,14 +409,11 @@ sub main {
 
         local $CWD = $dir;
 
-        my $write_tree_repo = Git::Repository->new;
+        my $write_tree_repo = Git::Repository->new( work_tree => $dir );
 
-        print $write_tree_repo->run( qw(add -v --force .) );
-        print $write_tree_repo->run( "write-tree" );
+        $write_tree_repo->run( qw(add -v --force .) );
+        $write_tree_repo->run( "write-tree" );
     };
-
-
-
 
 
     # create a commit for the imported tree object and write it into
@@ -482,7 +477,9 @@ sub main {
 
         my @parents = ( grep { $_ } $last_commit, @{ $opts->{parent} || [] } );
 
-        my $message = join ' ', ( $last_version ? "import" : "initial import of" ), "$name $version from CPAN\n" );
+        my $message = join ' ', 
+            ( $last_version ? "import" : "initial import of" ), 
+            "$name $version from CPAN\n";
         $message .= <<"END";
 
 git-cpan-module:   $name
@@ -493,7 +490,7 @@ END
 
         my $commit = $repo->run(
             { input => $message },
-            'commit-tree', $tree, map { ( -p => $_ ) } @parents;
+            'commit-tree', $tree, map { ( -p => $_ ) } @parents );
 
         # finally, update the fake remote branch and create a tag for convenience
 

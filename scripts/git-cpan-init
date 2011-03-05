@@ -1,5 +1,7 @@
 #!perl
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
@@ -25,9 +27,9 @@ Git::Repository->run("init");
 
 my $repo = Git::Repository->new;
 
-print $repo->run("cpan-import", @orig_args);
+say for $repo->run("cpan-import", @orig_args);
 
-print $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
+say for $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
 
 __END__
 

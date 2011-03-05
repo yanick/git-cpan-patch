@@ -1,5 +1,7 @@
 #!perl
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
@@ -24,11 +26,11 @@ my $repo = Git::Repository->new;
 
 my $last_import = $repo->run('rev-parse', '--verify', 'cpan/master');
 
-print $repo->run('cpan-import', @ARGV);
+say for $repo->run('cpan-import', @ARGV);
 
 my $updated = $repo->run('rev-parse', '-q', '--verify', 'cpan/master');
 
-print $repo->run('rebase', 'cpan/master') 
+map { say } $repo->run('rebase', 'cpan/master') 
     unless $last_import eq $updated;
 
 __END__

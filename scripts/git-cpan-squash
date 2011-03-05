@@ -1,5 +1,7 @@
 #!perl
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
@@ -25,9 +27,9 @@ my $branch = shift || die "Usage: git cpan-squash new-branch-name\n";
 
 my $head = $repo->run("rev-parse", "--verify", "HEAD");
 
-print $repo->run("checkout", "-b", $branch, "cpan/master");
+say for $repo->run("checkout", "-b", $branch, "cpan/master");
 
-print $repo->run("merge", "--squash", $head);
+say for $repo->run("merge", "--squash", $head);
 
 say "";
 

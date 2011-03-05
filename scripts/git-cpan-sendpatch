@@ -1,5 +1,7 @@
 #!perl
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
@@ -32,7 +34,7 @@ if ( @patches > 1 ) {
     exit 1;
 }
 
-print $repo->run( "cpan-send-email", @ARGV, @patches );
+say for $repo->run( "cpan-send-email", @ARGV, @patches );
 
 __END__
 
