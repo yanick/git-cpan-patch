@@ -1,11 +1,13 @@
 #!perl
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 use Pod::Usage;
 use Getopt::Long;
 
@@ -21,13 +23,13 @@ GetOptions( \%opt,
 
 my $module = $ARGV[0] || die("Usage: git cpan-init Foo::Bar\n");
 
-Git::command_noisy("init");
+Git::Repository->run("init");
 
-my $repo = Git->repository;
+my $repo = Git::Repository->new;
 
-$repo->command_noisy("cpan-import", @orig_args);
+say for $repo->run("cpan-import", @orig_args);
 
-$repo->command_noisy("checkout", "-f", "-t", "-b", "master", "cpan/master");
+say for $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
 
 __END__
 
@@ -39,7 +41,7 @@ git-cpan-init - Create a git repository for a CPAN module
 
 =head1 VERSION
 
-version 0.4.6
+version 0.5.0
 
 =head1 SYNOPSIS
 

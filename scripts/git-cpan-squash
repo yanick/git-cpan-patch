@@ -1,11 +1,13 @@
 #!perl
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 
 use Pod::Usage;
 use Getopt::Long;
@@ -19,15 +21,15 @@ GetOptions( \%opt,
 ) or pod2usage( "for a list of all valid options, do 'git cpan-squash --help'" );
 
 
-my $repo = Git->repository;
+my $repo = Git::Repository->new;
 
 my $branch = shift || die "Usage: git cpan-squash new-branch-name\n";
 
-my $head = $repo->command_oneline("rev-parse", "--verify", "HEAD");
+my $head = $repo->run("rev-parse", "--verify", "HEAD");
 
-$repo->command_noisy("checkout", "-b", $branch, "cpan/master");
+say for $repo->run("checkout", "-b", $branch, "cpan/master");
 
-$repo->command_noisy("merge", "--squash", $head);
+say for $repo->run("merge", "--squash", $head);
 
 say "";
 
@@ -43,7 +45,7 @@ git-cpan-squash - Combine multiple commits into one patch
 
 =head1 VERSION
 
-version 0.4.6
+version 0.5.0
 
 =head1 SYNOPSIS
 

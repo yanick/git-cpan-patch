@@ -5,7 +5,7 @@ use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 use CPANPLUS;
 
 use Pod::Usage;
@@ -20,16 +20,16 @@ GetOptions( \%opt,
 ) or pod2usage( "for a list of all valid options, do 'git cpan-send-email --help'" );
 
 
-my $repo = Git->repository;
+my $repo = Git::Repository->new;
 
-my $module = $repo->command_oneline("cpan-which");
+my $module = $repo->run("cpan-which");
 
 my $cpan = CPANPLUS::Backend->new;
 my $module_obj = $cpan->parse_module( module => $module ) or die("No such module $module");
 
 my $to = 'bug-' . $module_obj->package_name . '@rt.cpan.org';
 
-$repo->command_noisy("send-email", "--to", $to, @ARGV);
+say for $repo->run("send-email", "--to", $to, @ARGV);
 
 __END__
 
@@ -41,7 +41,7 @@ git-cpan-send-email - use C<git-send-email> to submit patches to CPAN RT
 
 =head1 VERSION
 
-version 0.4.6
+version 0.5.0
 
 =head1 SYNOPSIS
 

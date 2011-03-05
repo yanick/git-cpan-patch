@@ -5,7 +5,7 @@ use warnings;
 
 use autodie;
 
-use Git;
+use Git::Repository;
 
 use Pod::Usage;
 use Getopt::Long;
@@ -18,11 +18,11 @@ GetOptions( \%opt,
     'man'  => sub { pod2usage( verbose => 2 ) },
 ) or pod2usage( "for a list of all valid options, do 'git cpan-which --help'" );
 
-my $repo = Git->repository;
+my $repo = Git::Repository->new;
 
-my $last_commit = $repo->command_oneline('rev-parse', '--verify', 'cpan/master');
+my $last_commit = $repo->run('rev-parse', '--verify', 'cpan/master');
 
-my $last = join "\n", $repo->command( log => '--pretty=format:%b', '-n', 1, $last_commit );
+my $last = join "\n", $repo->run( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
 $last =~ /git-cpan-module: \s+ (.*?) \s+ git-cpan-version: \s+ (.*?) \s*$/sx
     or die "Couldn't parse message:\n$last\n";
@@ -39,7 +39,7 @@ git-cpan-last-version - Report the managed module
 
 =head1 VERSION
 
-version 0.4.6
+version 0.5.0
 
 =head1 SYNOPSIS
 
