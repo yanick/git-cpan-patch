@@ -1,6 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+
+0.5.0     2011-03-05 12:32:08 America/Montreal
     * use Git::Repository instead of Git for the git interactions.
         Thanks to brian d foy and Philippe Bruhat for the patches.
 
