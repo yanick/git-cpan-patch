@@ -32,6 +32,7 @@ use BackPAN::Index;
 }
 
 our $BackPAN_URL = "http://backpan.perl.org/";
+our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
 
 sub backpan_index {
     state $backpan = do {
@@ -361,6 +362,13 @@ sub main {
     my $name    = $module_obj->name;
     my $version = $module_obj->version;
     my $dist    = $module_obj->package;
+
+    if ( $module_obj->package_name eq 'perl' ) {
+        say "$name is a core modules, ",
+            "clone perl from $PERL_GIT_URL instead.";
+        exit;
+    }
+
     my $dist_name = join("-", $module_obj->package_name, $module_obj->package_version);
 
     my $prettyname = $name . ( " ($module)" x ( $name ne $module ) );
