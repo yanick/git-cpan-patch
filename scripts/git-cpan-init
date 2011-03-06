@@ -41,7 +41,7 @@ git-cpan-init - Create a git repository for a CPAN module
 
 =head1 VERSION
 
-version 0.5.0
+version 0.6.0
 
 =head1 SYNOPSIS
 
