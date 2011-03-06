@@ -1,6 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+
+0.6.0     2011-03-06 10:50:56 America/Montreal
     * don't blindly import perl if the module is core, but rather
         suggest to use the Perl git repository instead.
             Thanks to Rafael Kitover for the bug report (RT#66416)
