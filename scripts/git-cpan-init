@@ -29,7 +29,7 @@ my $repo = Git::Repository->new;
 
 say for $repo->run("cpan-import", @orig_args);
 
-say for $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
+say for $repo->run("checkout", "-f", "-t", "-b", "cpan/master", "master");
 
 __END__
 
