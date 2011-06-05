@@ -37,10 +37,6 @@ __END__
 
 git-cpan-last-version - Report the managed module
 
-=head1 VERSION
-
-version 0.6.0
-
 =head1 SYNOPSIS
 
     % git cpan-which

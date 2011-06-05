@@ -1,6 +1,9 @@
 package Git::CPAN::Patch;
 BEGIN {
-  $Git::CPAN::Patch::VERSION = '0.6.0';
+  $Git::CPAN::Patch::AUTHORITY = 'cpan:yanick';
+}
+BEGIN {
+  $Git::CPAN::Patch::VERSION = '0.6.1';
 }
 
 use strict;
@@ -15,10 +18,6 @@ __END__
 =head1 NAME
 
 Git::CPAN::Patch - Patch CPAN modules using Git
-
-=head1 VERSION
-
-version 0.6.0
 
 =head1 SYNOPSIS
 
@@ -182,3 +181,5 @@ to clone:
 
 
 =cut
+
+

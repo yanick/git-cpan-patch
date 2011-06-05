@@ -1,0 +1,85 @@
+{
+   "abstract" : "Patch CPAN modules using Git",
+   "author" : [
+      "Yanick Champoux <yanick@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.102345, CPAN::Meta::Converter version 2.101590",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Git-CPAN-Patch",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Archive::Extract" : 0,
+            "BackPAN::Index" : 0,
+            "CLASS" : 0,
+            "CPANPLUS" : 0,
+            "Cwd" : 0,
+            "File::Basename" : 0,
+            "File::Find" : 0,
+            "File::Path" : 0,
+            "File::Spec::Functions" : 0,
+            "File::Temp" : 0,
+            "File::chdir" : 0,
+            "File::chmod" : 0,
+            "Getopt::Long" : 0,
+            "Git::Repository" : 0,
+            "LWP::UserAgent" : 0,
+            "Pod::Usage" : 0,
+            "autodie" : 0,
+            "perl" : "v5.10.0",
+            "version" : 0
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Carp" : 0,
+            "Scalar::Util" : 0,
+            "Test::Compile" : 0,
+            "Test::More" : "0.94"
+         }
+      }
+   },
+   "provides" : {
+      "Git::CPAN::Patch" : {
+         "file" : "lib/Git/CPAN/Patch.pm",
+         "version" : "v0.6.1"
+      },
+      "Git::CPAN::Patch::Import" : {
+         "file" : "lib/Git/CPAN/Patch/Import.pm",
+         "version" : "v0.6.1"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-git-cpan-patch at rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=Git-CPAN-Patch"
+      },
+      "homepage" : "http://search.cpan.org/dist/Git-CPAN-Patch/",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/yanick/git-cpan-patch.git",
+         "web" : "http://github.com/yanick/git-cpan-patch/tree"
+      }
+   },
+   "version" : "0.6.1",
+   "x_authority" : "cpan:yanick"
+}
+

@@ -7,8 +7,8 @@ use autodie;
 
 use Git::Repository;
 
-use Pod::Usage;
 use Getopt::Long;
+use Pod::Usage;
 
 sub say (@) { print @_, "\n" }
 
@@ -16,18 +16,12 @@ my %opt;
 GetOptions( \%opt, 
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
-) or pod2usage( "for a list of all valid options, do 'git cpan-last-version --help'" );
+) 
+    or pod2usage( 
+        "for a list of all valid options, do 'git cpan-format-patch --help'" 
+    );
 
-my $repo = Git::Repository->new;
-
-my $last_commit = $repo->run('rev-parse', '--verify', 'cpan/master');
-
-my $last = join "\n", $repo->run( log => '--pretty=format:%b', '-n', 1, $last_commit );
-
-$last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version: \s+ (\S+)/sx
-    or die "Couldn't parse message:\n$last\n";
-
-say $2;
+print Git::Repository->new->run('format-patch', 'cpan/master');
 
 __END__
 
@@ -35,21 +29,16 @@ __END__
 
 =head1 NAME
 
-git-cpan-last-version - Report the last imported version
-
-=head1 VERSION
-
-version 0.6.0
+git-cpan-format-patch - Format patches using C<cpan/master> as the origin
+reference
 
 =head1 SYNOPSIS
 
-    % git cpan-last-version
+    % git cpan-format-patch
 
 =head1 DESCRIPTION
 
-This command searches through the history of the C<cpan/master> reference for
-the last imported version.
-
+This is just like running C<git format-patch cpan/master>.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -71,5 +60,7 @@ modify it under the same terms as Perl itself. See L<perlartistic>.
 =head1 SEE ALSO
 
 L<Git::CPAN::Patch>
+
+L<git-format-patch>
 
 =cut

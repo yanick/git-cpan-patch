@@ -1,38 +1,112 @@
-=== WHAT'S THIS ? 
+NAME
+    Git::CPAN::Patch - Patch CPAN modules using Git
 
-This is a series of scripts developped for the 
-article 'CPAN Patching with Git' that I wrote
-for the Winter 2008 edition (aka issue 5.1) 
-of the The Perl Review[1].  
+SYNOPSIS
+        # import a module:
 
-The goal of those scripts is to make trivially
-easy to grab any distribution off CPAN, gitify
-its latest version, hack on it and send back
-patches to the maintainer.  For now the only
-documentation is in the article, but I'll 
-eventually inject some documentation in
-the scripts themselves (in the meantime, I
-recommend to subscribe to the TPR :-) )
+        % mkdir Foo-Bar
+        % cd Foo-Bar
+        % git cpan-init Foo::Bar
 
 
-`/anick, January 2009
 
-[1] http://www.theperlreview.com/
+        # hack and submit to RT
 
-=== INSTALLATION
+        # it's probably best to work in a branch
+        % git checkout -b blah
 
-To install the scripts and their supporting module, do
+        hack lib/Foo/Bar.pm
 
-    $ perl ./Build.PL
-    $ ./Build test
-    $ sudo ./Build install
+        % git commit -am "blah"
+        % git cpan-sendpatch --compose
 
-or a variation thereof.
 
-If you run Build.PL interactively, it'll also
-ask you if you want to install the scripts alongside
-the Git commands for a tighter integration (Git will
-consider all the git-cpan-* commands as being legit
-Git sub-command, which means that shell completion and
-'git <blah>' type of commands will transparently work).  
+
+        # update the module
+        # this automatically rebases the current branch
+        % git cpan-update
+
+DESCRIPTION
+    Git::CPAN::Patch provides a suite of git commands aimed at making
+    trivially easy the process of grabbing any distribution off CPAN,
+    stuffing it in a local git repository and, once gleeful hacking has been
+    perpetrated, sending back patches to its maintainer.
+
+GIT COMMANDS
+    git-cpan-init
+        Create a git repository for a CPAN module
+
+    git-backpan-init
+        Initialize a repository for a CPAN module with full history from the
+        backpan.
+
+    git-cpan-import
+        Import a module into a git repository.
+
+    git-cpan-last-version
+        Report the last imported version
+
+    git-cpan-send-email
+        Use "git-send-email" to submit patches to CPAN RT
+
+    git-cpan-sendpatch
+        Create patch files and submit then to RT
+
+    git-cpan-update
+        Import the latest version of a module and rebase the current branch
+
+    git-cpan-format-patch
+        Format patches using "cpan/master" as the origin reference
+
+    git-cpan-squash
+        Combine multiple commits into one patch
+
+    git-cpan-which
+        Report the managed module
+
+BUGS AND LIMITATIONS
+    Please report any bugs or feature requests to
+    "bug-git-cpan-patch@rt.cpan.org", or through the web interface at
+    <http://rt.cpan.org>.
+
+AUTHORS
+    Yanick Champoux "<yanick@cpan.org>"
+
+    Yuval Kogman "<nothingmuch@woobling.org>"
+
+LICENCE
+    This module is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself. See perlartistic.
+
+SEE ALSO
+  
+    git-backpan-init
+    git-cpan-import
+    git-cpan-last-version
+    git-cpan-sendpatch
+    git-cpan-update
+    git-cpan-format-patch
+    git-cpan-init
+    git-cpan-send-email
+    git-cpan-squash
+    git-cpan-which
+
+  Articles
+    The set of scripts that would eventually become Git::CPAN::Patch were
+    first presented in the article *CPAN Patching with Git*, published in
+    issue 5.1 of The Perl Review <http://theperlreview.com>.
+
+  Git::CPAN::Patch on the Net
+    On CPAN
+        http://search.cpan.org/dist/Git-CPAN-Patch
+
+    Bug tracker
+        http://rt.cpan.org/Public/Dist/Display.html?Name=Git-CPAN-Patch
+
+    Github git repository
+        web interface: http://github.com/yanick/git-cpan-patch
+
+        to clone:
+
+          $ git clone git://github.com/yanick/git-cpan-patch.git
 
