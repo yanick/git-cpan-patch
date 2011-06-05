@@ -2,45 +2,50 @@ Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
 
-0.6.0     2011-03-06 10:50:56 America/Montreal
+    [BUG FIXES]
+
+    * pass '--no-chain-reply-to' explicitly to 'git-send-email'.
+
+
+0.6.0     2011-03-06
     * don't blindly import perl if the module is core, but rather
         suggest to use the Perl git repository instead.
             Thanks to Rafael Kitover for the bug report (RT#66416)
 
-0.5.0     2011-03-05 12:32:08 America/Montreal
+0.5.0     2011-03-05
     * use Git::Repository instead of Git for the git interactions.
         Thanks to brian d foy and Philippe Bruhat for the patches.
 
-0.4.6     2010-10-11 21:34:18 America/Montreal
+0.4.6     2010-10-11
     * move 'File::chmod' before 'autodie' to hush the warnings. (RT#61034)
 
-0.4.5     2010-08-16 19:30:23 America/Montreal
+0.4.5     2010-08-16
     * fix --force documentation/error message/support for git-cpan-import.
         Thanks to chocolateboy.
 
-0.4.4     2010-06-07 21:03:35 America/Montreal
+0.4.4     2010-06-07
     * Small doc fix for git-backpan-init. Thanks to chocolateboy.
     * Fix "Can't use string as an ARRAY ref" error introduced in 0.3.2. 
         Thanks to chocolateboy.
     * Fix repo initialization as per the documentation. 
         Thanks to chocolateboy.
 
-0.4.3     2010-06-06 18:45:02 America/Montreal
+0.4.3     2010-06-06
     * Still have troubles with the version number and the indexer.
 
-0.4.2     2010-06-06 18:25:41 America/Montreal
+0.4.2     2010-06-06
     * Return to the format vx.y.z to keep the CPAN indexer happy. Bleh.
 
-0.4.1     2010-06-06 17:48:56 America/Montreal
+0.4.1     2010-06-06
     * Fix the META.yml so that the version is correct.
 
-0.4.0     2010-06-05 18:54:32 America/Montreal
+0.4.0     2010-06-05
     * Fix git-cpan-which so that it doesn't return a leading space. Thanks
         to Tim Bunce. (rt-58001)
     * Check at install time if Git.pm (and thus Git) is present.
     * Add a --gitpan option for git-cpan0-import
 
-0.3.2 Sun Apr 25, 2010
+0.3.2   2010-04-25
     * Explicitly requires perl 5.10. (rt-54368, reported by Jesse Vincent)
     * Preventive dying if we don't see the body_* functions. (rt-46715,
         reported by Alexandr Ciornii)
@@ -48,7 +53,7 @@ Revision history for Git::CPAN::Patch
         Jesse Vincent)
     * create_makefile_pl now set to small
 
-0.3.1 Sun Dec 20 2009
+0.3.1 2009-12-20
     * Getting git cpan-import --backpan to work again
     * Adding dependencies for Parse::BACKPAN::Packages,
         File::Temp, CLASS and File::chmod

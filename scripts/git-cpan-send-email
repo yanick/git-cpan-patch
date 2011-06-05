@@ -29,7 +29,7 @@ my $module_obj = $cpan->parse_module( module => $module ) or die("No such module
 
 my $to = 'bug-' . $module_obj->package_name . '@rt.cpan.org';
 
-say for $repo->run("send-email", "--to", $to, @ARGV);
+say for $repo->run("send-email", '--no-chain-reply-to', "--to", $to, @ARGV);
 
 __END__
 
