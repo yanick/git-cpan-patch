@@ -5,6 +5,8 @@ Revision history for Git::CPAN::Patch
     [BUG FIXES]
 
     * pass '--no-chain-reply-to' explicitly to 'git-send-email'.
+    * git-cpan-sendpatch and git-cpan-sendemail now accept '--compose'.
+        (thanks to Olaf Alders for the bug report)
 
 
 0.6.0     2011-03-06

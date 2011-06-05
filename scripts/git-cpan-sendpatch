@@ -16,6 +16,7 @@ sub say (@) { print @_, "\n" }
 
 my %opt;
 GetOptions( \%opt, 
+    'compose' => \my $compose,    # used by cpan-send-email
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
 ) or pod2usage( "for a list of all valid options, do 'git cpan-sendpatch --help'" );
