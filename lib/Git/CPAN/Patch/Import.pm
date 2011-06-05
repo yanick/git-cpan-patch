@@ -1,6 +1,9 @@
 package Git::CPAN::Patch::Import;
 BEGIN {
-  $Git::CPAN::Patch::Import::VERSION = '0.6.0';
+  $Git::CPAN::Patch::Import::AUTHORITY = 'cpan:yanick';
+}
+BEGIN {
+  $Git::CPAN::Patch::Import::VERSION = '0.6.1';
 }
 
 use 5.10.0;
@@ -551,10 +554,6 @@ __END__
 =head1 NAME
 
 Git::CPAN::Patch::Import - The meat of git-cpan-import
-
-=head1 VERSION
-
-version 0.6.0
 
 =head1 DESCRIPTION
 

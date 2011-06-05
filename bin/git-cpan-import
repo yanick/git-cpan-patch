@@ -43,10 +43,6 @@ __END__
 
 git-cpan-import - Import a module into a git repository
 
-=head1 VERSION
-
-version 0.6.0
-
 =head1 SYNOPSIS
 
     # takes any string CPANPLUS handles:

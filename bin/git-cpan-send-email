@@ -15,6 +15,7 @@ sub say (@) { print @_, "\n" }
 
 my %opt;
 GetOptions( \%opt, 
+    'compose' => \my $compose,
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
 ) or pod2usage( "for a list of all valid options, do 'git cpan-send-email --help'" );
@@ -29,7 +30,7 @@ my $module_obj = $cpan->parse_module( module => $module ) or die("No such module
 
 my $to = 'bug-' . $module_obj->package_name . '@rt.cpan.org';
 
-say for $repo->run("send-email", "--to", $to, @ARGV);
+say for $repo->run("send-email", '--no-chain-reply-to', "--to", $to, @ARGV);
 
 __END__
 
@@ -38,10 +39,6 @@ __END__
 =head1 NAME
 
 git-cpan-send-email - use C<git-send-email> to submit patches to CPAN RT
-
-=head1 VERSION
-
-version 0.6.0
 
 =head1 SYNOPSIS
 

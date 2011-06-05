@@ -1,0 +1,72 @@
+#!perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use Git::Repository;
+use Pod::Usage;
+use Getopt::Long;
+
+my %opt;
+
+my @orig_args = @ARGV;
+
+GetOptions( \%opt,
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+    'backpan!',
+) or pod2usage( "for a list of all valid options, do 'git cpan-init --help'" );
+
+my $module = $ARGV[0] || die("Usage: git cpan-init Foo::Bar\n");
+
+Git::Repository->run("init");
+
+my $repo = Git::Repository->new;
+
+say for $repo->run("cpan-import", @orig_args);
+
+say for $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-init - Create a git repository for a CPAN module
+
+=head1 SYNOPSIS
+
+    git cpan-init [ --help | --man ] [ --backpan ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ]
+
+=head1 DESCRIPTION
+
+This command creates a new git repository, calls C<git-cpan-import> and then
+checks out the code in the C<master> branch.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Yanick Champoux C<< <yanick@cpan.org> >>
+
+Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>, L<git-cpan-import>
+
+=cut

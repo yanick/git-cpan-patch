@@ -1,14 +1,11 @@
 #!perl
 
-use 5.10.0;
-
 use strict;
 use warnings;
 
 use autodie;
 
 use Git::Repository;
-
 
 use Pod::Usage;
 use Getopt::Long;
@@ -19,19 +16,18 @@ my %opt;
 GetOptions( \%opt, 
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
-) or pod2usage( "for a list of all valid options, do 'git cpan-update --help'" );
-
+) or pod2usage( "for a list of all valid options, do 'git cpan-last-version --help'" );
 
 my $repo = Git::Repository->new;
 
-my $last_import = $repo->run('rev-parse', '--verify', 'cpan/master');
+my $last_commit = $repo->run('rev-parse', '--verify', 'cpan/master');
 
-say for $repo->run('cpan-import', @ARGV);
+my $last = join "\n", $repo->run( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
-my $updated = $repo->run('rev-parse', '-q', '--verify', 'cpan/master');
+$last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version: \s+ (\S+)/sx
+    or die "Couldn't parse message:\n$last\n";
 
-map { say } $repo->run('rebase', 'cpan/master') 
-    unless $last_import eq $updated;
+say $2;
 
 __END__
 
@@ -39,22 +35,17 @@ __END__
 
 =head1 NAME
 
-
-=head1 VERSION
-
-version 0.6.0
-git-cpan-update - Import the latest version of a module and rebase the current
-branch
+git-cpan-last-version - Report the last imported version
 
 =head1 SYNOPSIS
 
-    % git cpan-update
+    % git cpan-last-version
 
 =head1 DESCRIPTION
 
-This command runs C<git cpan-import>, and then if C<cpan/master> was updated
-runs C<git rebase cpan/master>, bringing your patches up to date with the
-upstream.
+This command searches through the history of the C<cpan/master> reference for
+the last imported version.
+
 
 =head1 BUGS AND LIMITATIONS
 
@@ -75,6 +66,6 @@ modify it under the same terms as Perl itself. See L<perlartistic>.
 
 =head1 SEE ALSO
 
-L<Git::CPAN::Patch>, L<git-cpan-import>
+L<Git::CPAN::Patch>
 
 =cut

@@ -1,0 +1,48 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.64.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 1a6ee1a4f6a6840cb0e5af0d9c21e2a85ebeda53 Build.PL
+SHA1 407ef4970008e488040c4c8321e5eebfe92b8200 Changes
+SHA1 59da7efc4d54fec3810ae9f44a59eb3ee7139957 LICENSE
+SHA1 702a44b69cd44067685ebc01f4dd88a500f2706b MANIFEST
+SHA1 8c9421c84446ed19e6b8d5e1ebf4bcc5b7e78a9c META.json
+SHA1 f713f67cdd39639734f31883f101ed0aafdfc71e META.yml
+SHA1 783f7c04a387969cb5633aa8e45bf148360bdbb6 Makefile.PL
+SHA1 da8495daad60a57e7f558ebf81a6bf08cc724e94 README
+SHA1 0c0fed40410b682c6c918eea5e747148e89e8db8 README.mkdn
+SHA1 044ee0273b0ae81bc3147d6854ea7bb9d1dcc15e bin/git-backpan-init
+SHA1 dbcef953e1db2f0077c58e560835a652e2be17a4 bin/git-cpan-format-patch
+SHA1 eec5aa539fd61d6cb736003e4b8ec60cdea3fe84 bin/git-cpan-import
+SHA1 293da127409540871dc89d11878170681664c9a0 bin/git-cpan-init
+SHA1 96b074850a6748fa748f727bc25c69a4caebee66 bin/git-cpan-last-version
+SHA1 ce57a61c5b1d292511179d4545fe239983cb44ee bin/git-cpan-send-email
+SHA1 70ebeda90ee780466771924ed62e3e7a97a508db bin/git-cpan-sendpatch
+SHA1 5416a65cf1893a4dacc12733116d426990520fa5 bin/git-cpan-squash
+SHA1 ccb0703c282fefd4c56114df87034fb7518df659 bin/git-cpan-update
+SHA1 6ab6897aa5f5f18d090d98fcf9cf92ef6c373a8e bin/git-cpan-which
+SHA1 2aac39909431b872bb8c5290788f05596a1fb545 lib/Git/CPAN/Patch.pm
+SHA1 ef9f0f855e508c45ee888f0efe7d8d69d54e07e7 lib/Git/CPAN/Patch/Import.pm
+SHA1 4f2471497515ddf996904a3e99db4e21253a764a t/00-load.t
+SHA1 050aa113e828a52db3c86065c0c0ed50198b7ce8 t/000-report-versions.t
+SHA1 29032452b7719a4da0f5fb611226ca07a9acd7fa t/syntax.t
+SHA1 e88703bc16259ef5d6b5ea5970a8ec688c3b717f xt/perlcritic-progressive.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAk3sCCkACgkQ34Hwf+GwC4xAaACfaXrqjgUqUwk5HiYeUyTpvlli
+WqsAn2JXPJrKmKAglreYLSBJ8Su0lf1z
+=3jIu
+-----END PGP SIGNATURE-----

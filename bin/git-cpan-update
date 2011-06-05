@@ -8,28 +8,30 @@ use warnings;
 use autodie;
 
 use Git::Repository;
+
+
 use Pod::Usage;
 use Getopt::Long;
 
+sub say (@) { print @_, "\n" }
+
 my %opt;
-
-my @orig_args = @ARGV;
-
-GetOptions( \%opt,
+GetOptions( \%opt, 
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
-    'backpan!',
-) or pod2usage( "for a list of all valid options, do 'git cpan-init --help'" );
+) or pod2usage( "for a list of all valid options, do 'git cpan-update --help'" );
 
-my $module = $ARGV[0] || die("Usage: git cpan-init Foo::Bar\n");
-
-Git::Repository->run("init");
 
 my $repo = Git::Repository->new;
 
-say for $repo->run("cpan-import", @orig_args);
+my $last_import = $repo->run('rev-parse', '--verify', 'cpan/master');
 
-say for $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
+say for $repo->run('cpan-import', @ARGV);
+
+my $updated = $repo->run('rev-parse', '-q', '--verify', 'cpan/master');
+
+map { say } $repo->run('rebase', 'cpan/master') 
+    unless $last_import eq $updated;
 
 __END__
 
@@ -37,20 +39,18 @@ __END__
 
 =head1 NAME
 
-git-cpan-init - Create a git repository for a CPAN module
-
-=head1 VERSION
-
-version 0.6.0
+git-cpan-update - Import the latest version of a module and rebase the current
+branch
 
 =head1 SYNOPSIS
 
-    git cpan-init [ --help | --man ] [ --backpan ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ]
+    % git cpan-update
 
 =head1 DESCRIPTION
 
-This command creates a new git repository, calls C<git-cpan-import> and then
-checks out the code in the C<master> branch.
+This command runs C<git cpan-import>, and then if C<cpan/master> was updated
+runs C<git rebase cpan/master>, bringing your patches up to date with the
+upstream.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -60,9 +60,9 @@ interface at L<http://rt.cpan.org>.
   
 =head1 AUTHORS
 
-Yanick Champoux C<< <yanick@cpan.org> >>
-
 Yuval Kogman C<< <nothingmuch@woobling.org> >>
+
+Yanick Champoux C<< <yanick@cpan.org> >>
 
 =head1 LICENCE
 
