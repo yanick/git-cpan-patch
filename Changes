@@ -7,6 +7,7 @@ Revision history for Git::CPAN::Patch
 
  [ENHANCEMENTS]
  - 'git cpan-init' now accepts a '--vcs' argument
+ - new command 'git cpan-sources'
 
 0.6.1 2011-06-05
  [BUG FIXES]
