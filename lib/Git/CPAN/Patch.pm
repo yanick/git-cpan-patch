@@ -82,7 +82,7 @@ Git::CPAN::Patch - Patch CPAN modules using Git
     hack lib/Foo/Bar.pm
 
     % git commit -am "blah"
-    % git cpan-sendpatch --compose
+    % git cpan-sendpatch
 
 
 
