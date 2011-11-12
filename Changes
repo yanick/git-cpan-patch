@@ -6,6 +6,7 @@ Revision history for Git::CPAN::Patch
  [BUG FIXES]
 
  [ENHANCEMENTS]
+ - 'git cpan-init' now accepts a '--vcs' argument
 
 0.6.1 2011-06-05
  [BUG FIXES]
