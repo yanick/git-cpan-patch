@@ -1,13 +1,64 @@
 package Git::CPAN::Patch;
 BEGIN {
-  $Git::CPAN::Patch::AUTHORITY = 'cpan:yanick';
+  $Git::CPAN::Patch::AUTHORITY = 'cpan:YANICK';
 }
-BEGIN {
-  $Git::CPAN::Patch::VERSION = '0.6.1';
+{
+  $Git::CPAN::Patch::VERSION = '0.7.0';
 }
 
 use strict;
 use warnings;
+
+use Moose;
+use MooseX::SemiAffordanceAccessor;
+use MetaCPAN::API;
+use Method::Signatures;
+
+extends 'MooseX::App::Cmd';
+
+has target => (
+    is => 'rw',
+    isa => 'Str',
+);
+
+has distribution_name => (
+    is => 'ro',
+    lazy_build => 1,
+);
+
+has distribution_meta => (
+    isa => 'HashRef',
+    is => 'ro',
+    lazy_build => 1,
+);
+
+has repo => (
+    is => 'ro',
+    lazy_build => 1,
+);
+
+method _build_repo {
+    Git::Repository->new( );
+}
+
+method _build_distribution_name {
+    my $target = $self->target;
+
+    $target =~ s/-/::/g;
+
+    my $mcpan = MetaCPAN::API->new;
+
+    return  $mcpan->module( $target )->{distribution};
+}
+
+method _build_distribution_meta {
+    my $mcpan = MetaCPAN::API->new;
+
+    $mcpan->release( distribution => $self->distribution_name );
+}
+
+
+__PACKAGE__->meta->make_immutable;
 
 'end of module Git::CPAN::Patch';
 

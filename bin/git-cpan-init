@@ -19,6 +19,7 @@ GetOptions( \%opt,
     'help' => sub { pod2usage(1) },
     'man'  => sub { pod2usage( verbose => 2 ) },
     'backpan!',
+    'vcs!',
 ) or pod2usage( "for a list of all valid options, do 'git cpan-init --help'" );
 
 my $module = $ARGV[0] || die("Usage: git cpan-init Foo::Bar\n");
@@ -27,9 +28,35 @@ Git::Repository->run("init");
 
 my $repo = Git::Repository->new;
 
-say for $repo->run("cpan-import", @orig_args);
+if ( not $opt{vcs} ) {
+    say for $repo->run("cpan-import", @orig_args);
 
-say for $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
+    say for $repo->run("checkout", "-f", "-t", "-b", "master", "cpan/master");
+}
+else {
+    require Git::CPAN::Patch;
+    my $gcp = Git::CPAN::Patch->new;
+    $gcp->set_target( $module );
+
+    my $repo = $gcp->repo;
+
+    my $meta = $gcp->distribution_meta;
+    my $external_repo = $meta->{resources}{repository}
+        or die "distribution's META information doesn't contain a repository\n";
+
+    die "type of repository not recognized\n" unless $external_repo->{type} eq 'git';
+
+    say "repository found: $external_repo->{url}";
+
+    local *STDERR;  # hush the warnings the easy way
+    my $err;
+    open STDERR, '>', \$err;
+
+    say for $repo->run( 'remote', 'add', 'cpan', $external_repo->{url} );
+    say for $repo->run( 'fetch', 'cpan' );
+    say for $repo->run( 'checkout', '-f', '-t', '-b', 'master', 'cpan/master' );
+
+}
 
 __END__
 
@@ -41,7 +68,7 @@ git-cpan-init - Create a git repository for a CPAN module
 
 =head1 SYNOPSIS
 
-    git cpan-init [ --help | --man ] [ --backpan ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ]
+    git cpan-init [ --help | --man ] [ --backpan | --vcs ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ]
 
 =head1 DESCRIPTION
 
