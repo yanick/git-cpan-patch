@@ -415,6 +415,7 @@ BEGIN {
       Test::Pod::Coverage
       Test::Portability::Files
       Test::YAML::Meta
+      open
     );
 
     my $Test = Test::Builder->new;
@@ -437,7 +438,7 @@ BEGIN {
             next;
         }
         local $SIG{__WARN__} = sub { note "$module: $_[0]" };
-        use_ok $module or BAIL_OUT("can't load $module");
+        require_ok $module or BAIL_OUT("can't load $module");
         my $version = $module->VERSION;
         $version = 'undefined' unless defined $version;
         diag("    $module version is $version");

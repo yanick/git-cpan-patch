@@ -111,23 +111,14 @@ modify it under the same terms as Perl itself. See [perlartistic](http://search.
 ## 
 
 - L<git-backpan-init>       
-
 - L<git-cpan-import>  
-
 - L<git-cpan-last-version>
-
 - L<git-cpan-sendpatch>  
-
 - L<git-cpan-update>
-
 - L<git-cpan-format-patch>  
-
 - L<git-cpan-init>    
-
 - L<git-cpan-send-email>    
-
 - L<git-cpan-squash>
-
 - L<git-cpan-which>
 
 
