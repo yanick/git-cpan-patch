@@ -16,10 +16,12 @@ bin/git-cpan-init
 bin/git-cpan-last-version
 bin/git-cpan-send-email
 bin/git-cpan-sendpatch
+bin/git-cpan-sources
 bin/git-cpan-squash
 bin/git-cpan-update
 bin/git-cpan-which
 lib/Git/CPAN/Patch.pm
+lib/Git/CPAN/Patch/Command/sources.pm
 lib/Git/CPAN/Patch/Import.pm
 t/00-load.t
 t/000-report-versions.t
