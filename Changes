@@ -6,6 +6,8 @@ Revision history for Git::CPAN::Patch
  [BUG FIXES]
 
  [ENHANCEMENTS]
+ - Added new command 'cpan-clone', which operates
+   like git-clone [Mike Doherty]
 
 0.7.0 2011-11-12
  [ENHANCEMENTS]
