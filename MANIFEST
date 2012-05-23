@@ -1,3 +1,4 @@
+AUTHOR_PLEDGE
 Build.PL
 Changes
 INSTALL
@@ -10,6 +11,7 @@ README
 README.mkdn
 SIGNATURE
 bin/git-backpan-init
+bin/git-cpan-clone
 bin/git-cpan-format-patch
 bin/git-cpan-import
 bin/git-cpan-init
@@ -23,6 +25,7 @@ bin/git-cpan-which
 lib/Git/CPAN/Patch.pm
 lib/Git/CPAN/Patch/Command/sources.pm
 lib/Git/CPAN/Patch/Import.pm
+t/00-compile.t
 t/00-load.t
 t/000-report-versions.t
 t/syntax.t
