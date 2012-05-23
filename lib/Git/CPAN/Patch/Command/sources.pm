@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::sources::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::sources::VERSION = '0.7.0';
+  $Git::CPAN::Patch::Command::sources::VERSION = '0.8.0';
 }
 
 use 5.10.0;

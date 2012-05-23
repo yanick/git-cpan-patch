@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Import::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Import::VERSION = '0.7.0';
+  $Git::CPAN::Patch::Import::VERSION = '0.8.0';
 }
 
 use 5.10.0;
