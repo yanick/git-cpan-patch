@@ -21,7 +21,7 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Git-CPAN-Patch",
-  "dist_version" => "0.7.0",
+  "dist_version" => "0.8.0",
   "license" => "perl",
   "module_name" => "Git::CPAN::Patch",
   "recommends" => {},
@@ -51,7 +51,7 @@ my %module_build_args = (
     "MooseX::SemiAffordanceAccessor" => 0,
     "Pod::Usage" => 0,
     "autodie" => 0,
-    "perl" => "5.10.0",
+    "perl" => "v5.10.0",
     "strict" => 0,
     "version" => 0,
     "warnings" => 0
@@ -67,7 +67,8 @@ my %module_build_args = (
     "bin/git-cpan-import",
     "bin/git-cpan-sources",
     "bin/git-cpan-update",
-    "bin/git-cpan-last-version"
+    "bin/git-cpan-last-version",
+    "bin/git-cpan-clone"
   ]
 );
 

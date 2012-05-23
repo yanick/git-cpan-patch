@@ -4,7 +4,7 @@
       "Yanick Champoux <yanick@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "Dist::Zilla version 4.300010, CPAN::Meta::Converter version 2.120630",
    "license" : [
       "perl_5"
    ],
@@ -26,41 +26,41 @@
       },
       "runtime" : {
          "requires" : {
-            "Archive::Extract" : 0,
-            "BackPAN::Index" : 0,
-            "CLASS" : 0,
-            "CPANPLUS" : 0,
-            "Cwd" : 0,
-            "DateTime::Format::W3CDTF" : 0,
-            "File::Basename" : 0,
-            "File::Find" : 0,
-            "File::Path" : 0,
-            "File::Spec::Functions" : 0,
-            "File::Temp" : 0,
-            "File::chdir" : 0,
-            "File::chmod" : 0,
-            "Getopt::Long" : 0,
-            "Git::Repository" : 0,
-            "LWP::UserAgent" : 0,
-            "MetaCPAN::API" : 0,
-            "Method::Signatures" : 0,
-            "Moose" : 0,
-            "MooseX::App::Cmd" : 0,
-            "MooseX::App::Cmd::Command" : 0,
-            "MooseX::SemiAffordanceAccessor" : 0,
-            "Pod::Usage" : 0,
-            "autodie" : 0,
+            "Archive::Extract" : "0",
+            "BackPAN::Index" : "0",
+            "CLASS" : "0",
+            "CPANPLUS" : "0",
+            "Cwd" : "0",
+            "DateTime::Format::W3CDTF" : "0",
+            "File::Basename" : "0",
+            "File::Find" : "0",
+            "File::Path" : "0",
+            "File::Spec::Functions" : "0",
+            "File::Temp" : "0",
+            "File::chdir" : "0",
+            "File::chmod" : "0",
+            "Getopt::Long" : "0",
+            "Git::Repository" : "0",
+            "LWP::UserAgent" : "0",
+            "MetaCPAN::API" : "0",
+            "Method::Signatures" : "0",
+            "Moose" : "0",
+            "MooseX::App::Cmd" : "0",
+            "MooseX::App::Cmd::Command" : "0",
+            "MooseX::SemiAffordanceAccessor" : "0",
+            "Pod::Usage" : "0",
+            "autodie" : "0",
             "perl" : "v5.10.0",
-            "strict" : 0,
-            "version" : 0,
-            "warnings" : 0
+            "strict" : "0",
+            "version" : "0",
+            "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "Carp" : 0,
-            "Scalar::Util" : 0,
-            "Test::Compile" : 0,
+            "Carp" : "0",
+            "Scalar::Util" : "0",
+            "Test::Compile" : "0",
             "Test::More" : "0.94"
          }
       }
@@ -68,15 +68,15 @@
    "provides" : {
       "Git::CPAN::Patch" : {
          "file" : "lib/Git/CPAN/Patch.pm",
-         "version" : "v0.7.0"
+         "version" : "v0.8.0"
       },
       "Git::CPAN::Patch::Command::sources" : {
          "file" : "lib/Git/CPAN/Patch/Command/sources.pm",
-         "version" : "v0.7.0"
+         "version" : "v0.8.0"
       },
       "Git::CPAN::Patch::Import" : {
          "file" : "lib/Git/CPAN/Patch/Import.pm",
-         "version" : "v0.7.0"
+         "version" : "v0.8.0"
       }
    },
    "release_status" : "stable",
@@ -92,7 +92,10 @@
          "web" : "https://github.com/yanick/git-cpan-patch"
       }
    },
-   "version" : "0.7.0",
+   "version" : "0.8.0",
+   "x_author_pledge" : {
+      "version" : 1
+   },
    "x_authority" : "cpan:YANICK"
 }
 
