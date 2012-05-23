@@ -1,11 +1,15 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+
+0.8.0     2012-05-22
  [API CHANGES]
 
  [BUG FIXES]
 
  [ENHANCEMENTS]
+ - Added new command 'cpan-clone', which operates
+   like git-clone [Mike Doherty]
 
 0.7.0 2011-11-12
  [ENHANCEMENTS]
@@ -19,48 +23,133 @@ Revision history for Git::CPAN::Patch
    (thanks to Olaf Alders for the bug report)
 
 0.6.0 2011-03-06
+ - don't blindly import perl if the module is core, but rather suggest to
+   use the Perl git repository instead. Thanks to Rafael Kitover for the
+   bug report (RT#66416)
 
 0.5.0 2011-03-05
+ - use Git::Repository instead of Git for the git interactions. Thanks to
+   brian d foy and Philippe Bruhat for the patches.
 
 0.4.6 2010-10-11
+ - move 'File::chmod' before 'autodie' to hush the warnings. (RT#61034)
 
 0.4.5 2010-08-16
+ - fix --force documentation/error message/support for git-cpan-import.
+   Thanks to chocolateboy.
 
 0.4.4 2010-06-07
+ - Small doc fix for git-backpan-init. Thanks to chocolateboy.
+ - Fix "Can't use string as an ARRAY ref" error introduced in 0.3.2. 
+   Thanks to chocolateboy.
+ - Fix repo initialization as per the documentation.  Thanks to
+   chocolateboy.
 
 0.4.3 2010-06-06
+ - Still have troubles with the version number and the indexer.
 
 0.4.2 2010-06-06
+ - Return to the format vx.y.z to keep the CPAN indexer happy. Bleh.
 
 0.4.1 2010-06-06
+ - Fix the META.yml so that the version is correct.
 
 0.4.0 2010-06-05
+ - Fix git-cpan-which so that it doesn't return a leading space. Thanks to
+   Tim Bunce. (rt-58001)
+ - Check at install time if Git.pm (and thus Git) is present.
+ - Add a --gitpan option for git-cpan0-import
 
 0.3.2 2010-04-25
+ - Explicitly requires perl 5.10. (rt-54368, reported by Jesse Vincent)
+ - Preventive dying if we don't see the body_* functions. (rt-46715,
+   reported by Alexandr Ciornii)
+ - Moved Module::Build to 'configure_requires'. (rt-44925, reported by
+   Jesse Vincent)
+ - create_makefile_pl now set to small
 
 0.3.1 2009-12-20
+ - Getting git cpan-import --backpan to work again
+ - Adding dependencies for Parse::BACKPAN::Packages, File::Temp, CLASS and
+   File::chmod
+ - Adding a 'use 5.010'
 
 0.3.0 2009-12-20
+ - Temporary directory are removed after used. Thanks to Slaven Rezic.
+ - git-backpan-init, --mkdir make full directory paths. Thanks to Schwern.
+ - git-backpan-init, add a --backpan option to supply your  own backpan
+   URL. Thanks to Schwern.
+ - Guts of git-cpan-import moved to Git::CPAN::Patch::Import. Thanks to
+   Schwern.
+ - git-cpan-* just install themselves as regular scripts instead of hunting
+   the git directory, as git will pull commands from anyway in the PATH.
+   Thanks to Schwern.
+ - Distributions no longer lower cased. Thanks to Schwern.
+ - Date bug fixed. Thanks to Schwern.
+ - Adding File::Path to the dependencies.
+ - Include the CPAN id of the author in the commit log. Thanks to Schwern.
+ - PPM files are now skipped. Thanks to Schwern.
+ - Skip perl distributions. Thanks to Schwern.
+ - Have Archive::Extract prefer binary programs for performance. Thanks to
+   Schwern.
+ - Overwrite existing version tags if there's two releases with  the same
+   versions. Thanks to Schwern.
+ - Some archives have broken permissions.  Fix them after extraction.
+   Thanks to Schwern.
+ - Record the file we imported from in the commit message. Thanks to
+   Schwern.
+ - Use File::chmod instead of shell chmod to avoid shell quoting problems.
+   Thanks to Schwern.
+ - Don't try to tag releases with no versions.	Thanks to Schwern.
+ - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
+ - Skip empty tarballs.  Thanks to Schwern.
+ - Skip bad archives.  Thanks to Schwern.
 
 0.2.1 Thur Sept 3 2009
+ - git-cpan-import is working with new version of Git.	Thanks to Alexandr
+   Ciornii. (rt#48713)
+ - Require CPANPLUS 0.84 or higher. Thanks to Alexandr Ciornii. (rt#48713)
 
 0.2.0 2009-07-11
+ - New --parent option for git-cpan-import
 
 0.1.7 2009-05-31
+ - git-backpan-init doesn't choke on bad versions but skip them (rt bug
+   46469)
 
 0.1.6 2009-05-12
+ - git-backpan-init doesn't choke on non-monotone version numbers anymore
+   (rt bug 45994)
+ - git-cpan-import gets a new --checkversion option
+ - Adding Module::Build as an explicit dependency and passthrough
+   Makefile.PL
 
 0.1.5 2009-03-28
+ - Fixed typo in git-cpan-squash doc (rt bug 43294),  patch by Slaven Rezic
+ - Removed warning from git-cpan-import,  patch by Pedro Melo
+ - scripts' shebang line now set to Perl's interpreter	used by Build.PL
+   (rt bug 43366)
 
 0.1.4 2009-02-14
+ - backpan-init now calls cpan-import properly (fix by Slaven Rezic)
+ - CPANPlUS added as dependency
+ - Documentation correction (patch by 2shortplanks)
 
 0.1.3 2009-02-05
+ - Of course, removing 5.10 requirements in Build.PL would help... *sigh*
 
 0.1.2 2009-02-03
+ - Made scripts Perl 5.8-compatible
 
 0.1.1 2009-02-03
+ - Removed dependency on List::MoreUtils from Build.PL
 
 0.1.0 2009-02-02
+ - First CPAN release.
+ - Massive restructuration and explosion of features, thanks to  Yuval
+   Kogman.
 
 0.0.1 December 2008
+ - Original scripts are published alongside the article "CPAN Patching with
+   Git" in issue 5.1 of the Perl Review.
 

@@ -1,0 +1,87 @@
+#!perl
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use autodie;
+
+use Git::Repository;
+use Pod::Usage;
+use Getopt::Long;
+use File::Path qw(make_path);
+
+my %opt;
+
+my @orig_args = @ARGV;
+
+GetOptions( \%opt,
+    'help' => sub { pod2usage(1) },
+    'man'  => sub { pod2usage( verbose => 2 ) },
+) or pod2usage( "for a list of all valid options, do 'git cpan-clone --help'" );
+
+my $module = $ARGV[0] || die("Usage: git cpan-clone Foo::Bar\n");
+my $target_dir;
+if ($ARGV[1]) {
+    $target_dir = pop(@ARGV);
+    pop @orig_args; # we'll handle the directory name so git-cpan-init doesn't have to
+}
+else {
+    $target_dir = $module;
+    $target_dir =~ s{^https?://.*?/}{};
+    $target_dir =~ s{\.(?:tgz|tar\.gz|tar\.bz2)$}{};
+    $target_dir =~ s{-v?[\d\.]+$}{};
+    $target_dir =~ s{::}{-}g;
+}
+
+unless (-d $target_dir) {
+    make_path($target_dir) or die "Couldn't create $target_dir: $!";
+}
+chdir $target_dir or die "Couldn't move into $target_dir: $!";
+say "Cloning into '$target_dir'...";
+
+Git::Repository->run('init');
+my $repo = Git::Repository->new;
+say for $repo->run('cpan-init', @orig_args);
+
+__END__
+
+=pod
+
+=head1 NAME
+
+git-cpan-clone - Clone a CPAN module's history into a new git repository
+
+=head1 SYNOPSIS
+
+    git cpan-clone [ --help | --man ] [ --backpan | --vcs ] [ Foo::Bar | Foo-Bar-0.03.tar.gz | http://... ] [ directory ]
+
+=head1 DESCRIPTION
+
+Clones the history of a CPAN module into a new directory.
+
+This command creates the named directory, creates a new git repository, calls
+C<git-cpan-init>, and then checks out the code in the C<master> branch. If the
+directory is omitted, then the "humanish" part of the named module is used.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to
+C<bug-git-cpan-patch@rt.cpan.org>, or through the web 
+interface at L<http://rt.cpan.org>.
+  
+=head1 AUTHORS
+
+Mike Doherty C<< <doherty@cpan.org> >>
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+=head1 SEE ALSO
+
+L<Git::CPAN::Patch>, L<git-cpan-init>, L<git-cpan-import>
+
+=cut
