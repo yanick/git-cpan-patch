@@ -2,14 +2,19 @@ Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
 
-0.8.0     2012-05-22
  [API CHANGES]
 
  [BUG FIXES]
 
  [ENHANCEMENTS]
- - Added new command 'cpan-clone', which operates
-   like git-clone [Mike Doherty]
+ - cpan-git-import now uses metacpan instead of CPANPLUS
+ 
+0.8.0 2012-05-22
+ - code churn: 1 files changed, 4 insertions(+), 86 deletions(-)
+
+ [ENHANCEMENTS]
+ - Added new command 'cpan-clone', which operates like git-clone [Mike
+   Doherty]
 
 0.7.0 2011-11-12
  [ENHANCEMENTS]
