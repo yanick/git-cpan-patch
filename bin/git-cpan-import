@@ -16,7 +16,6 @@ GetOptions( \%opt,
     'backpan!', 
     'checkversion!',
     'parent:s@',
-    'gitpan!',
     'force!',
 ) 
     or pod2usage( 
@@ -82,11 +81,6 @@ you have pending work.
 
 Enables Backpan index fetching (to get the author and release date).
 
-=item --gitpan
-
-Imports the distribution's gitpan repository 
-under the remote branch I<gitpan>.  Subsequent calls with this option are
-equivalent to a simple C<git fetch gitpan>.
 
 =item --checkversion, --nocheckversion
 
@@ -139,7 +133,5 @@ modify it under the same terms as Perl itself. See L<perlartistic>.
 =head1 SEE ALSO
 
 L<Git::CPAN::Patch>
-
-The gitpan GitHub account at L<http://github.com/gitpan>.
 
 =cut

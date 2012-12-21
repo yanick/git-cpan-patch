@@ -346,8 +346,6 @@ sub main {
     my $module = shift;
     my $opts   = shift;
 
-    return import_from_gitpan( $module, $opts ) if $opts->{gitpan};
-
     if ( delete $opts->{backpan} ) {
         return import_from_backpan( $module, $opts );
     }
@@ -524,37 +522,6 @@ END
 
         say "created tag '$version' ($commit)";
     }
-
-}
-
-sub import_from_gitpan {
-    my ( $module, $opts ) = @_;
-
-    die "Usage: git cpan-import --gitpan Foo::Bar\n" unless $module;
-
-    my $cpan = CPANPLUS::Backend->new;
-    my $module_obj = $cpan->parse_module( module => $module )
-      or die "no such module $module\n";
-
-    my $dist = $module_obj->name;
-    $dist =~ s/::/-/g;
-
-    my $repo = Git::Repository->new;
-    my $url  = "git://github.com/gitpan/${dist}.git";
-
-    unless ( "gitpan\n" ~~ $repo->run('remote') ) {
-
-        # no gitpan remote? create it!
-
-        # but first, does it exist?
-
-        die "no repo found at $url\n"
-          unless eval { $repo->run( 'ls-remote', $url ) };
-
-        print $repo->run( 'remote', 'add', 'gitpan', $url );
-    }
-
-    print $repo->run(qw/ fetch gitpan /);
 
 }
 

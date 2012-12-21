@@ -8,6 +8,7 @@ Revision history for Git::CPAN::Patch
 
  [ENHANCEMENTS]
  - cpan-git-import now uses metacpan instead of CPANPLUS
+ - removed gitpan support, as it has gone dormant
  
 0.8.0 2012-05-22
  - code churn: 1 files changed, 4 insertions(+), 86 deletions(-)
