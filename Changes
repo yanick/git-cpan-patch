@@ -3,6 +3,7 @@ Revision history for Git::CPAN::Patch
 {{$NEXT}}
 
  [API CHANGES]
+ - Major rewrite using MooseX::App
 
  [BUG FIXES]
 

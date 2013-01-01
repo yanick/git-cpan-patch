@@ -1,0 +1,63 @@
+package Git::CPAN::Patch::Command::Squash;
+#ABSTRACT: Combine multiple commits into one patch
+
+use 5.10.0;
+
+use strict;
+use warnings;
+
+use Method::Signatures;
+use Git::Repository;
+
+use MooseX::App::Command;
+
+with 'Git::CPAN::Patch::Role::Git';
+
+has branch => (
+    is => 'ro',
+    isa => 'Str',
+    lazy => 1,
+    default => method {
+        $self->extra_argv->[0] || 'patch';
+    },
+);
+
+method run {
+    my $head = $self->git_run("rev-parse", "--verify", "HEAD");
+
+    say for $self->git_run("checkout", "-b", $self->branch, "cpan/master");
+
+    say for $self->git_run("merge", "--squash", $head);
+
+    say "";
+
+    say "Changes squashed onto working directory, commit and run git-cpan send_patch";
+}
+
+__PACKAGE__->meta->make_immutable;
+
+1;
+
+__END__
+
+=pod
+
+=head1 SYNOPSIS
+
+    % git cpan-squash temp_submit_branch
+
+    % git ci -m "This is my message"
+
+    % git cpan-sendpatch --compose
+
+    # delete the branch now that we're done
+    % git checkout master
+    % git branch -D temp_submit_branch
+
+=head1 DESCRIPTION
+
+This command creates a new branch from C<cpan/master> runs
+C<git merge --squash> against your head revision. This stages all the files for
+the branch and allows you to create a combined commit in order to send a single
+patch easily.
+

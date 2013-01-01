@@ -1,4 +1,4 @@
-Git-CPAN-Patch-
+^Git-CPAN-Patch-
 contrib/gitpan
 ^dist\.ini$
 # Avoid version control files.
@@ -7,7 +7,7 @@ contrib/gitpan
 ,v$
 \B\.svn\b
 \B\.cvsignore$
-\B\.git\b
+^\.git\b
 
 # Avoid Makemaker generated and utility files.
 \bMakefile$
@@ -47,10 +47,10 @@ contrib/gitpan
 \B\.DS_Store
 #   Mac OSX SMB mount metadata files
 \B\._
-# Avoid archives of this distribution
-\bGit-CPAN-Patch-[\d\.\_]+
 distrelease.yml
 .gitignore
 .perlcriticrc
 xt/.perlcritic-history
 ^MYMETA.yml$
+project.vim
+TODO

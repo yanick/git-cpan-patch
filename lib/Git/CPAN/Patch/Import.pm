@@ -350,8 +350,6 @@ sub main {
         return import_from_backpan( $module, $opts );
     }
 
-    my $full_hist;
-
     my $repo = Git::Repository->new;
 
     my ( $last_commit, $last_version );
@@ -375,7 +373,7 @@ sub main {
     my $version = $release->{version};
     my $dist    = $release->{distribution};
 
-    if ( $dist eq 'perl' ) {
+     if ( $dist eq 'perl' ) {
         say "$name is a core modules, ",
             "clone perl from $PERL_GIT_URL instead.";
         exit;
