@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Import::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Import::VERSION = '0.8.0';
+  $Git::CPAN::Patch::Import::VERSION = '1.0.0';
 }
 
 use 5.10.0;
@@ -28,13 +28,16 @@ use File::Spec::Functions;
 use File::Temp qw(tempdir);
 use File::Path;
 use File::chdir;
+use Path::Class qw/ file /;
 use Cwd qw/ getcwd /;
 use version;
 use Git::Repository;
 use CLASS;
+use DateTime;
 
 use CPANPLUS;
 use BackPAN::Index;
+
 }
 
 our $BackPAN_URL = "http://backpan.perl.org/";
@@ -331,18 +334,27 @@ sub fixup_repository {
     }
 }
 
+use MetaCPAN::API;
+my $mcpan = MetaCPAN::API->new;
+
+sub find_release {
+    my $input = shift;
+
+    return eval { $mcpan->release( 
+                        distribution => $mcpan->module($input)->{distribution}
+                  ) }
+        || eval { $mcpan->release( distribution => $input ) }
+        || die "could not find release for '$input' on metacpan\n";
+
+}
 
 sub main {
     my $module = shift;
     my $opts   = shift;
 
-    return import_from_gitpan( $module, $opts ) if $opts->{gitpan};
-
     if ( delete $opts->{backpan} ) {
         return import_from_backpan( $module, $opts );
     }
-
-    my $full_hist;
 
     my $repo = Git::Repository->new;
 
@@ -357,34 +369,30 @@ sub main {
     die("Usage: git cpan-import Foo::Bar\n") unless $module;
 
     # first we figure out a module object from the module argument
-    # CPANPLUS handles dist names and URIs too
+
+    my $release = find_release($module);
 
     # based on the version number it figured out for us we decide whether or not to
     # actually import.
 
-    my $cpan = CPANPLUS::Backend->new;
-    my $module_obj = $cpan->parse_module( module => $module ) or die("No such module $module");
+    my $name    = $release->{name};
+    my $version = $release->{version};
+    my $dist    = $release->{distribution};
 
-    my $name    = $module_obj->name;
-    my $version = $module_obj->version;
-    my $dist    = $module_obj->package;
-
-    if ( $module_obj->package_name eq 'perl' ) {
+     if ( $dist eq 'perl' ) {
         say "$name is a core modules, ",
             "clone perl from $PERL_GIT_URL instead.";
         exit;
     }
 
-    my $dist_name = join("-", $module_obj->package_name, $module_obj->package_version);
-
-    my $prettyname = $name . ( " ($module)" x ( $name ne $module ) );
+    my $prettyname = $dist . ( " ($module)" x ( $dist ne $module ) );
 
     if ( $last_version and $opts->{checkversion} ) {
         # if last_version is defined this is an update
         my $imported = version->new($last_version);
-        my $will_import = version->new($module_obj->version);
+        my $will_import = version->new($release->{version});
 
-        die "$dist_name has already been imported\n" if $imported == $will_import;
+        die "$name has already been imported\n" if $imported == $will_import;
     
         die "imported version $imported is more recent than $will_import, can't import\n"
           if $imported > $will_import;
@@ -395,21 +403,28 @@ sub main {
         say "importing $prettyname";
     }
 
+    require LWP::UserAgent;
 
+    my $ua = LWP::UserAgent->new;
 
     # download the dist and extract into a temporary directory
-
-    my $tmp_dir = tempdir( CLEANUP => 1 );
+    my $tmp_dir = tempdir( CLEANUP => 0 );
 
     say "downloading $dist";
 
-    my $location = $module_obj->fetch( fetchdir => $tmp_dir )
-      or die "couldn't retrieve distribution file for module $module";
+    my $tarball = file( $tmp_dir, $release->{archive} );
+
+    $ua->mirror( 
+        $release->{download_url} => $tarball
+    ) or die "couldn't fetch tarball\n";
 
     say "extracting distribution";
 
-    my $dir = $module_obj->extract( extractdir => $tmp_dir )
-      or die "couldn't extract distribution file $location";
+    my $archive = Archive::Extract->new( archive => $tarball );
+    $archive->extract( to => $tmp_dir );
+
+    my $dist_dir = $archive->extract_path 
+        or die "extraction failed\n";
 
     # create a tree object for the CPAN module
     # this imports the source code without touching the user's working directory or
@@ -419,16 +434,15 @@ sub main {
         # don't overwrite the user's index
         local $ENV{GIT_INDEX_FILE} = catfile($tmp_dir, "temp_git_index");
         local $ENV{GIT_DIR} = catfile( getcwd(), '.git' );
-        local $ENV{GIT_WORK_TREE} = $dir;
+        local $ENV{GIT_WORK_TREE} = $dist_dir;
 
-        local $CWD = $dir;
+        local $CWD = $dist_dir;
 
-        my $write_tree_repo = Git::Repository->new( work_tree => $dir );
+        my $write_tree_repo = Git::Repository->new( work_tree => $dist_dir );
 
         $write_tree_repo->run( qw(add -v --force .) );
         $write_tree_repo->run( "write-tree" );
     };
-
 
     # create a commit for the imported tree object and write it into
     # refs/heads/cpan/master
@@ -436,17 +450,14 @@ sub main {
     {
         local %ENV = %ENV;
 
-        my $author_obj = $module_obj->author;
+        my $author_obj = $mcpan->author($release->{author});
 
         # try to find a date for the version using the backpan index
         # secondly, if the CPANPLUS author object is a fake one (e.g. when importing a
         # URI), get the user object by using the ID from the backpan index
         unless ( $ENV{GIT_AUTHOR_DATE} ) {
             my $mtime = eval {
-                return if $author_obj->isa("CPANPLUS::Module::Author::Fake");
-                my $checksums = $module_obj->checksums;
-                my $href = $module_obj->_parse_checksums_file( file => $checksums );
-                return $href->{$dist}{mtime};
+                DateTime->from_epoch( epoch => $release->{stat}{mtime})->ymd;
             };
 
             warn $@ if $@;
@@ -465,7 +476,8 @@ sub main {
                     # we need the backpan index for dates
                     my $backpan = $CLASS->backpan_index;
 
-                    %dists = map { $_->filename => $_ } $backpan->releases($module_obj->package_name);
+                    %dists = map { $_->filename => $_ }
+                    $backpan->releases($release->{name});
                 }
 
                 if ( my $bp_dist = $dists{$dist} ) {
@@ -473,7 +485,7 @@ sub main {
                     $ENV{GIT_AUTHOR_DATE} = $bp_dist->date;
 
                     if ( $author_obj->isa("CPANPLUS::Module::Author::Fake") ) {
-                        $author_obj = $cpan->author_tree($bp_dist->cpanid);
+                        $author_obj = $mcpan->author_tree($bp_dist->cpanid);
                     }
                 } else {
                     say "Couldn't find upload date for $dist";
@@ -486,8 +498,8 @@ sub main {
         }
 
         # create the commit object
-        $ENV{GIT_AUTHOR_NAME}  = $author_obj->author unless $ENV{GIT_AUTHOR_NAME};
-        $ENV{GIT_AUTHOR_EMAIL} = $author_obj->email unless $ENV{GIT_AUTHOR_EMAIL};
+        $ENV{GIT_AUTHOR_NAME}  = $author_obj->{name} unless $ENV{GIT_AUTHOR_NAME};
+        $ENV{GIT_AUTHOR_EMAIL} = $author_obj->{email}[0] unless $ENV{GIT_AUTHOR_EMAIL};
 
         my @parents = ( grep { $_ } $last_commit, @{ $opts->{parent} || [] } );
 
@@ -498,7 +510,7 @@ sub main {
 
 git-cpan-module:   $name
 git-cpan-version:  $version
-git-cpan-authorid: @{[ $author_obj->cpanid ]}
+git-cpan-authorid: @{[ $author_obj->{pauseid} ]}
 
 END
 
@@ -514,36 +526,6 @@ END
 
         say "created tag '$version' ($commit)";
     }
-}
-
-sub import_from_gitpan {
-    my ( $module, $opts ) = @_;
-
-    die "Usage: git cpan-import --gitpan Foo::Bar\n" unless $module;
-
-    my $cpan = CPANPLUS::Backend->new;
-    my $module_obj = $cpan->parse_module( module => $module )
-      or die "no such module $module\n";
-
-    my $dist = $module_obj->name;
-    $dist =~ s/::/-/g;
-
-    my $repo = Git::Repository->new;
-    my $url  = "git://github.com/gitpan/${dist}.git";
-
-    unless ( "gitpan\n" ~~ $repo->run('remote') ) {
-
-        # no gitpan remote? create it!
-
-        # but first, does it exist?
-
-        die "no repo found at $url\n"
-          unless eval { $repo->run( 'ls-remote', $url ) };
-
-        print $repo->run( 'remote', 'add', 'gitpan', $url );
-    }
-
-    print $repo->run(qw/ fetch gitpan /);
 
 }
 

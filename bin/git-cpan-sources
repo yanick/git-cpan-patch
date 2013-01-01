@@ -1,7 +1,0 @@
-#!perl
-
-use Git::CPAN::Patch;
-
-unshift @ARGV, 'sources';
-
-Git::CPAN::Patch->run;

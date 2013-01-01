@@ -15,40 +15,40 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 d3f72516f6c8cacd16bac19a21973d37f2fa4ccf AUTHOR_PLEDGE
-SHA1 27dc84b0c0eaa5b0c2cbe5709962dcb94288dfc3 Build.PL
-SHA1 a84658544ade292997cb0600cea5b57b1cbb1cc6 Changes
-SHA1 fd189856d1cf677602fb28b41228290a7b19ef5e INSTALL
-SHA1 33260abc93b43a44581b0b6263d7e4318f4122bb LICENSE
-SHA1 620534b9fc9ada4274879c7baf7228bcffca1fde MANIFEST
-SHA1 e78945777bdb14a0f1cc359ca23595b1abb5db69 META.json
-SHA1 1195df82a8d1748ff3ba0ce0f132b4be01307bb9 META.yml
+SHA1 5d86683d86f09df1c35d24c71946a873a2353390 Build.PL
+SHA1 e73d1bb75f6f0faeba8ff912fc376451d41f007d Changes
+SHA1 e730f54e7d410989f18a9d234a52d5ecacd0fac1 INSTALL
+SHA1 cf5dc9c929415cfa7133eed863def866ade9774d LICENSE
+SHA1 2e1746e1265c9edf4b2b7615f1b17805ad4dbeac MANIFEST
+SHA1 bccf7983de0a8d149245742799e2ee236ccb5b39 META.json
+SHA1 87c88ba10176f5680b719ac7462fdd644cf846df META.yml
 SHA1 783f7c04a387969cb5633aa8e45bf148360bdbb6 Makefile.PL
-SHA1 da8495daad60a57e7f558ebf81a6bf08cc724e94 README
-SHA1 9d6b0959958a5792fa0d075756f8f5fdc66697db README.mkdn
-SHA1 044ee0273b0ae81bc3147d6854ea7bb9d1dcc15e bin/git-backpan-init
-SHA1 1d4fae73e5302354e33cf72c383287d61d9b3a7d bin/git-cpan-clone
-SHA1 dbcef953e1db2f0077c58e560835a652e2be17a4 bin/git-cpan-format-patch
-SHA1 eec5aa539fd61d6cb736003e4b8ec60cdea3fe84 bin/git-cpan-import
-SHA1 77b78142326cb2185b4ad0dd026b47ebc265b004 bin/git-cpan-init
-SHA1 96b074850a6748fa748f727bc25c69a4caebee66 bin/git-cpan-last-version
-SHA1 ce57a61c5b1d292511179d4545fe239983cb44ee bin/git-cpan-send-email
-SHA1 70ebeda90ee780466771924ed62e3e7a97a508db bin/git-cpan-sendpatch
-SHA1 2eeb5801cefb0057b9c7e023419eb0a569c6752c bin/git-cpan-sources
-SHA1 5416a65cf1893a4dacc12733116d426990520fa5 bin/git-cpan-squash
-SHA1 ccb0703c282fefd4c56114df87034fb7518df659 bin/git-cpan-update
-SHA1 6ab6897aa5f5f18d090d98fcf9cf92ef6c373a8e bin/git-cpan-which
-SHA1 3f962cadc6d86146a3174a491717b2e5fb906478 lib/Git/CPAN/Patch.pm
-SHA1 eabc5f1c9ad9c294d643274c0d4cfb4839172df0 lib/Git/CPAN/Patch/Command/sources.pm
-SHA1 bec29e139b767be7e805c09887a7676caded8be0 lib/Git/CPAN/Patch/Import.pm
+SHA1 002b9283a7d36ba162d91d34673d91b09a2603b7 README
+SHA1 11b15b51a3334df03b5c6976f37c2d73dedea101 README.mkdn
+SHA1 013de435af7aac5ae1f0529e1bfbb9271da9754a bin/git-cpan
+SHA1 9e7b7d64f91f77f55cd864aea4a54548db9567e7 lib/Git/CPAN/Patch.pm
+SHA1 1ef26703bb2720d088f6af6f95a426a9f185aa2d lib/Git/CPAN/Patch/Command/Clone.pm
+SHA1 6a561cacace545a2bb6840e9ed47718852dc9b78 lib/Git/CPAN/Patch/Command/FormatPatch.pm
+SHA1 974980854a292b15bf670b484ae3e66a2c5eaa99 lib/Git/CPAN/Patch/Command/Import.pm
+SHA1 86527a5bc77dc498904621d095e9dbde28682c4e lib/Git/CPAN/Patch/Command/SendEmail.pm
+SHA1 1eb33948e2e1de2760ded6c8aae200a4909c97b9 lib/Git/CPAN/Patch/Command/SendPatch.pm
+SHA1 f2e1f183574775012d69ef5691e2f2a280631c4b lib/Git/CPAN/Patch/Command/Sources.pm
+SHA1 9fe0b4f640487c5f4a516ec84ca8e2d42894118c lib/Git/CPAN/Patch/Command/Squash.pm
+SHA1 1e2b3fd8bc3bb609a0854ad884fa5e654acc841c lib/Git/CPAN/Patch/Command/Update.pm
+SHA1 14b5f764c8b517073b23c4dc2e121aa268262129 lib/Git/CPAN/Patch/Command/Which.pm
+SHA1 e6a08ba6c62f4518fb700ffaab601244d8eedf6e lib/Git/CPAN/Patch/Import.pm
+SHA1 415fdaf1e077b1b2aca5d4c78305353d9e1ae61d lib/Git/CPAN/Patch/Release.pm
+SHA1 87ad5678f2678b7d380369b7e15a83b8bb5b50f0 lib/Git/CPAN/Patch/Role/Git.pm
+SHA1 d22e10eed5775adc2b79cd967fef663434d3323c lib/Git/CPAN/Patch/Role/Patch.pm
 SHA1 3cbe905b92fbc69d59a06031d5ce6c837b352aa2 t/00-compile.t
 SHA1 4f2471497515ddf996904a3e99db4e21253a764a t/00-load.t
-SHA1 473906254ecd96009795d4b7fbc82fac48c03ecd t/000-report-versions.t
-SHA1 720c53f8de60bb07d0335697062b7f47d7cb6d10 t/syntax.t
-SHA1 e88703bc16259ef5d6b5ea5970a8ec688c3b717f xt/perlcritic-progressive.t
+SHA1 65ee6df883a11d71f03fd198fa12a0e595507257 t/000-report-versions-tiny.t
+SHA1 62f5f17a9d19113f39ecd115bc7bab5adc205514 t/corpus/Git-CPAN-Patch-0.4.5.tar.gz
+SHA1 ec3f84bfd7a9ce3246e7592f4134100c6b5ce02b xt/release/unused-vars.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iEYEARECAAYFAk+8WJIACgkQ34Hwf+GwC4y7bgCfZ/i98Z0OQPiipYxO1VoeL7pe
-x7QAoKpb2Lzcc54A5jpR3GV/lKflgiIr
-=8y/g
+iEYEARECAAYFAlDjZ5YACgkQ34Hwf+GwC4yMrwCg71qY+nV1q0kzCKsJJvn1XTsK
+FHsAoOfBfFSXT2c1JTV5sccgsZ2xJL4B
+=DLtb
 -----END PGP SIGNATURE-----

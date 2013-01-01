@@ -36,6 +36,20 @@ If you are installing into a system-wide directory, you may need to run:
 
     % sudo make install
 
+As a last resort, you can manually install it. Download the tarball, untar it,
+then build it:
+
+    % perl Build.PL
+    % ./Build && ./Build test
+
+Then install it:
+
+    % ./Build install
+
+If you are installing into a system-wide directory, you may need to run:
+
+    % sudo ./Build install
+
 ## Documentation
 
 Git-CPAN-Patch documentation is available as POD.

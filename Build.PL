@@ -7,11 +7,8 @@ use Module::Build 0.3601;
 
 my %module_build_args = (
   "build_requires" => {
-    "Carp" => 0,
     "Module::Build" => "0.3601",
-    "Scalar::Util" => 0,
-    "Test::Compile" => 0,
-    "Test::More" => "0.94"
+    "Test::More" => "0.88"
   },
   "configure_requires" => {
     "Module::Build" => "0.3601"
@@ -21,7 +18,7 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Git-CPAN-Patch",
-  "dist_version" => "0.8.0",
+  "dist_version" => "1.0.0",
   "license" => "perl",
   "module_name" => "Git::CPAN::Patch",
   "recommends" => {},
@@ -30,9 +27,11 @@ my %module_build_args = (
     "Archive::Extract" => 0,
     "BackPAN::Index" => 0,
     "CLASS" => 0,
+    "CPAN::Meta" => 0,
+    "CPAN::ParseDistribution" => 0,
     "CPANPLUS" => 0,
     "Cwd" => 0,
-    "DateTime::Format::W3CDTF" => 0,
+    "DateTime" => 0,
     "File::Basename" => 0,
     "File::Find" => 0,
     "File::Path" => 0,
@@ -40,15 +39,22 @@ my %module_build_args = (
     "File::Temp" => 0,
     "File::chdir" => 0,
     "File::chmod" => 0,
-    "Getopt::Long" => 0,
     "Git::Repository" => 0,
+    "LWP::Simple" => 0,
     "LWP::UserAgent" => 0,
+    "List::Pairwise" => 0,
     "MetaCPAN::API" => 0,
     "Method::Signatures" => 0,
     "Moose" => 0,
-    "MooseX::App::Cmd" => 0,
-    "MooseX::App::Cmd::Command" => 0,
+    "Moose::Role" => 0,
+    "MooseX::App" => 0,
+    "MooseX::App::Command" => 0,
+    "MooseX::App::Meta::Role::Class::Base" => 0,
+    "MooseX::App::Role" => 0,
+    "MooseX::App::Utils" => 0,
+    "MooseX::Role::Tempdir" => 0,
     "MooseX::SemiAffordanceAccessor" => 0,
+    "Path::Class" => 0,
     "Pod::Usage" => 0,
     "autodie" => 0,
     "perl" => "v5.10.0",
@@ -57,18 +63,7 @@ my %module_build_args = (
     "warnings" => 0
   },
   "script_files" => [
-    "bin/git-backpan-init",
-    "bin/git-cpan-which",
-    "bin/git-cpan-sendpatch",
-    "bin/git-cpan-format-patch",
-    "bin/git-cpan-squash",
-    "bin/git-cpan-send-email",
-    "bin/git-cpan-init",
-    "bin/git-cpan-import",
-    "bin/git-cpan-sources",
-    "bin/git-cpan-update",
-    "bin/git-cpan-last-version",
-    "bin/git-cpan-clone"
+    "bin/git-cpan"
   ]
 );
 

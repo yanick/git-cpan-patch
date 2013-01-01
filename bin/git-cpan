@@ -1,0 +1,5 @@
+#!/usr/bin/env perl
+
+use Git::CPAN::Patch;
+
+Git::CPAN::Patch->new_with_command->run;

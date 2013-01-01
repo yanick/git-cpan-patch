@@ -4,7 +4,7 @@
       "Yanick Champoux <yanick@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300010, CPAN::Meta::Converter version 2.120630",
+   "generated_by" : "Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -24,14 +24,21 @@
             "Module::Build" : "0.3601"
          }
       },
+      "develop" : {
+         "requires" : {
+            "version" : "0.9901"
+         }
+      },
       "runtime" : {
          "requires" : {
             "Archive::Extract" : "0",
             "BackPAN::Index" : "0",
             "CLASS" : "0",
+            "CPAN::Meta" : "0",
+            "CPAN::ParseDistribution" : "0",
             "CPANPLUS" : "0",
             "Cwd" : "0",
-            "DateTime::Format::W3CDTF" : "0",
+            "DateTime" : "0",
             "File::Basename" : "0",
             "File::Find" : "0",
             "File::Path" : "0",
@@ -39,15 +46,22 @@
             "File::Temp" : "0",
             "File::chdir" : "0",
             "File::chmod" : "0",
-            "Getopt::Long" : "0",
             "Git::Repository" : "0",
+            "LWP::Simple" : "0",
             "LWP::UserAgent" : "0",
+            "List::Pairwise" : "0",
             "MetaCPAN::API" : "0",
             "Method::Signatures" : "0",
             "Moose" : "0",
-            "MooseX::App::Cmd" : "0",
-            "MooseX::App::Cmd::Command" : "0",
+            "Moose::Role" : "0",
+            "MooseX::App" : "0",
+            "MooseX::App::Command" : "0",
+            "MooseX::App::Meta::Role::Class::Base" : "0",
+            "MooseX::App::Role" : "0",
+            "MooseX::App::Utils" : "0",
+            "MooseX::Role::Tempdir" : "0",
             "MooseX::SemiAffordanceAccessor" : "0",
+            "Path::Class" : "0",
             "Pod::Usage" : "0",
             "autodie" : "0",
             "perl" : "v5.10.0",
@@ -58,25 +72,70 @@
       },
       "test" : {
          "requires" : {
-            "Carp" : "0",
-            "Scalar::Util" : "0",
-            "Test::Compile" : "0",
-            "Test::More" : "0.94"
+            "Test::More" : "0.88"
          }
       }
    },
    "provides" : {
       "Git::CPAN::Patch" : {
          "file" : "lib/Git/CPAN/Patch.pm",
-         "version" : "v0.8.0"
+         "version" : "v1.0.0"
       },
-      "Git::CPAN::Patch::Command::sources" : {
-         "file" : "lib/Git/CPAN/Patch/Command/sources.pm",
-         "version" : "v0.8.0"
+      "Git::CPAN::Patch::Command::Clone" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Clone.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Command::FormatPatch" : {
+         "file" : "lib/Git/CPAN/Patch/Command/FormatPatch.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Command::Import" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Import.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Command::SendEmail" : {
+         "file" : "lib/Git/CPAN/Patch/Command/SendEmail.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Command::SendPatch" : {
+         "file" : "lib/Git/CPAN/Patch/Command/SendPatch.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Command::Sources" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Sources.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Command::Squash" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Squash.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Command::Update" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Update.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Command::Which" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Which.pm",
+         "version" : "v1.0.0"
       },
       "Git::CPAN::Patch::Import" : {
          "file" : "lib/Git/CPAN/Patch/Import.pm",
-         "version" : "v0.8.0"
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Release" : {
+         "file" : "lib/Git/CPAN/Patch/Release.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Role::Git" : {
+         "file" : "lib/Git/CPAN/Patch/Role/Git.pm",
+         "version" : "v1.0.0"
+      },
+      "Git::CPAN::Patch::Role::Patch" : {
+         "file" : "lib/Git/CPAN/Patch/Role/Patch.pm",
+         "version" : "v1.0.0"
+      },
+      "MooseX::App::Meta::Role::Class::Base" : {
+         "file" : "lib/Git/CPAN/Patch.pm",
+         "version" : "v1.0.0"
       }
    },
    "release_status" : "stable",
@@ -92,7 +151,7 @@
          "web" : "https://github.com/yanick/git-cpan-patch"
       }
    },
-   "version" : "0.8.0",
+   "version" : "1.0.0",
    "x_author_pledge" : {
       "version" : 1
    },
