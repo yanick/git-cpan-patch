@@ -1,0 +1,13 @@
+
+# CPAN Covenant for Git-CPAN-Patch
+
+I, Yanick Champoux <yanick@cpan.org>, hereby give modules@perl.org permission to grant co-maintainership 
+to Git-CPAN-Patch, if all the following conditions are met:
+
+   (1) I haven't released the module for a year or more
+   (2) There are outstanding issues in the module's public bug tracker
+   (3) Email to my CPAN email address hasn't been answered after a month
+   (4) The requester wants to make worthwhile changes that will benefit CPAN
+
+In the event of my death, then the time-limits in (1) and (3) do not apply.
+

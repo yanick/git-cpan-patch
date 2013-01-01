@@ -1,4 +1,10 @@
 package Git::CPAN::Patch::Release;
+BEGIN {
+  $Git::CPAN::Patch::Release::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::Release::VERSION = '1.0.0';
+}
 
 use strict;
 use warnings;
