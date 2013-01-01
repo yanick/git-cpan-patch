@@ -1,18 +1,30 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
-
-1.0.0     2013-01-01
-
  [API CHANGES]
- - Major rewrite using MooseX::App
 
  [BUG FIXES]
+ - Hide the MooseX::App monkeypatching from the cpan indexer.
+
+ [DOCUMENTATION]
+
+ [ENHANCEMENTS]
+
+ [NEW FEATURES]
+
+ [STATISTICS]
+
+1.0.0 2013-01-01
+ [API CHANGES]
+ - Major rewrite using MooseX::App
 
  [ENHANCEMENTS]
  - cpan-git-import now uses metacpan instead of CPANPLUS
  - removed gitpan support, as it has gone dormant
- 
+
+ [STATISTICS]
+ - code churn: 38 files changed, 1594 insertions(+), 1244 deletions(-)
+
 0.8.0 2012-05-22
  - code churn: 1 files changed, 4 insertions(+), 86 deletions(-)
 
@@ -109,14 +121,14 @@ Revision history for Git::CPAN::Patch
    Schwern.
  - Use File::chmod instead of shell chmod to avoid shell quoting problems.
    Thanks to Schwern.
- - Don't try to tag releases with no versions.	Thanks to Schwern.
+ - Don't try to tag releases with no versions.	      Thanks to Schwern.
  - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
  - Skip empty tarballs.  Thanks to Schwern.
  - Skip bad archives.  Thanks to Schwern.
 
 0.2.1 Thur Sept 3 2009
- - git-cpan-import is working with new version of Git.	Thanks to Alexandr
-   Ciornii. (rt#48713)
+ - git-cpan-import is working with new version of Git.	      Thanks to
+   Alexandr Ciornii. (rt#48713)
  - Require CPANPLUS 0.84 or higher. Thanks to Alexandr Ciornii. (rt#48713)
 
 0.2.0 2009-07-11
@@ -136,8 +148,8 @@ Revision history for Git::CPAN::Patch
 0.1.5 2009-03-28
  - Fixed typo in git-cpan-squash doc (rt bug 43294),  patch by Slaven Rezic
  - Removed warning from git-cpan-import,  patch by Pedro Melo
- - scripts' shebang line now set to Perl's interpreter	used by Build.PL
-   (rt bug 43366)
+ - scripts' shebang line now set to Perl's interpreter	      used by
+   Build.PL (rt bug 43366)
 
 0.1.4 2009-02-14
  - backpan-init now calls cpan-import properly (fix by Slaven Rezic)

@@ -18,7 +18,8 @@ use warnings;
         return $result;
     };
 
-    package MooseX::App::Meta::Role::Class::Base;
+    package   # hide from PAUSE
+        MooseX::App::Meta::Role::Class::Base;
 
     sub command_usage_header {
         my ($self,$command_meta_class) = @_;
