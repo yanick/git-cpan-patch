@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Import::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Import::VERSION = '1.0.0';
+  $Git::CPAN::Patch::Import::VERSION = '1.0.1';
 }
 
 use 5.10.0;
@@ -366,7 +366,7 @@ sub main {
         $last_version = $repo->run("cpan-last-version");
     }
 
-    die("Usage: git cpan-import Foo::Bar\n") unless $module;
+    die("Usage: git-cpan import Foo::Bar\n") unless $module;
 
     # first we figure out a module object from the module argument
 

@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Squash::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Squash::VERSION = '1.0.0';
+  $Git::CPAN::Patch::Command::Squash::VERSION = '1.0.1';
 }
 #ABSTRACT: Combine multiple commits into one patch
 
@@ -50,11 +50,11 @@ __END__
 
 =head1 SYNOPSIS
 
-    % git cpan-squash temp_submit_branch
+    % git-cpan squash temp_submit_branch
 
-    % git ci -m "This is my message"
+    % git commit -m "This is my message"
 
-    % git cpan-sendpatch --compose
+    % git-cpan send-patch --compose
 
     # delete the branch now that we're done
     % git checkout master

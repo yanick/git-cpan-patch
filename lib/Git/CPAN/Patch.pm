@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::VERSION = '1.0.0';
+  $Git::CPAN::Patch::VERSION = '1.0.1';
 }
 #ABSTRACT: Patch CPAN modules using Git
 
@@ -24,13 +24,8 @@ use warnings;
         return $result;
     };
 
-    package MooseX::App::Meta::Role::Class::Base;
-BEGIN {
-  $MooseX::App::Meta::Role::Class::Base::AUTHORITY = 'cpan:YANICK';
-}
-{
-  $MooseX::App::Meta::Role::Class::Base::VERSION = '1.0.0';
-}
+    package   # hide from PAUSE
+        MooseX::App::Meta::Role::Class::Base;
 
     sub command_usage_header {
         my ($self,$command_meta_class) = @_;

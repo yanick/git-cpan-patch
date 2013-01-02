@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::SendPatch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::SendPatch::VERSION = '1.0.0';
+  $Git::CPAN::Patch::Command::SendPatch::VERSION = '1.0.1';
 }
 #ABSTRACT: create patch files and submit them to RT
 
@@ -42,12 +42,12 @@ __END__
 
 =head1 SYNOPSIS
 
-    % git cpan-sendpatch
+    % git-cpan send-patch
 
 =head1 DESCRIPTION
 
-This command runs C<git cpan-format-patch> and then if there is one patch file
-runs C<git cpan-send-email>.
+This command runs C<git-cpan format-patch> and then if there is one patch file
+runs C<git-cpan send-email>.
 
 Multiple patches are not sent because C<git send-email> creates a separate
 message for each patch file, resulting in multiple tickets.

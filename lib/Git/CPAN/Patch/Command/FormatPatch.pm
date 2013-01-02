@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::FormatPatch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::FormatPatch::VERSION = '1.0.0';
+  $Git::CPAN::Patch::Command::FormatPatch::VERSION = '1.0.1';
 }
 #ABSTRACT: Format patches using C<cpan/master> as the origin reference
 
@@ -32,7 +32,7 @@ __END__
 
 =head1 SYNOPSIS
 
-    % git cpan-format-patch
+    % git-cpan format-patch
 
 =head1 DESCRIPTION
 

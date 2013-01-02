@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Sources::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Sources::VERSION = '1.0.0';
+  $Git::CPAN::Patch::Command::Sources::VERSION = '1.0.1';
 }
 #ABSTRACT: lists sources for the module
 
@@ -125,7 +125,7 @@ has '+app' => (
 sub execute {
     my ( $self, $opts, $args ) = @_;
 
-    die "usage: git cpan-sources <distribution>\n" unless $args->[0];
+    die "usage: git-cpan sources <distribution>\n" unless $args->[0];
 
     $self->set_target( $args->[0] );
     my $meta = $self->distribution_meta;

@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Update::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Update::VERSION = '1.0.0';
+  $Git::CPAN::Patch::Command::Update::VERSION = '1.0.1';
 }
 #ABSTRACT: Import the latest version of a module and rebase the current branch
 
@@ -49,11 +49,11 @@ __END__
 
 =head1 SYNOPSIS
 
-    % git cpan-update
+    % git-cpan update
 
 =head1 DESCRIPTION
 
-This command runs C<git cpan-import>, and then if C<cpan/master> was updated
+This command runs C<git-cpan import>, and then if C<cpan/master> was updated
 runs C<git rebase cpan/master>, bringing your patches up to date with the
 upstream.
 
