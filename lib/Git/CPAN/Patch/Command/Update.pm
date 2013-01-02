@@ -1,4 +1,10 @@
 package Git::CPAN::Patch::Command::Update;
+BEGIN {
+  $Git::CPAN::Patch::Command::Update::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::Command::Update::VERSION = '1.0.1';
+}
 #ABSTRACT: Import the latest version of a module and rebase the current branch
 
 use 5.10.0;
