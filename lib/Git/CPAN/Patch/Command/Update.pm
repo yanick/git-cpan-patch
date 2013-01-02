@@ -43,11 +43,11 @@ __END__
 
 =head1 SYNOPSIS
 
-    % git cpan-update
+    % git-cpan update
 
 =head1 DESCRIPTION
 
-This command runs C<git cpan-import>, and then if C<cpan/master> was updated
+This command runs C<git-cpan import>, and then if C<cpan/master> was updated
 runs C<git rebase cpan/master>, bringing your patches up to date with the
 upstream.
 

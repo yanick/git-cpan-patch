@@ -360,7 +360,7 @@ sub main {
         $last_version = $repo->run("cpan-last-version");
     }
 
-    die("Usage: git cpan-import Foo::Bar\n") unless $module;
+    die("Usage: git-cpan import Foo::Bar\n") unless $module;
 
     # first we figure out a module object from the module argument
 

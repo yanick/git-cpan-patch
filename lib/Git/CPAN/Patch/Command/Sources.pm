@@ -119,7 +119,7 @@ has '+app' => (
 sub execute {
     my ( $self, $opts, $args ) = @_;
 
-    die "usage: git cpan-sources <distribution>\n" unless $args->[0];
+    die "usage: git-cpan sources <distribution>\n" unless $args->[0];
 
     $self->set_target( $args->[0] );
     my $meta = $self->distribution_meta;

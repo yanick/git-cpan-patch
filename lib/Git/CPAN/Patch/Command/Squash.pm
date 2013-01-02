@@ -44,11 +44,11 @@ __END__
 
 =head1 SYNOPSIS
 
-    % git cpan-squash temp_submit_branch
+    % git-cpan squash temp_submit_branch
 
-    % git ci -m "This is my message"
+    % git commit -m "This is my message"
 
-    % git cpan-sendpatch --compose
+    % git-cpan send-patch --compose
 
     # delete the branch now that we're done
     % git checkout master

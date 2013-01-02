@@ -237,13 +237,13 @@ __END__
 
     # takes any string CPANPLUS handles:
 
-    % git cpan-import Foo::Bar
-    % git cpan-import A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
-    % git cpan-import http://backpan.cpan.org/authors/id/A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
+    % git-cpan import Foo::Bar
+    % git-cpan import A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
+    % git-cpan import http://backpan.cpan.org/authors/id/A/AU/AUTHORID/Foo-Bar-0.03.tar.gz
 
     # If the repository is already initialized, can be run with no arguments to
     # import the latest version
-    git cpan-import
+    git-cpan import
 
 
 =head1 DESCRIPTION
@@ -289,7 +289,7 @@ For example, this will set the current HEAD of the master branch as a parent of
 the imported CPAN package:
 
     $ git checkout master
-    $ git cpan-import --parent HEAD My-Module
+    $ git-cpan import --parent HEAD My-Module
 
 More than one '--parent' can be specified.
 

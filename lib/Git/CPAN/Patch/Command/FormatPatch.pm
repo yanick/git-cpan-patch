@@ -26,7 +26,7 @@ __END__
 
 =head1 SYNOPSIS
 
-    % git cpan-format-patch
+    % git-cpan format-patch
 
 =head1 DESCRIPTION
 
