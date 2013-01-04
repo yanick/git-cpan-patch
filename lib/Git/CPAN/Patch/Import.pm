@@ -1,4 +1,10 @@
 package Git::CPAN::Patch::Import;
+BEGIN {
+  $Git::CPAN::Patch::Import::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::Import::VERSION = '1.0.2';
+}
 
 use 5.10.0;
 
