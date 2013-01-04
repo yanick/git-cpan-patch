@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Import::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Import::VERSION = '1.0.1';
+  $Git::CPAN::Patch::Command::Import::VERSION = '1.0.2';
 }
 #ABSTRACT: Import a module into a git repository
 
@@ -66,7 +66,7 @@ has thing_to_import => (
 method get_releases_from_url($url) {
     require LWP::Simple;
 
-    my $name = $url =~ s#^.*/##r;
+    ( my $name = $url ) =~ s#^.*/##;
     my $destination = $self->tmpdir . '/'.$name;
 
     say "copying '$url' to '$destination'";

@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::VERSION = '1.0.1';
+  $Git::CPAN::Patch::VERSION = '1.0.2';
 }
 #ABSTRACT: Patch CPAN modules using Git
 

@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::SendPatch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::SendPatch::VERSION = '1.0.1';
+  $Git::CPAN::Patch::Command::SendPatch::VERSION = '1.0.2';
 }
 #ABSTRACT: create patch files and submit them to RT
 
