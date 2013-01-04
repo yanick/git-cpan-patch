@@ -60,7 +60,7 @@ has thing_to_import => (
 method get_releases_from_url($url) {
     require LWP::Simple;
 
-    my $name = $url =~ s#^.*/##r;
+    ( my $name = $url ) =~ s#^.*/##;
     my $destination = $self->tmpdir . '/'.$name;
 
     say "copying '$url' to '$destination'";
