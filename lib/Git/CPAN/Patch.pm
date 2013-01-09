@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::VERSION = '1.0.2';
+  $Git::CPAN::Patch::VERSION = '1.0.3';
 }
 #ABSTRACT: Patch CPAN modules using Git
 
@@ -81,7 +81,7 @@ use MooseX::App;
 use MooseX::SemiAffordanceAccessor;
 
 use MetaCPAN::API;
-use Method::Signatures;
+use Method::Signatures 20121201;
 
 app_base 'git-cpan';
 app_namespace 'Git::CPAN::Patch::Command';
