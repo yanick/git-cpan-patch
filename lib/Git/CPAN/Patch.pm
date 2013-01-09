@@ -75,7 +75,7 @@ use MooseX::App;
 use MooseX::SemiAffordanceAccessor;
 
 use MetaCPAN::API;
-use Method::Signatures;
+use Method::Signatures 20121201;
 
 app_base 'git-cpan';
 app_namespace 'Git::CPAN::Patch::Command';
