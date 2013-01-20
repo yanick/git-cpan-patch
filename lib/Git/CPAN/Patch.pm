@@ -4,74 +4,7 @@ package Git::CPAN::Patch;
 use strict;
 use warnings;
 
-{
-    no warnings 'redefine';
-
-    use MooseX::App::Utils;
-    use MooseX::App::Meta::Role::Class::Base;
-
-    #FIXME very naughty monkeypatching
-    my $orig = \&MooseX::App::Utils::class_to_command;
-    *MooseX::App::Utils::class_to_command = sub {
-        my $result = $orig->(@_);
-        $result =~ y/_/-/;
-        return $result;
-    };
-
-    package   # hide from PAUSE
-        MooseX::App::Meta::Role::Class::Base;
-
-    sub command_usage_header {
-        my ($self,$command_meta_class) = @_;
-    
-        my $caller = $self->app_base;
-        my $command;
-
-        if ( $command_meta_class ) {
-            my $command_class = $command_meta_class->name;
-            $command = $self->command_class_to_command($command_class);
-
-            # for a proof of concept, let's go hard-core
-            $command_class =~ s#::#/#g;
-            $command_class .= ".pm";
-
-            if( open my $fh, '<', $INC{$command_class} ) {
-            my $content = do { local $/ = <$fh> };
-
-            return $self->command_message(
-                header  => 'usage:',
-                body    => $1 ) 
-                if $content =~ m#^=head1\s+SYNOPSIS.*?\n(.*?)(?:^=|\Z)#sm;
-            }
-        }
-
-        $command ||= 'command';
-        
-        return $self->command_message(
-            header  => 'usage:',
-            body    => MooseX::App::Utils::format_text("$caller $command [long options...]
-$caller help
-$caller $command --help"));
-    }
-
-    sub command_usage_command {
-        my ($self,$command_meta_class) = @_;
-        
-        $command_meta_class ||= $self;
-        
-        my $command_class = $command_meta_class->name;
-        my $command_name = $self->command_class_to_command($command_class);
-        
-        my @usage;
-        push(@usage,$self->command_usage_header($command_meta_class));
-        push(@usage,$self->command_usage_description($command_meta_class));
-        push(@usage,$self->command_usage_attributes($command_meta_class));
-        
-        return @usage;
-    }
-}
-
-use MooseX::App;
+use MooseX::App 1.15;
 use MooseX::SemiAffordanceAccessor;
 
 use MetaCPAN::API;
@@ -79,6 +12,10 @@ use Method::Signatures 20121201;
 
 app_base 'git-cpan';
 app_namespace 'Git::CPAN::Patch::Command';
+
+app_command_name {
+    join '-', map { lc } $_[0] =~ /([A-Z]+[a-z]+)/g;
+};
 
 option man => (
     is => 'ro',
