@@ -1,19 +1,12 @@
 Revision history for Git::CPAN::Patch
 
-{{$NEXT}}
- [API CHANGES]
-
+1.1.1 2013-04-01
  [BUG FIXES]
- - changes in latest MooseX::App broke Git::CPAN::Patch 
-    (RT#84349, reported by Peter Valdemar Mørch)
-
- [DOCUMENTATION]
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
+ - changes in latest MooseX::App broke Git::CPAN::Patch  (RT#84349,
+   reported by Peter Valdemar Mørch)
 
  [STATISTICS]
+ - code churn: 8 files changed, 47 insertions(+), 18 deletions(-)
 
 1.1.0 2013-01-19
  [ENHANCEMENTS]
@@ -154,7 +147,7 @@ Revision history for Git::CPAN::Patch
  - Use File::chmod instead of shell chmod to avoid shell quoting problems.
    Thanks to Schwern.
  - Don't try to tag releases with no versions.				   
-     Thanks to Schwern.
+      Thanks to Schwern.
  - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
  - Skip empty tarballs.  Thanks to Schwern.
  - Skip bad archives.  Thanks to Schwern.
