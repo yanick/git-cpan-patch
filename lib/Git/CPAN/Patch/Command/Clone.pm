@@ -11,15 +11,21 @@ use Path::Class;
 use Method::Signatures;
 
 use MooseX::App::Command;
-
 extends 'Git::CPAN::Patch::Command::Import';
+
+parameter xtarget => (
+    is       => 'rw',
+    isa      => 'Str',
+    required => 0,
+);
+
 
 before import_release => method($release) {
     state $first = 1;
 
     return unless $first;
 
-    my $target = $self->extra_argv->[1] || $release->dist_name;
+    my $target = $self->target || $release->dist_name;
 
     say "creating $target";
 

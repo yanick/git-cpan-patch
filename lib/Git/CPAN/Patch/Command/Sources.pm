@@ -49,6 +49,11 @@ option backpan => (
     documentation => 'show backpan information',
 );
 
+parameter thingy => (
+    is  => 'rw',
+    isa => 'Str',
+);
+
 has release_meta => (
     is => 'ro',
     lazy => 1,
@@ -56,7 +61,7 @@ has release_meta => (
         require MetaCPAN::API;
         my $mcpan = MetaCPAN::API->new;
 
-        my $thingy = $self->extra_argv->[0];
+        my $thingy = $self->thingy;
 
         eval { $mcpan->release( 
                 distribution => $mcpan->module($thingy)->{distribution}
@@ -91,7 +96,7 @@ method run {
     my $BackPAN_URL = "http://backpan.perl.org/";
     if ( $self->backpan ) {
         say "backpan:";
-        my $dist = $self->backpan_index->dist($self->extra_argv->[0])
+        my $dist = $self->backpan_index->dist($self->thingy)
             or die "could not find distribution on BackPAN";
 
         say "  - ", $BackPAN_URL . "/" . $_->prefix 

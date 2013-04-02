@@ -13,12 +13,18 @@ use MooseX::App::Command;
 
 with 'Git::CPAN::Patch::Role::Git';
 
+has first_arg => (
+    is => 'ro',
+    isa => 'Str',
+    required => 0,
+);
+
 has branch => (
     is => 'ro',
     isa => 'Str',
     lazy => 1,
     default => method {
-        $self->extra_argv->[0] || 'patch';
+        $self->first_arg || 'patch';
     },
 );
 

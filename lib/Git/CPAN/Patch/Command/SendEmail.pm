@@ -13,8 +13,14 @@ use MooseX::App::Command;
 with 'Git::CPAN::Patch::Role::Git';
 with 'Git::CPAN::Patch::Role::Patch';
 
+parameter extra_arg => (
+    is => 'rw',
+    isa => 'Str',
+    required => 0,
+);
+
 method run {
-    $self->send_emails($self->extra_argv);
+    $self->send_emails($self->extra_arg);
 }
 
 __PACKAGE__->meta->make_immutable;
