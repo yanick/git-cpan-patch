@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Import::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Import::VERSION = '1.1.0';
+  $Git::CPAN::Patch::Command::Import::VERSION = '1.1.1';
 }
 #ABSTRACT: Import a module into a git repository
 
@@ -53,15 +53,12 @@ option parent  => (
     documentation => q{Parent of the imported release (can have more than one)},
 );
 
-has thing_to_import => (
-    is => 'rw',
-    lazy => 1,
-    default => method {
-        # TODO proper usage death
-        $self->extra_argv->[0] 
-            or die 'argument required';
-    },
+parameter thing_to_import => (
+    is  => 'rw',
+    isa => 'Str',
+    required => 0,
 );
+
 
 method get_releases_from_url($url) {
     require LWP::Simple;

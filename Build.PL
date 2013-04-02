@@ -18,7 +18,7 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Git-CPAN-Patch",
-  "dist_version" => "1.1.0",
+  "dist_version" => "1.1.1",
   "license" => "perl",
   "module_name" => "Git::CPAN::Patch",
   "recommends" => {},
@@ -47,7 +47,7 @@ my %module_build_args = (
     "Method::Signatures" => 20121201,
     "Moose" => 0,
     "Moose::Role" => 0,
-    "MooseX::App" => "1.15",
+    "MooseX::App" => "1.19",
     "MooseX::App::Command" => 0,
     "MooseX::App::Role" => 0,
     "MooseX::Role::Tempdir" => 0,

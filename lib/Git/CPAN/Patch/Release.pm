@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Release::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Release::VERSION = '1.1.0';
+  $Git::CPAN::Patch::Release::VERSION = '1.1.1';
 }
 
 use strict;

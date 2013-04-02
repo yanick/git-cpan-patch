@@ -3,14 +3,14 @@ BEGIN {
   $Git::CPAN::Patch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::VERSION = '1.1.0';
+  $Git::CPAN::Patch::VERSION = '1.1.1';
 }
 #ABSTRACT: Patch CPAN modules using Git
 
 use strict;
 use warnings;
 
-use MooseX::App 1.15;
+use MooseX::App 1.19;
 use MooseX::SemiAffordanceAccessor;
 
 use MetaCPAN::API;
