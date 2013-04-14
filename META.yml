@@ -1,0 +1,117 @@
+---
+abstract: 'Patch CPAN modules using Git'
+author:
+  - 'Yanick Champoux <yanick@cpan.org>'
+build_requires:
+  Module::Build: 0.3601
+  Test::More: 0.88
+configure_requires:
+  Module::Build: 0.3601
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Git-CPAN-Patch
+provides:
+  Git::CPAN::Patch:
+    file: lib/Git/CPAN/Patch.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::Clone:
+    file: lib/Git/CPAN/Patch/Command/Clone.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::FormatPatch:
+    file: lib/Git/CPAN/Patch/Command/FormatPatch.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::Import:
+    file: lib/Git/CPAN/Patch/Command/Import.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::SendEmail:
+    file: lib/Git/CPAN/Patch/Command/SendEmail.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::SendPatch:
+    file: lib/Git/CPAN/Patch/Command/SendPatch.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::Sources:
+    file: lib/Git/CPAN/Patch/Command/Sources.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::Squash:
+    file: lib/Git/CPAN/Patch/Command/Squash.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::Update:
+    file: lib/Git/CPAN/Patch/Command/Update.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Command::Which:
+    file: lib/Git/CPAN/Patch/Command/Which.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Import:
+    file: lib/Git/CPAN/Patch/Import.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Release:
+    file: lib/Git/CPAN/Patch/Release.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Role::Git:
+    file: lib/Git/CPAN/Patch/Role/Git.pm
+    version: v1.1.2
+  Git::CPAN::Patch::Role::Patch:
+    file: lib/Git/CPAN/Patch/Role/Patch.pm
+    version: v1.1.2
+requires:
+  Archive::Extract: 0
+  BackPAN::Index: 0
+  CLASS: 0
+  CPAN::Meta: 0
+  CPAN::ParseDistribution: 0
+  CPANPLUS: 0
+  Cwd: 0
+  DateTime: 0
+  File::Basename: 0
+  File::Find: 0
+  File::Path: 0
+  File::Spec::Functions: 0
+  File::Temp: 0
+  File::chdir: 0
+  File::chmod: 0
+  Git::Repository: 0
+  LWP::Simple: 0
+  LWP::UserAgent: 0
+  List::Pairwise: 0
+  MetaCPAN::API: 0
+  Method::Signatures: 20121201
+  Moose: 0
+  Moose::Role: 0
+  MooseX::App: 1.21
+  MooseX::App::Command: 0
+  MooseX::App::Role: 0
+  MooseX::Role::Tempdir: 0
+  MooseX::SemiAffordanceAccessor: 0
+  Path::Class: 0
+  Pod::Usage: 0
+  autodie: 0
+  perl: v5.10.0
+  strict: 0
+  version: 0
+  warnings: 0
+resources:
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Git-CPAN-Patch
+  homepage: http://search.cpan.org/dist/Git-CPAN-Patch/
+  repository: https://github.com/yanick/git-cpan-patch.git
+version: 1.1.2
+x_author_pledge:
+  version: 1
+x_authority: cpan:YANICK
+x_contributors:
+  - '2shortplanks <mark@twoshortplanks.com>'
+  - 'Michael G. Schwern <schwern@pobox.com>'
+  - 'Mike Doherty <doherty@cs.dal.ca>'
+  - 'Pedro Melo <melo@simplicidade.org>'
+  - 'Peter Valdemar Mørch <peter@morch.com>'
+  - 'Slaven Rezic <slaven@rezic.de>'
+  - 'Tim Bunce via RT <bug-Git-CPAN-Patch@rt.cpan.org>'
+  - 'Yanick Champoux <yanick@babyl.dyndns.org>'
+  - 'Yanick Champoux <yanick@byakko.(none)>'
+  - 'Yuval Kogman <nothingmuch@woobling.org>'
+  - 'brian d foy <brian.d.foy@gmail.com>'
+  - 'chocolateboy <chocolate@cpan.org>'
+  - 'slaven@rezic.de <slaven@rezic.de>'

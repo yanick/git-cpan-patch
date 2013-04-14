@@ -1,4 +1,10 @@
 package Git::CPAN::Patch::Role::Git;
+BEGIN {
+  $Git::CPAN::Patch::Role::Git::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::Role::Git::VERSION = '1.1.2';
+}
 #ABSTRACT: provides access to Git repository
 
 use strict;
