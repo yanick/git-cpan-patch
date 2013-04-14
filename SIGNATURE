@@ -15,41 +15,41 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 d3f72516f6c8cacd16bac19a21973d37f2fa4ccf AUTHOR_PLEDGE
-SHA1 b851779219293686cdda245fc28042c89c1f9a84 Build.PL
+SHA1 9199d721f0805221bc671b84a6723fb519df3ddd Build.PL
 SHA1 c7fc61fb588e4ba8f5912c3f8bde8ab6d325a913 CONTRIBUTORS
-SHA1 aa2bf9fd49a83cf44c8bbf5841f1753b651f0117 Changes
+SHA1 6ba0809faa1ae390add01f9363e88f10860e113f Changes
 SHA1 e730f54e7d410989f18a9d234a52d5ecacd0fac1 INSTALL
 SHA1 cf5dc9c929415cfa7133eed863def866ade9774d LICENSE
 SHA1 b50bc965df8f0ca610e47ac17a1796cfe39331fc MANIFEST
-SHA1 ddaaa2ddf67cbb3bf47e2d64eb432009e4c9d0ff META.json
-SHA1 e43dba7b689a3013f1402940a1828ee4ff31f30c META.yml
+SHA1 72a6e33407964070fcdb1d772850ac656d344a52 META.json
+SHA1 c19baa5bf344f707172e995ac0284e0676f955bd META.yml
 SHA1 783f7c04a387969cb5633aa8e45bf148360bdbb6 Makefile.PL
 SHA1 002b9283a7d36ba162d91d34673d91b09a2603b7 README
 SHA1 11b15b51a3334df03b5c6976f37c2d73dedea101 README.mkdn
 SHA1 013de435af7aac5ae1f0529e1bfbb9271da9754a bin/git-cpan
-SHA1 858d0f3ac691ea40d0fe13a0bde5781b69be7de2 lib/Git/CPAN/Patch.pm
-SHA1 7d09532e7045d50fea7be5c6a6e2e3a01e595638 lib/Git/CPAN/Patch/Command/Clone.pm
-SHA1 a35bf9e47900011bf58c6f17195d2c9418ad5cd7 lib/Git/CPAN/Patch/Command/FormatPatch.pm
-SHA1 0f73d0df3571637dac509fba876c6c9d491efa7a lib/Git/CPAN/Patch/Command/Import.pm
-SHA1 d2a878e643dcd97866c46fd1c87d0c9da619b97f lib/Git/CPAN/Patch/Command/SendEmail.pm
-SHA1 8b755b300feb3f7b4149dd9c25336b748caa8bf0 lib/Git/CPAN/Patch/Command/SendPatch.pm
-SHA1 170327f14de3498fdc48b3f5951cf5dfca0e8514 lib/Git/CPAN/Patch/Command/Sources.pm
-SHA1 2a73419d1b1b2d0d270002668a9c152bce399526 lib/Git/CPAN/Patch/Command/Squash.pm
-SHA1 275c635e1cc5e157d25c22956c3029cc21dd46a4 lib/Git/CPAN/Patch/Command/Update.pm
-SHA1 8a304ccb0a94730149673f909603c4f290200793 lib/Git/CPAN/Patch/Command/Which.pm
-SHA1 4c298cd889aab073cecb4befc44060c8ff980844 lib/Git/CPAN/Patch/Import.pm
-SHA1 803a6eaa9fc98033fdc28b8b37f40a670ced44fa lib/Git/CPAN/Patch/Release.pm
-SHA1 a7a6c9bd7655bd27d9ec48fbfae4fa29608759d0 lib/Git/CPAN/Patch/Role/Git.pm
-SHA1 5ae4e5a8b5bf1256d871fd7fd61a4077ecd57a5b lib/Git/CPAN/Patch/Role/Patch.pm
+SHA1 358f5cd55113cf09acc44d82df41bb5f32efbaec lib/Git/CPAN/Patch.pm
+SHA1 497b3dcf8e8025a41f536d223f433acc647392c1 lib/Git/CPAN/Patch/Command/Clone.pm
+SHA1 35d88ccce94bfe2a008d4073b38e00243ffa222a lib/Git/CPAN/Patch/Command/FormatPatch.pm
+SHA1 afbc5d2b0e4885bdef5ca7d4090e35462c67ecc2 lib/Git/CPAN/Patch/Command/Import.pm
+SHA1 0523ecf5c425b76abf07aae082037bb03307c712 lib/Git/CPAN/Patch/Command/SendEmail.pm
+SHA1 58623568a32ef8dbe20ee502d39ea7adf86a9c95 lib/Git/CPAN/Patch/Command/SendPatch.pm
+SHA1 b7153dd7df28f396aba4c4a83aafc2002cb7804c lib/Git/CPAN/Patch/Command/Sources.pm
+SHA1 7ce46cbae21534bb729f6be9252bff28384ffee9 lib/Git/CPAN/Patch/Command/Squash.pm
+SHA1 1c56096e3aa6546ba87eb731bcf852f09421bc3b lib/Git/CPAN/Patch/Command/Update.pm
+SHA1 b2e9b7ad76c1788074f578a092615a2e3c114b46 lib/Git/CPAN/Patch/Command/Which.pm
+SHA1 5c676ffc790d2aa1efdc0cdf41d970263c1a49f4 lib/Git/CPAN/Patch/Import.pm
+SHA1 e5a8ad22568ed674aa6776f4e2d2d3c5906edc06 lib/Git/CPAN/Patch/Release.pm
+SHA1 5e1e6d803e80a9018024151a4aa9986376b2adc6 lib/Git/CPAN/Patch/Role/Git.pm
+SHA1 c7f4e8f940f1c2dc5d5308e5c33283242aebc6e4 lib/Git/CPAN/Patch/Role/Patch.pm
 SHA1 3cbe905b92fbc69d59a06031d5ce6c837b352aa2 t/00-compile.t
 SHA1 4f2471497515ddf996904a3e99db4e21253a764a t/00-load.t
-SHA1 16de31a864c4039cb19acf7fa6fc7cb708721c7d t/000-report-versions-tiny.t
+SHA1 4a7ef38c8a5086d343fe65420a23d804040ce836 t/000-report-versions-tiny.t
 SHA1 62f5f17a9d19113f39ecd115bc7bab5adc205514 t/corpus/Git-CPAN-Patch-0.4.5.tar.gz
 SHA1 ec3f84bfd7a9ce3246e7592f4134100c6b5ce02b xt/release/unused-vars.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iEYEARECAAYFAlFaMlUACgkQ34Hwf+GwC4yGUgCg3I0VdwLw4u7awJV1dNMnORNB
-oAoAoMSSVWZepvM5l+tL+VuZQJ3GcrZ9
-=UJrz
+iEYEARECAAYFAlFq+3MACgkQ34Hwf+GwC4yW6ACfYr6JqFo93GrXvuoyBgF+C1rl
+BDEAn08HAdkxX3gku0TwwibWEBnqUP+b
+=zzs4
 -----END PGP SIGNATURE-----

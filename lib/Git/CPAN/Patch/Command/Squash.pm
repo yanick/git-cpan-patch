@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Squash::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Squash::VERSION = '1.1.1';
+  $Git::CPAN::Patch::Command::Squash::VERSION = '1.1.2';
 }
 #ABSTRACT: Combine multiple commits into one patch
 
