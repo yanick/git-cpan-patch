@@ -2,6 +2,8 @@ Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
 
+1.1.2     2013-04-14
+
  [BUG FIXES]
  - bump dependency for MooseX::App to solve boolean
     argument problem.
