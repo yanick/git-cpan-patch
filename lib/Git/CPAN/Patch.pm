@@ -4,7 +4,7 @@ package Git::CPAN::Patch;
 use strict;
 use warnings;
 
-use MooseX::App 1.19;
+use MooseX::App 1.21;
 use MooseX::SemiAffordanceAccessor;
 
 use MetaCPAN::API;
