@@ -4,7 +4,7 @@ package Git::CPAN::Patch::Role::Git;
 use strict;
 use warnings;
 
-use Method::Signatures;
+use Method::Signatures::Simple;
 use version;
 
 use Moose::Role;

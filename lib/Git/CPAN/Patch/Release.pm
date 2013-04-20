@@ -3,7 +3,7 @@ package Git::CPAN::Patch::Release;
 use strict;
 use warnings;
 
-use Method::Signatures;
+use Method::Signatures::Simple;
 use File::chdir;
 use File::Temp qw/ tempdir /;
 use version;
