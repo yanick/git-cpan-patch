@@ -3,6 +3,8 @@ Revision history for Git::CPAN::Patch
 {{$NEXT}}
 
 1.1.2     2013-04-14
+ - Move to Method:::Signature::Simple as M::S doesn't work with 5.17.11. 
+    (GH#14, ilmari)
 
  [BUG FIXES]
  - bump dependency for MooseX::App to solve boolean
