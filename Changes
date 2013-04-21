@@ -1,6 +1,8 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+
+1.2.0     2013-04-21
  [API CHANGES]
 
  [BUG FIXES]
