@@ -6,7 +6,7 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures;
+use Method::Signatures::Simple;
 use MooseX::App::Command;
 
 with 'Git::CPAN::Patch::Role::Git'; 
