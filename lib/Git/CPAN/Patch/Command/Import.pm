@@ -7,7 +7,7 @@ use strict;
 use warnings;
 
 use File::Temp qw/ tempdir /;
-use Method::Signatures;
+use Method::Signatures::Simple;
 use Git::Repository;
 use Git::CPAN::Patch::Import;
 use File::chdir;
