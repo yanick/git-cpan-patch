@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Sources::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Sources::VERSION = '1.1.2';
+  $Git::CPAN::Patch::Command::Sources::VERSION = '1.2.0';
 }
 #ABSTRACT: lists sources for the module
 
@@ -12,7 +12,7 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures;
+use Method::Signatures::Simple;
 use List::Pairwise qw/ mapp /;
 
 use MooseX::App::Command;

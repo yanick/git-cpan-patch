@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Update::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Update::VERSION = '1.1.2';
+  $Git::CPAN::Patch::Command::Update::VERSION = '1.2.0';
 }
 #ABSTRACT: Import the latest version of a module and rebase the current branch
 
@@ -12,7 +12,7 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures;
+use Method::Signatures::Simple;
 use Git::Repository;
 
 use MooseX::App::Command;

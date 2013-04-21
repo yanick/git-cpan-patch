@@ -3,14 +3,14 @@ BEGIN {
   $Git::CPAN::Patch::Role::Git::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Role::Git::VERSION = '1.1.2';
+  $Git::CPAN::Patch::Role::Git::VERSION = '1.2.0';
 }
 #ABSTRACT: provides access to Git repository
 
 use strict;
 use warnings;
 
-use Method::Signatures;
+use Method::Signatures::Simple;
 use version;
 
 use Moose::Role;

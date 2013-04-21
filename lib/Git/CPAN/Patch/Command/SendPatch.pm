@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::SendPatch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::SendPatch::VERSION = '1.1.2';
+  $Git::CPAN::Patch::Command::SendPatch::VERSION = '1.2.0';
 }
 #ABSTRACT: create patch files and submit them to RT
 
@@ -12,7 +12,7 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures;
+use Method::Signatures::Simple;
 
 use MooseX::App::Command;
 

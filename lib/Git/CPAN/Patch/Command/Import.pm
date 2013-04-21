@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Import::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Import::VERSION = '1.1.2';
+  $Git::CPAN::Patch::Command::Import::VERSION = '1.2.0';
 }
 #ABSTRACT: Import a module into a git repository
 
@@ -13,7 +13,7 @@ use strict;
 use warnings;
 
 use File::Temp qw/ tempdir /;
-use Method::Signatures;
+use Method::Signatures::Simple;
 use Git::Repository;
 use Git::CPAN::Patch::Import;
 use File::chdir;

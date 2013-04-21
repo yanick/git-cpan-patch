@@ -3,13 +3,13 @@ BEGIN {
   $Git::CPAN::Patch::Release::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Release::VERSION = '1.1.2';
+  $Git::CPAN::Patch::Release::VERSION = '1.2.0';
 }
 
 use strict;
 use warnings;
 
-use Method::Signatures;
+use Method::Signatures::Simple;
 use File::chdir;
 use File::Temp qw/ tempdir /;
 use version;

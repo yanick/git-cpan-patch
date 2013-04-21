@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Clone::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Clone::VERSION = '1.1.2';
+  $Git::CPAN::Patch::Command::Clone::VERSION = '1.2.0';
 }
 #ABSTRACT: Clone a CPAN module's history into a new git repository
 
@@ -14,7 +14,7 @@ use warnings;
 
 use autodie;
 use Path::Class;
-use Method::Signatures;
+use Method::Signatures::Simple;
 
 use MooseX::App::Command;
 extends 'Git::CPAN::Patch::Command::Import';
@@ -42,7 +42,7 @@ before import_release => method($release) {
     $first = 0;
 };
 
-after import_release => method(...) {
+after import_release => method {
     $self->git_run( 'reset', '--hard', $self->last_commit );    
 };
 

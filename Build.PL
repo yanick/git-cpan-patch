@@ -18,7 +18,7 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Git-CPAN-Patch",
-  "dist_version" => "1.1.2",
+  "dist_version" => "1.2.0",
   "license" => "perl",
   "module_name" => "Git::CPAN::Patch",
   "recommends" => {},
@@ -44,7 +44,7 @@ my %module_build_args = (
     "LWP::UserAgent" => 0,
     "List::Pairwise" => 0,
     "MetaCPAN::API" => 0,
-    "Method::Signatures" => 20121201,
+    "Method::Signatures::Simple" => "1.07",
     "Moose" => 0,
     "Moose::Role" => 0,
     "MooseX::App" => "1.21",

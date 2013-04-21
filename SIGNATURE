@@ -15,41 +15,41 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 d3f72516f6c8cacd16bac19a21973d37f2fa4ccf AUTHOR_PLEDGE
-SHA1 9199d721f0805221bc671b84a6723fb519df3ddd Build.PL
-SHA1 c7fc61fb588e4ba8f5912c3f8bde8ab6d325a913 CONTRIBUTORS
-SHA1 6ba0809faa1ae390add01f9363e88f10860e113f Changes
+SHA1 c8a8a77c7ab4b9cd6ce5273890a14747016f040e Build.PL
+SHA1 4370667eae5e4045b3fbcaf270b3721df05db2e3 CONTRIBUTORS
+SHA1 b18ee3ae4417ed6363ddd07de26f059d7a709c41 Changes
 SHA1 e730f54e7d410989f18a9d234a52d5ecacd0fac1 INSTALL
 SHA1 cf5dc9c929415cfa7133eed863def866ade9774d LICENSE
 SHA1 b50bc965df8f0ca610e47ac17a1796cfe39331fc MANIFEST
-SHA1 72a6e33407964070fcdb1d772850ac656d344a52 META.json
-SHA1 c19baa5bf344f707172e995ac0284e0676f955bd META.yml
+SHA1 c537247609d2ef726c9ca71a3ccd192c421e2ea5 META.json
+SHA1 7709845ee5b347a1d206164ab2d5be68129efefc META.yml
 SHA1 783f7c04a387969cb5633aa8e45bf148360bdbb6 Makefile.PL
 SHA1 002b9283a7d36ba162d91d34673d91b09a2603b7 README
 SHA1 11b15b51a3334df03b5c6976f37c2d73dedea101 README.mkdn
 SHA1 013de435af7aac5ae1f0529e1bfbb9271da9754a bin/git-cpan
-SHA1 358f5cd55113cf09acc44d82df41bb5f32efbaec lib/Git/CPAN/Patch.pm
-SHA1 497b3dcf8e8025a41f536d223f433acc647392c1 lib/Git/CPAN/Patch/Command/Clone.pm
-SHA1 35d88ccce94bfe2a008d4073b38e00243ffa222a lib/Git/CPAN/Patch/Command/FormatPatch.pm
-SHA1 afbc5d2b0e4885bdef5ca7d4090e35462c67ecc2 lib/Git/CPAN/Patch/Command/Import.pm
-SHA1 0523ecf5c425b76abf07aae082037bb03307c712 lib/Git/CPAN/Patch/Command/SendEmail.pm
-SHA1 58623568a32ef8dbe20ee502d39ea7adf86a9c95 lib/Git/CPAN/Patch/Command/SendPatch.pm
-SHA1 b7153dd7df28f396aba4c4a83aafc2002cb7804c lib/Git/CPAN/Patch/Command/Sources.pm
-SHA1 7ce46cbae21534bb729f6be9252bff28384ffee9 lib/Git/CPAN/Patch/Command/Squash.pm
-SHA1 1c56096e3aa6546ba87eb731bcf852f09421bc3b lib/Git/CPAN/Patch/Command/Update.pm
-SHA1 b2e9b7ad76c1788074f578a092615a2e3c114b46 lib/Git/CPAN/Patch/Command/Which.pm
-SHA1 5c676ffc790d2aa1efdc0cdf41d970263c1a49f4 lib/Git/CPAN/Patch/Import.pm
-SHA1 e5a8ad22568ed674aa6776f4e2d2d3c5906edc06 lib/Git/CPAN/Patch/Release.pm
-SHA1 5e1e6d803e80a9018024151a4aa9986376b2adc6 lib/Git/CPAN/Patch/Role/Git.pm
-SHA1 c7f4e8f940f1c2dc5d5308e5c33283242aebc6e4 lib/Git/CPAN/Patch/Role/Patch.pm
+SHA1 5318e9d42e6fb6f569a7b7fe5c37e53931d315bc lib/Git/CPAN/Patch.pm
+SHA1 68fbe064e96822f47fe467bb3b5bd01acb6ff1f4 lib/Git/CPAN/Patch/Command/Clone.pm
+SHA1 00ddb137c5f4fb0f8fd313dd5de1518edac86252 lib/Git/CPAN/Patch/Command/FormatPatch.pm
+SHA1 649a30eabbcbcad8ba1286da412f9b91a9ed9c5a lib/Git/CPAN/Patch/Command/Import.pm
+SHA1 a7221fd99dc0ec5221494b3a11fe70422643bc23 lib/Git/CPAN/Patch/Command/SendEmail.pm
+SHA1 f3faa47669770cfa23acaec7c9fd285064548e40 lib/Git/CPAN/Patch/Command/SendPatch.pm
+SHA1 e48221a628d9f2e531c2b617887a468f81f3069f lib/Git/CPAN/Patch/Command/Sources.pm
+SHA1 ed61915ab40648a34159a6dbeca7cf79f932df77 lib/Git/CPAN/Patch/Command/Squash.pm
+SHA1 910b9ee1846bc9deade78d82ad06581d9b541654 lib/Git/CPAN/Patch/Command/Update.pm
+SHA1 a3c3c01a5c9eadcef1ea57c5344f7842a63539c0 lib/Git/CPAN/Patch/Command/Which.pm
+SHA1 7db9341ebe11485a8930aef3ba7474fb66967490 lib/Git/CPAN/Patch/Import.pm
+SHA1 8110699e445c67eb0ebdd2b84120f1e7781b2bf7 lib/Git/CPAN/Patch/Release.pm
+SHA1 31fb9f56d36738158b1274cd346203ff8520a46e lib/Git/CPAN/Patch/Role/Git.pm
+SHA1 f52318be85d6a10a46962cedbefa0462005ccdac lib/Git/CPAN/Patch/Role/Patch.pm
 SHA1 3cbe905b92fbc69d59a06031d5ce6c837b352aa2 t/00-compile.t
 SHA1 4f2471497515ddf996904a3e99db4e21253a764a t/00-load.t
-SHA1 4a7ef38c8a5086d343fe65420a23d804040ce836 t/000-report-versions-tiny.t
+SHA1 ae503c485ec1c686af31bdc54fbc16b38d0aea93 t/000-report-versions-tiny.t
 SHA1 62f5f17a9d19113f39ecd115bc7bab5adc205514 t/corpus/Git-CPAN-Patch-0.4.5.tar.gz
 SHA1 ec3f84bfd7a9ce3246e7592f4134100c6b5ce02b xt/release/unused-vars.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iEYEARECAAYFAlFq+3MACgkQ34Hwf+GwC4yW6ACfYr6JqFo93GrXvuoyBgF+C1rl
-BDEAn08HAdkxX3gku0TwwibWEBnqUP+b
-=zzs4
+iEYEARECAAYFAlF0ZG4ACgkQ34Hwf+GwC4xyPwCgqxnUpn6qZUJCx7aICq/1/Slx
+HiUAoO2HKT4VYlHZn5oBzoBowgsP1LRG
+=v+Qm
 -----END PGP SIGNATURE-----
