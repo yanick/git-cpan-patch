@@ -1,19 +1,12 @@
 Revision history for Git::CPAN::Patch
 
-{{$NEXT}}
- [API CHANGES]
-
- [BUG FIXES]
-
- [DOCUMENTATION]
-
+1.2.0 2013-04-21
  [ENHANCEMENTS]
  - Move to Method:::Signature::Simple as M::S doesn't work with 5.17.11. 
-    (GH#14, ilmari)
-
- [NEW FEATURES]
+   (GH#14, ilmari)
 
  [STATISTICS]
+ - code churn: 14 files changed, 32 insertions(+), 16 deletions(-)
 
 1.1.2 2013-04-14
  [BUG FIXES]

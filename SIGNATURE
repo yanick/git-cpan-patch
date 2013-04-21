@@ -1,0 +1,55 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.68.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 d3f72516f6c8cacd16bac19a21973d37f2fa4ccf AUTHOR_PLEDGE
+SHA1 c8a8a77c7ab4b9cd6ce5273890a14747016f040e Build.PL
+SHA1 4370667eae5e4045b3fbcaf270b3721df05db2e3 CONTRIBUTORS
+SHA1 b18ee3ae4417ed6363ddd07de26f059d7a709c41 Changes
+SHA1 e730f54e7d410989f18a9d234a52d5ecacd0fac1 INSTALL
+SHA1 cf5dc9c929415cfa7133eed863def866ade9774d LICENSE
+SHA1 b50bc965df8f0ca610e47ac17a1796cfe39331fc MANIFEST
+SHA1 c537247609d2ef726c9ca71a3ccd192c421e2ea5 META.json
+SHA1 7709845ee5b347a1d206164ab2d5be68129efefc META.yml
+SHA1 783f7c04a387969cb5633aa8e45bf148360bdbb6 Makefile.PL
+SHA1 002b9283a7d36ba162d91d34673d91b09a2603b7 README
+SHA1 11b15b51a3334df03b5c6976f37c2d73dedea101 README.mkdn
+SHA1 013de435af7aac5ae1f0529e1bfbb9271da9754a bin/git-cpan
+SHA1 5318e9d42e6fb6f569a7b7fe5c37e53931d315bc lib/Git/CPAN/Patch.pm
+SHA1 68fbe064e96822f47fe467bb3b5bd01acb6ff1f4 lib/Git/CPAN/Patch/Command/Clone.pm
+SHA1 00ddb137c5f4fb0f8fd313dd5de1518edac86252 lib/Git/CPAN/Patch/Command/FormatPatch.pm
+SHA1 649a30eabbcbcad8ba1286da412f9b91a9ed9c5a lib/Git/CPAN/Patch/Command/Import.pm
+SHA1 a7221fd99dc0ec5221494b3a11fe70422643bc23 lib/Git/CPAN/Patch/Command/SendEmail.pm
+SHA1 f3faa47669770cfa23acaec7c9fd285064548e40 lib/Git/CPAN/Patch/Command/SendPatch.pm
+SHA1 e48221a628d9f2e531c2b617887a468f81f3069f lib/Git/CPAN/Patch/Command/Sources.pm
+SHA1 ed61915ab40648a34159a6dbeca7cf79f932df77 lib/Git/CPAN/Patch/Command/Squash.pm
+SHA1 910b9ee1846bc9deade78d82ad06581d9b541654 lib/Git/CPAN/Patch/Command/Update.pm
+SHA1 a3c3c01a5c9eadcef1ea57c5344f7842a63539c0 lib/Git/CPAN/Patch/Command/Which.pm
+SHA1 7db9341ebe11485a8930aef3ba7474fb66967490 lib/Git/CPAN/Patch/Import.pm
+SHA1 8110699e445c67eb0ebdd2b84120f1e7781b2bf7 lib/Git/CPAN/Patch/Release.pm
+SHA1 31fb9f56d36738158b1274cd346203ff8520a46e lib/Git/CPAN/Patch/Role/Git.pm
+SHA1 f52318be85d6a10a46962cedbefa0462005ccdac lib/Git/CPAN/Patch/Role/Patch.pm
+SHA1 3cbe905b92fbc69d59a06031d5ce6c837b352aa2 t/00-compile.t
+SHA1 4f2471497515ddf996904a3e99db4e21253a764a t/00-load.t
+SHA1 ae503c485ec1c686af31bdc54fbc16b38d0aea93 t/000-report-versions-tiny.t
+SHA1 62f5f17a9d19113f39ecd115bc7bab5adc205514 t/corpus/Git-CPAN-Patch-0.4.5.tar.gz
+SHA1 ec3f84bfd7a9ce3246e7592f4134100c6b5ce02b xt/release/unused-vars.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAlF0ZG4ACgkQ34Hwf+GwC4xyPwCgqxnUpn6qZUJCx7aICq/1/Slx
+HiUAoO2HKT4VYlHZn5oBzoBowgsP1LRG
+=v+Qm
+-----END PGP SIGNATURE-----
