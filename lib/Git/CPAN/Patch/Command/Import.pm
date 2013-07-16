@@ -23,6 +23,8 @@ with 'MooseX::Role::Tempdir' => {
     tmpdir_opts => { CLEANUP => 1 },
 };
 
+use experimental qw(smartmatch);
+
 our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
 our $BackPAN_URL = "http://backpan.perl.org/";
 
@@ -75,7 +77,7 @@ method get_releases_from_cpan($dist_or_module) {
     require MetaCPAN::API;
     my $mcpan = MetaCPAN::API->new;
 
-    my $release = eval { $mcpan->release( 
+    my $release = eval { $mcpan->release(
                         distribution => $mcpan->module($dist_or_module)->{distribution}
                   ) }
         || eval { $mcpan->release( distribution => $dist_or_module ) }
@@ -97,7 +99,7 @@ method get_releases_from_cpan($dist_or_module) {
 
     say "fetching ".$release->{download_url};
 
-    LWP::Simple::is_error( 
+    LWP::Simple::is_error(
         LWP::Simple::mirror( $release->{download_url} =>
             $destination ) ) and die;
 
@@ -109,14 +111,14 @@ method get_releases_from_backpan($dist_name) {
     require BackPAN::Index;
     my $backpan = BackPAN::Index->new;
 
-    my $dist =$backpan->dist($dist_name) 
+    my $dist =$backpan->dist($dist_name)
         or die "couldn't find distribution '$dist_name' on BackPAN";
 
-    return 
+    return
         map {
-            my $archive_file = $self->tmpdir . '/' . $_->filename;   
+            my $archive_file = $self->tmpdir . '/' . $_->filename;
             my $release_url = $BackPAN_URL . "/" . $_->prefix;
-            say "fetching $release_url"; 
+            say "fetching $release_url";
             my $okay = not LWP::Simple::is_error(
                 LWP::Simple::mirror( $release_url =>
                 $archive_file ) );
@@ -148,9 +150,9 @@ method import_release($release) {
     my $import_version = $release->dist_version;
 
     if ( $self->check and $self->last_imported_version ) {
-        return say $release->dist_name . " $import_version has already been imported\n" 
+        return say $release->dist_name . " $import_version has already been imported\n"
             if $import_version == $self->last_imported_version;
-    
+
         return say sprintf "last imported version %s is more recent than %s"
             . ", can't import",
             $self->last_imported_version, $import_version
@@ -160,7 +162,7 @@ method import_release($release) {
     # create a tree object for the CPAN module
     # this imports the source code without touching the user's working directory or
     # index
-    
+
     my $tree = do {
         # don't overwrite the user's index
         local $ENV{GIT_INDEX_FILE} = $self->tmpdir . "/temp_git_index";
@@ -174,7 +176,7 @@ method import_release($release) {
         $write_tree_repo->run( qw(add -v --force .) );
         $write_tree_repo->run( "write-tree" );
     };
-    
+
     # create a commit for the imported tree object and write it into
     # refs/heads/cpan/master
     {
@@ -212,7 +214,7 @@ END
 
         say "created tag '@{[ $release->dist_version->normal ]}' ($commit)";
     }
-    
+
 }
 
 method run {
@@ -271,7 +273,7 @@ Enables Backpan index fetching (to get the author and release date).
 =item --check, --nocheck
 
 Explicitly enables/disables version checking.  If version checking is
-enabled, which is the default, git-cpan-import will refuse to import a 
+enabled, which is the default, git-cpan-import will refuse to import a
 version of the package
 that has a smaller version number than the HEAD of the branch I<cpan/master>.
 
@@ -282,7 +284,7 @@ importing, so that when a patch has been incorporated into an upstream
 version the generated commit is like a merge commit, incorporating both
 the CPAN history and the user's local history.
 
-For example, this will set the current HEAD of the master branch as a parent of 
+For example, this will set the current HEAD of the master branch as a parent of
 the imported CPAN package:
 
     $ git checkout master
@@ -291,7 +293,7 @@ the imported CPAN package:
 More than one '--parent' can be specified.
 
 =back
-  
+
 =head1 AUTHORS
 
 Yuval Kogman C<< <nothingmuch@woobling.org> >>
