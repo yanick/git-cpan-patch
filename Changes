@@ -1,21 +1,24 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
-
-1.2.0     2013-04-21
  [API CHANGES]
 
  [BUG FIXES]
+ - Was using 'return $foo or die' instead of 'return $foo || die'.
+    [RT#86950, Reini Urban]
 
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
- - Move to Method:::Signature::Simple as M::S doesn't work with 5.17.11. 
-    (GH#14, ilmari)
 
  [NEW FEATURES]
 
  [STATISTICS]
+
+1.2.0 2013-04-21
+ [ENHANCEMENTS]
+ - Move to Method:::Signature::Simple as M::S doesn't work with 5.17.11. 
+   (GH#14, ilmari)
 
 1.1.2 2013-04-14
  [BUG FIXES]
