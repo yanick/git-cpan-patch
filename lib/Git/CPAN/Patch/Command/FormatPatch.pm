@@ -1,4 +1,10 @@
 package Git::CPAN::Patch::Command::FormatPatch;
+BEGIN {
+  $Git::CPAN::Patch::Command::FormatPatch::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::Command::FormatPatch::VERSION = '1.2.1';
+}
 #ABSTRACT: Format patches using C<cpan/master> as the origin reference
 
 use 5.10.0;
