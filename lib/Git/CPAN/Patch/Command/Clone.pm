@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Clone::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Clone::VERSION = '1.2.0';
+  $Git::CPAN::Patch::Command::Clone::VERSION = '1.2.1';
 }
 #ABSTRACT: Clone a CPAN module's history into a new git repository
 

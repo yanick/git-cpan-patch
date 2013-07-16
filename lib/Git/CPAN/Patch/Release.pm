@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Release::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Release::VERSION = '1.2.0';
+  $Git::CPAN::Patch::Release::VERSION = '1.2.1';
 }
 
 use strict;
@@ -35,7 +35,7 @@ has extracted_dir => (
         my $archive = Archive::Extract->new( archive => $self->tarball );
         $archive->extract( to => $self->tmpdir );
 
-        return $archive->extract_path or die "extraction failed\n";
+        return $archive->extract_path || die "extraction failed\n";
     },
 );
 
@@ -55,7 +55,6 @@ has meta_info => (
     default => method {
         require CPAN::Meta;
         local $CWD = $self->extracted_dir;
-        $DB::single = 1;
         return eval { CPAN::Meta->load_file('META.json') } 
             || eval { CPAN::Meta->load_file('META.yml')  }; 
     },

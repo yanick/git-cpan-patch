@@ -77,59 +77,59 @@
    "provides" : {
       "Git::CPAN::Patch" : {
          "file" : "lib/Git/CPAN/Patch.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::Clone" : {
          "file" : "lib/Git/CPAN/Patch/Command/Clone.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::FormatPatch" : {
          "file" : "lib/Git/CPAN/Patch/Command/FormatPatch.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::Import" : {
          "file" : "lib/Git/CPAN/Patch/Command/Import.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::SendEmail" : {
          "file" : "lib/Git/CPAN/Patch/Command/SendEmail.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::SendPatch" : {
          "file" : "lib/Git/CPAN/Patch/Command/SendPatch.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::Sources" : {
          "file" : "lib/Git/CPAN/Patch/Command/Sources.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::Squash" : {
          "file" : "lib/Git/CPAN/Patch/Command/Squash.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::Update" : {
          "file" : "lib/Git/CPAN/Patch/Command/Update.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Command::Which" : {
          "file" : "lib/Git/CPAN/Patch/Command/Which.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Import" : {
          "file" : "lib/Git/CPAN/Patch/Import.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Release" : {
          "file" : "lib/Git/CPAN/Patch/Release.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Role::Git" : {
          "file" : "lib/Git/CPAN/Patch/Role/Git.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       },
       "Git::CPAN::Patch::Role::Patch" : {
          "file" : "lib/Git/CPAN/Patch/Role/Patch.pm",
-         "version" : "v1.2.0"
+         "version" : "v1.2.1"
       }
    },
    "release_status" : "stable",
@@ -145,7 +145,7 @@
          "web" : "https://github.com/yanick/git-cpan-patch"
       }
    },
-   "version" : "1.2.0",
+   "version" : "1.2.1",
    "x_author_pledge" : {
       "version" : 1
    },
@@ -157,6 +157,7 @@
       "Mike Doherty <doherty@cs.dal.ca>",
       "Pedro Melo <melo@simplicidade.org>",
       "Peter Valdemar M\u00c3\u00b8rch <peter@morch.com>",
+      "Reini Urban <RURBAN@cpan.org>",
       "Slaven Rezic <slaven@rezic.de>",
       "Tim Bunce via RT <bug-Git-CPAN-Patch@rt.cpan.org>",
       "Yanick Champoux <yanick@babyl.dyndns.org>",

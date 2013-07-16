@@ -1,5 +1,12 @@
 Revision history for Git::CPAN::Patch
 
+1.2.1 2013-07-15
+ [BUG FIXES]
+ - Was using 'return $foo or die' instead of 'return $foo || die'.
+
+ [STATISTICS]
+ - code churn: 2 files changed, 11 insertions(+), 4 deletions(-)
+
 1.2.0 2013-04-21
  [ENHANCEMENTS]
  - Move to Method:::Signature::Simple as M::S doesn't work with 5.17.11. 

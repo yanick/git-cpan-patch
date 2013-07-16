@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Sources::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Command::Sources::VERSION = '1.2.0';
+  $Git::CPAN::Patch::Command::Sources::VERSION = '1.2.1';
 }
 #ABSTRACT: lists sources for the module
 
