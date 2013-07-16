@@ -4,8 +4,6 @@ Revision history for Git::CPAN::Patch
  [API CHANGES]
 
  [BUG FIXES]
- - Was using 'return $foo or die' instead of 'return $foo || die'.
-    [RT#86950, Reini Urban]
 
  [DOCUMENTATION]
 
@@ -14,6 +12,13 @@ Revision history for Git::CPAN::Patch
  [NEW FEATURES]
 
  [STATISTICS]
+
+1.2.1 2013-07-15
+ [BUG FIXES]
+ - Was using 'return $foo or die' instead of 'return $foo || die'.
+
+ [STATISTICS]
+ - code churn: 2 files changed, 11 insertions(+), 4 deletions(-)
 
 1.2.0 2013-04-21
  [ENHANCEMENTS]
