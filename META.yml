@@ -17,46 +17,46 @@ name: Git-CPAN-Patch
 provides:
   Git::CPAN::Patch:
     file: lib/Git/CPAN/Patch.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::Clone:
     file: lib/Git/CPAN/Patch/Command/Clone.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::FormatPatch:
     file: lib/Git/CPAN/Patch/Command/FormatPatch.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::Import:
     file: lib/Git/CPAN/Patch/Command/Import.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::SendEmail:
     file: lib/Git/CPAN/Patch/Command/SendEmail.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::SendPatch:
     file: lib/Git/CPAN/Patch/Command/SendPatch.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::Sources:
     file: lib/Git/CPAN/Patch/Command/Sources.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::Squash:
     file: lib/Git/CPAN/Patch/Command/Squash.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::Update:
     file: lib/Git/CPAN/Patch/Command/Update.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Command::Which:
     file: lib/Git/CPAN/Patch/Command/Which.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Import:
     file: lib/Git/CPAN/Patch/Import.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Release:
     file: lib/Git/CPAN/Patch/Release.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Role::Git:
     file: lib/Git/CPAN/Patch/Role/Git.pm
-    version: v1.2.1
+    version: v1.3.0
   Git::CPAN::Patch::Role::Patch:
     file: lib/Git/CPAN/Patch/Role/Patch.pm
-    version: v1.2.1
+    version: v1.3.0
 requires:
   Archive::Extract: 0
   BackPAN::Index: 0
@@ -89,6 +89,7 @@ requires:
   Path::Class: 0
   Pod::Usage: 0
   autodie: 0
+  experimental: 0
   perl: v5.10.0
   strict: 0
   version: 0
@@ -97,7 +98,7 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Git-CPAN-Patch
   homepage: http://search.cpan.org/dist/Git-CPAN-Patch/
   repository: https://github.com/yanick/git-cpan-patch.git
-version: 1.2.1
+version: 1.3.0
 x_author_pledge:
   version: 1
 x_authority: cpan:YANICK
@@ -106,6 +107,7 @@ x_contributors:
   - 'Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>'
   - 'Michael G. Schwern <schwern@pobox.com>'
   - 'Mike Doherty <doherty@cs.dal.ca>'
+  - 'Mike Doherty <mike@mikedoherty.ca>'
   - 'Pedro Melo <melo@simplicidade.org>'
   - 'Peter Valdemar Mørch <peter@morch.com>'
   - 'Reini Urban <RURBAN@cpan.org>'

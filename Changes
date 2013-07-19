@@ -1,5 +1,12 @@
 Revision history for Git::CPAN::Patch
 
+1.3.0 2013-07-18
+ [ENHANCEMENTS]
+ - Silence smart-match warnings for 5.18+
+
+ [STATISTICS]
+ - code churn: 2 files changed, 25 insertions(+), 16 deletions(-)
+
 1.2.1 2013-07-15
  [BUG FIXES]
  - Was using 'return $foo or die' instead of 'return $foo || die'.

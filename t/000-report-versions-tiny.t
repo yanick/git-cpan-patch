@@ -81,6 +81,7 @@ eval { $v .= pmver('Path::Class','any version') };
 eval { $v .= pmver('Pod::Usage','any version') };
 eval { $v .= pmver('Test::More','0.88') };
 eval { $v .= pmver('autodie','any version') };
+eval { $v .= pmver('experimental','any version') };
 eval { $v .= pmver('strict','any version') };
 eval { $v .= pmver('version','0.9901') };
 eval { $v .= pmver('warnings','any version') };

@@ -18,7 +18,7 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Git-CPAN-Patch",
-  "dist_version" => "1.2.1",
+  "dist_version" => "1.3.0",
   "license" => "perl",
   "module_name" => "Git::CPAN::Patch",
   "recommends" => {},
@@ -55,6 +55,7 @@ my %module_build_args = (
     "Path::Class" => 0,
     "Pod::Usage" => 0,
     "autodie" => 0,
+    "experimental" => 0,
     "perl" => "v5.10.0",
     "strict" => 0,
     "version" => 0,
