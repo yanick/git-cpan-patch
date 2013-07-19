@@ -8,6 +8,8 @@ Revision history for Git::CPAN::Patch
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - Silence smart-match warnings for 5.18+
+    [GH#15, Mike Doherty]
 
  [NEW FEATURES]
 
