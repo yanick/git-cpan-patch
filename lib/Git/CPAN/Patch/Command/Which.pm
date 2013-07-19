@@ -1,4 +1,10 @@
 package Git::CPAN::Patch::Command::Which;
+BEGIN {
+  $Git::CPAN::Patch::Command::Which::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::Command::Which::VERSION = '1.3.0';
+}
 #ABSTRACT: reports the repository's module
 
 use 5.10.0;

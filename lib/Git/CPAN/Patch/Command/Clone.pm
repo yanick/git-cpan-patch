@@ -1,4 +1,10 @@
 package Git::CPAN::Patch::Command::Clone;
+BEGIN {
+  $Git::CPAN::Patch::Command::Clone::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::Command::Clone::VERSION = '1.3.0';
+}
 #ABSTRACT: Clone a CPAN module's history into a new git repository
 
 use 5.10.0;
