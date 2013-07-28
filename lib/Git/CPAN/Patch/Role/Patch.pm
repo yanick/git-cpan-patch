@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Role::Patch::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Role::Patch::VERSION = '1.3.0';
+  $Git::CPAN::Patch::Role::Patch::VERSION = '1.3.1';
 }
 
 use 5.10.0;

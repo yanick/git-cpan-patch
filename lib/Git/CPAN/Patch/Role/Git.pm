@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Role::Git::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $Git::CPAN::Patch::Role::Git::VERSION = '1.3.0';
+  $Git::CPAN::Patch::Role::Git::VERSION = '1.3.1';
 }
 #ABSTRACT: provides access to Git repository
 
