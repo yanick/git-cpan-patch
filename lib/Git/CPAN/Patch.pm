@@ -1,4 +1,10 @@
 package Git::CPAN::Patch;
+BEGIN {
+  $Git::CPAN::Patch::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::VERSION = '1.3.1';
+}
 #ABSTRACT: Patch CPAN modules using Git
 
 use 5.10.1;

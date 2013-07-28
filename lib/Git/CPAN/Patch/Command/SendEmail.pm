@@ -1,4 +1,10 @@
 package Git::CPAN::Patch::Command::SendEmail;
+BEGIN {
+  $Git::CPAN::Patch::Command::SendEmail::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $Git::CPAN::Patch::Command::SendEmail::VERSION = '1.3.1';
+}
 #ABSTRACT: use C<git-send-email> to submit patches to CPAN RT
 
 use 5.10.0;
