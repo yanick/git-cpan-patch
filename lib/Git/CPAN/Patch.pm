@@ -1,6 +1,8 @@
 package Git::CPAN::Patch;
 #ABSTRACT: Patch CPAN modules using Git
 
+use 5.10.1;
+
 use strict;
 use warnings;
 

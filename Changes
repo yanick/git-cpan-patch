@@ -4,6 +4,7 @@ Revision history for Git::CPAN::Patch
  [API CHANGES]
 
  [BUG FIXES]
+ - Bump minimal Perl requirements to 5.10.1 (for smartmatches).
 
  [DOCUMENTATION]
 
