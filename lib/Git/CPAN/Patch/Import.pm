@@ -346,6 +346,9 @@ sub main {
     my $module = shift;
     my $opts   = shift;
 
+    $DB::single = 1;
+    
+
     if ( delete $opts->{backpan} ) {
         return import_from_backpan( $module, $opts );
     }

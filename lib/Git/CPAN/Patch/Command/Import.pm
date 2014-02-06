@@ -32,7 +32,10 @@ option backpan => (
     is => 'ro',
     isa => 'Bool',
     default => 0,
-    documentation => 'Imports from BackPAN',
+    documentation => 'Imports from BackPAN (deprecated)',
+    trigger => sub {
+        warn "option '--backpan' is deprecated, whole history is now imported by default\n";
+    },
 );
 
 option check => (
@@ -55,6 +58,14 @@ parameter thing_to_import => (
     required => 0,
 );
 
+has metacpan => (
+    is => 'ro',
+    default => sub {
+        require MetaCPAN::API;
+        return MetaCPAN::API->new;
+    },
+);
+
 
 method get_releases_from_url($url) {
     require LWP::Simple;
@@ -75,35 +86,31 @@ method get_releases_from_local_file($path) {
 
 method get_releases_from_cpan($dist_or_module) {
     require MetaCPAN::API;
-    my $mcpan = MetaCPAN::API->new;
 
-    my $release = eval { $mcpan->release(
-                        distribution => $mcpan->module($dist_or_module)->{distribution}
-                  ) }
-        || eval { $mcpan->release( distribution => $dist_or_module ) }
-        || die "could not find release for '$dist_or_module' on metacpan\n";
+    # is it a module belonging to a release?
+    my $dist = eval{ $self->metacpan->module($dist_or_module)->{distribution} 
+    } || $dist_or_module;
 
-
-     if ( $release->{distribution} eq 'perl' ) {
+     if ( $dist eq 'perl' ) {
         die "$dist_or_module is a core modules, ",
             "clone perl from $PERL_GIT_URL instead.\n";
     }
 
-    return $self->get_releases_from_backpan($release->{distribution})
-        if $self->backpan;
+    my $releases = eval { $self->metacpan->release( search => {
+        q => "distribution:$dist",
+        fields => 'name,author,date,download_url,version',
+        ( filter => 'status:latest' ) x !$self->backpan
+    }) }
+    or die "could not find release for '$dist_or_module' on metacpan\n";
 
-    require LWP::Simple;
+    my @releases = @{ $releases->{hits}{hits} };
 
-    my $name = $release->{archive};
-    my $destination = $self->tmpdir . '/'.$name;
+    $_->{author_cpan} = delete $_->{author} for @releases;
 
-    say "fetching ".$release->{download_url};
-
-    LWP::Simple::is_error(
-        LWP::Simple::mirror( $release->{download_url} =>
-            $destination ) ) and die;
-
-    return Git::CPAN::Patch::Release->new( tarball => $destination );
+    return sort { $a->date cmp $b->date } 
+           map { Git::CPAN::Patch::Release->new( %{$_->{fields}} ) }  
+                @releases;
+               
 }
 
 method get_releases_from_backpan($dist_name) {
@@ -185,8 +192,9 @@ method import_release($release) {
         # TODO authors and author_date
 
         # create the commit object
-        $ENV{GIT_AUTHOR_NAME}  ||= 'unknown';
-        $ENV{GIT_AUTHOR_EMAIL} ||= 'unknown';
+        $ENV{GIT_AUTHOR_NAME}  ||= $release->author_name;
+        $ENV{GIT_AUTHOR_EMAIL} ||= $release->author_email;
+        $ENV{GIT_AUTHOR_DATE} ||= $release->date;
 
         my @parents = grep { $_ } $self->last_commit, @{ $self->parent };
 
@@ -198,7 +206,7 @@ method import_release($release) {
 
 git-cpan-module:   @{[ $release->dist_name ]}
 git-cpan-version:  @{[ $release->dist_version ]}
-git-cpan-authorid: unknown
+git-cpan-authorid: @{[ $release->author_cpan ]}
 
 END
 
