@@ -14,17 +14,6 @@ with 'MooseX::Role::Tempdir' => {
     tmpdir_opts => { CLEANUP => 1 },
 };
 
-has date => (
-    is => 'ro',
-    isa => 'Str',
-    lazy => 1,
-    default => sub {
-        my $self = shift;
-        
-
-    }
-);
-
 has author_name => (
     is => 'ro',
     isa => 'Str',
