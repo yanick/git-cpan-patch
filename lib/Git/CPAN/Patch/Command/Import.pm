@@ -28,14 +28,18 @@ use experimental qw(smartmatch);
 our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
 our $BackPAN_URL = "http://backpan.perl.org/";
 
-option backpan => (
+option 'repository' => (
+    is => 'ro',
+    isa => 'Bool',
+    default => 1,
+    documentation => "clone git repository (if available)",
+);
+
+option 'latest' => (
     is => 'ro',
     isa => 'Bool',
     default => 0,
-    documentation => 'Imports from BackPAN (deprecated)',
-    trigger => sub {
-        warn "option '--backpan' is deprecated, whole history is now imported by default\n";
-    },
+    documentation => 'only pick latest release, if clone from CPAN',
 );
 
 option check => (
@@ -84,10 +88,15 @@ method get_releases_from_local_file($path) {
     return Git::CPAN::Patch::Release->new( tarball => $path );
 }
 
+method clone_git_repo($release,$url) {
+    $self->git_run( 'remote', 'add', 'cpan', $url );
+    $self->git_run( 'fetch', 'cpan' );
+}
+
 method get_releases_from_cpan($dist_or_module) {
     require MetaCPAN::API;
 
-    # is it a module belonging to a release?
+    # is it a module belonging to a distribution?
     my $dist = eval{ $self->metacpan->module($dist_or_module)->{distribution} 
     } || $dist_or_module;
 
@@ -96,10 +105,20 @@ method get_releases_from_cpan($dist_or_module) {
             "clone perl from $PERL_GIT_URL instead.\n";
     }
 
+    if( my $latest_release = $self->repository && $self->metacpan->release( distribution => $dist)) {
+        my $repo = $latest_release->{metadata}{resources}{repository};
+        if( $repo and $repo->{type} eq 'git' ) {
+            say "Git repository found: ", $repo->{url};
+            $self->clone_git_repo(Git::CPAN::Patch::Release->new( dist_name =>
+                    $dist),$repo->{url});
+            return;
+        }
+    }
+
     my $releases = eval { $self->metacpan->release( search => {
         q => "distribution:$dist",
         fields => 'name,author,date,download_url,version',
-        ( filter => 'status:latest' ) x !$self->backpan
+        ( filter => 'status:latest' ) x $self->latest
     }) }
     or die "could not find release for '$dist_or_module' on metacpan\n";
 
