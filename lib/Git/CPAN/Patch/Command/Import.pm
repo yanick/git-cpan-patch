@@ -2,11 +2,8 @@ package Git::CPAN::Patch::Command::Import;
 BEGIN {
   $Git::CPAN::Patch::Command::Import::AUTHORITY = 'cpan:YANICK';
 }
-{
-  $Git::CPAN::Patch::Command::Import::VERSION = '1.3.1';
-}
 #ABSTRACT: Import a module into a git repository
-
+$Git::CPAN::Patch::Command::Import::VERSION = '2.0.0';
 use 5.10.0;
 
 use strict;
@@ -34,11 +31,18 @@ use experimental qw(smartmatch);
 our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
 our $BackPAN_URL = "http://backpan.perl.org/";
 
-option backpan => (
+option 'norepository' => (
     is => 'ro',
     isa => 'Bool',
     default => 0,
-    documentation => 'Imports from BackPAN',
+    documentation => "don't clone git repository",
+);
+
+option 'latest' => (
+    is => 'ro',
+    isa => 'Bool',
+    default => 0,
+    documentation => 'only pick latest release, if clone from CPAN',
 );
 
 option check => (
@@ -61,6 +65,14 @@ parameter thing_to_import => (
     required => 0,
 );
 
+has metacpan => (
+    is => 'ro',
+    default => sub {
+        require MetaCPAN::API;
+        return MetaCPAN::API->new;
+    },
+);
+
 
 method get_releases_from_url($url) {
     require LWP::Simple;
@@ -79,37 +91,55 @@ method get_releases_from_local_file($path) {
     return Git::CPAN::Patch::Release->new( tarball => $path );
 }
 
+method clone_git_repo($release,$url) {
+    $self->git_run( 'remote', 'add', 'cpan', $url );
+    $self->git_run( 'fetch', 'cpan' );
+}
+
 method get_releases_from_cpan($dist_or_module) {
     require MetaCPAN::API;
-    my $mcpan = MetaCPAN::API->new;
 
-    my $release = eval { $mcpan->release(
-                        distribution => $mcpan->module($dist_or_module)->{distribution}
-                  ) }
-        || eval { $mcpan->release( distribution => $dist_or_module ) }
-        || die "could not find release for '$dist_or_module' on metacpan\n";
+    # is it a module belonging to a distribution?
+    my $dist = eval{ $self->metacpan->module($dist_or_module)->{distribution} 
+    } || $dist_or_module;
 
-
-     if ( $release->{distribution} eq 'perl' ) {
+     if ( $dist eq 'perl' ) {
         die "$dist_or_module is a core modules, ",
             "clone perl from $PERL_GIT_URL instead.\n";
     }
 
-    return $self->get_releases_from_backpan($release->{distribution})
-        if $self->backpan;
+    if( my $latest_release = !$self->norepository && $self->metacpan->release( distribution => $dist)) {
+        my $repo = $latest_release->{metadata}{resources}{repository};
+        if( $repo and $repo->{type} eq 'git' ) {
+            say "Git repository found: ", $repo->{url};
+            $self->clone_git_repo(Git::CPAN::Patch::Release->new( dist_name =>
+                    $dist),$repo->{url});
+            return;
+        }
+    }
 
-    require LWP::Simple;
+    if ( $self->latest ) {
+        my $rel = $self->metacpan->release( distribution => $dist);
+        return Git::CPAN::Patch::Release->new(
+            map { $_ => $rel->{$_} } qw/ name author date download_url version /
+        );
+    }
 
-    my $name = $release->{archive};
-    my $destination = $self->tmpdir . '/'.$name;
+    my $releases = eval { $self->metacpan->release( search => {
+        q => "distribution:$dist",
+        fields => 'name,author,date,download_url,version',
+        ( filter => 'status:latest' ) x $self->latest
+    }) }
+    or die "could not find release for '$dist_or_module' on metacpan\n";
 
-    say "fetching ".$release->{download_url};
+    my @releases = @{ $releases->{hits}{hits} };
 
-    LWP::Simple::is_error(
-        LWP::Simple::mirror( $release->{download_url} =>
-            $destination ) ) and die;
+    $_->{author_cpan} = delete $_->{author} for @releases;
 
-    return Git::CPAN::Patch::Release->new( tarball => $destination );
+    return sort { $a->date cmp $b->date } 
+           map { Git::CPAN::Patch::Release->new( %{$_->{fields}} ) }  
+                @releases;
+               
 }
 
 method get_releases_from_backpan($dist_name) {
@@ -179,7 +209,7 @@ method import_release($release) {
 
         my $write_tree_repo = Git::Repository->new( work_tree => $CWD );
 
-        $write_tree_repo->run( qw(add -v --force .) );
+        $write_tree_repo->run( qw(add -v --all --force .) );
         $write_tree_repo->run( "write-tree" );
     };
 
@@ -191,8 +221,9 @@ method import_release($release) {
         # TODO authors and author_date
 
         # create the commit object
-        $ENV{GIT_AUTHOR_NAME}  ||= 'unknown';
-        $ENV{GIT_AUTHOR_EMAIL} ||= 'unknown';
+        $ENV{GIT_AUTHOR_NAME}  ||= $release->author_name;
+        $ENV{GIT_AUTHOR_EMAIL} ||= $release->author_email;
+        $ENV{GIT_AUTHOR_DATE} ||= $release->date;
 
         my @parents = grep { $_ } $self->last_commit, @{ $self->parent };
 
@@ -200,11 +231,12 @@ method import_release($release) {
             ( $self->first_import ? 'initial import of' : 'import' ),
             $release->dist_name, $release->dist_version;
 
+        no warnings 'uninitialized';
         $message .= <<"END";
 
 git-cpan-module:   @{[ $release->dist_name ]}
 git-cpan-version:  @{[ $release->dist_version ]}
-git-cpan-authorid: unknown
+git-cpan-authorid: @{[ $release->author_cpan ]}
 
 END
 
@@ -216,9 +248,9 @@ END
 
         print $self->git_run('update-ref', '-m' => "import " . $release->dist_name, 'refs/remotes/cpan/master', $commit );
 
-        print $self->git_run( tag => $release->dist_version->normal, $commit );
+        print $self->git_run( tag => 'v'.$release->dist_version, $commit );
 
-        say "created tag '@{[ $release->dist_version->normal ]}' ($commit)";
+        say "created tag '@{[ 'v'.$release->dist_version ]}' ($commit)";
     }
 
 }

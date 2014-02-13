@@ -2,11 +2,8 @@ package Git::CPAN::Patch::Command::Which;
 BEGIN {
   $Git::CPAN::Patch::Command::Which::AUTHORITY = 'cpan:YANICK';
 }
-{
-  $Git::CPAN::Patch::Command::Which::VERSION = '1.3.1';
-}
 #ABSTRACT: reports the repository's module
-
+$Git::CPAN::Patch::Command::Which::VERSION = '2.0.0';
 use 5.10.0;
 
 use strict;

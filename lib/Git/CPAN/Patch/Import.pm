@@ -2,10 +2,7 @@ package Git::CPAN::Patch::Import;
 BEGIN {
   $Git::CPAN::Patch::Import::AUTHORITY = 'cpan:YANICK';
 }
-{
-  $Git::CPAN::Patch::Import::VERSION = '1.3.1';
-}
-
+$Git::CPAN::Patch::Import::VERSION = '2.0.0';
 use 5.10.0;
 
 use strict;
@@ -351,6 +348,9 @@ sub find_release {
 sub main {
     my $module = shift;
     my $opts   = shift;
+
+    $DB::single = 1;
+    
 
     if ( delete $opts->{backpan} ) {
         return import_from_backpan( $module, $opts );

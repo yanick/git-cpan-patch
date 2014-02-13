@@ -2,11 +2,8 @@ package Git::CPAN::Patch::Command::Clone;
 BEGIN {
   $Git::CPAN::Patch::Command::Clone::AUTHORITY = 'cpan:YANICK';
 }
-{
-  $Git::CPAN::Patch::Command::Clone::VERSION = '1.3.1';
-}
 #ABSTRACT: Clone a CPAN module's history into a new git repository
-
+$Git::CPAN::Patch::Command::Clone::VERSION = '2.0.0';
 use 5.10.0;
 
 use strict;
@@ -19,14 +16,14 @@ use Method::Signatures::Simple;
 use MooseX::App::Command;
 extends 'Git::CPAN::Patch::Command::Import';
 
-parameter xtarget => (
+parameter target => (
     is       => 'rw',
     isa      => 'Str',
     required => 0,
 );
 
 
-before import_release => method($release) {
+before [ qw/import_release clone_git_repo /] => method($release) {
     state $first = 1;
 
     return unless $first;
@@ -42,8 +39,9 @@ before import_release => method($release) {
     $first = 0;
 };
 
-after import_release => method {
+after [ qw/ clone_git_repo import_release /] => method {
     $self->git_run( 'reset', '--hard', $self->last_commit );    
+    #$self->git_run( 'checkout', '-b', 'master', 'cpan/master' );
 };
 
 __PACKAGE__->meta->make_immutable;
@@ -54,16 +52,26 @@ __END__
 
 =head1 SYNOPSIS
 
-  % git-cpan clone Foo::Bar 
-  % git-cpan clone Foo-Bar-0.03.tar.gz 
-  % git-cpan clone http://... 
-  % git-cpan clone /path/to/Foo-Bar-0.03.tar.gz
+  # from a specific tarball
+  $ git-cpan clone http://... 
+  $ git-cpan clone /path/to/Foo-Bar-0.03.tar.gz
+
+  # from CPAN, module and dist names are okay
+  $ git-cpan clone Foo::Bar 
+  $ git-cpan clone Foo-Bar 
+   
+  # can also specify the directory to create
+  $ git-cpan clone Foo-Bar my_clone
 
 =head1 DESCRIPTION
 
-This command creates the named directory, creates a new git repository, calls
-C<git-cpan-init>, and then checks out the code in the C<master> branch. If the
-directory is omitted, then the "humanish" part of the named module is used.
+Clones a CPAN distribution. If a tarball is given, either locally or via an 
+url, it'll be used. If not, C<git-cpan> will try to find the distribution or
+module. If it has an official git repository, it'll be cloned. If not, the
+history will be created using the CPAN releases.
+
+If the target
+directory is omitted, then the "humanish" part of the distribution is used.
 
   
 =head1 AUTHORS

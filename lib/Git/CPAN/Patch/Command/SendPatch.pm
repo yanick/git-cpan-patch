@@ -2,11 +2,8 @@ package Git::CPAN::Patch::Command::SendPatch;
 BEGIN {
   $Git::CPAN::Patch::Command::SendPatch::AUTHORITY = 'cpan:YANICK';
 }
-{
-  $Git::CPAN::Patch::Command::SendPatch::VERSION = '1.3.1';
-}
 #ABSTRACT: create patch files and submit them to RT
-
+$Git::CPAN::Patch::Command::SendPatch::VERSION = '2.0.0';
 use 5.10.0;
 
 use strict;
