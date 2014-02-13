@@ -9,3 +9,4 @@ gitpan-build
 Git-CPAN-Patch-*
 MYMETA.yml
 .build
+.watsonrc
