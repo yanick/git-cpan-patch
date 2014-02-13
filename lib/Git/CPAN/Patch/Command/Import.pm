@@ -1,6 +1,9 @@
 package Git::CPAN::Patch::Command::Import;
+BEGIN {
+  $Git::CPAN::Patch::Command::Import::AUTHORITY = 'cpan:YANICK';
+}
 #ABSTRACT: Import a module into a git repository
-
+$Git::CPAN::Patch::Command::Import::VERSION = '2.0.0';
 use 5.10.0;
 
 use strict;

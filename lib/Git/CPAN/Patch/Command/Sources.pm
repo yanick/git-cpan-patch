@@ -1,6 +1,9 @@
 package Git::CPAN::Patch::Command::Sources;
+BEGIN {
+  $Git::CPAN::Patch::Command::Sources::AUTHORITY = 'cpan:YANICK';
+}
 #ABSTRACT: lists sources for the module
-
+$Git::CPAN::Patch::Command::Sources::VERSION = '2.0.0';
 use 5.10.0;
 
 use strict;

@@ -1,18 +1,11 @@
 Revision history for Git::CPAN::Patch
 
-{{$NEXT}}
+2.0.0 2014-02-12
  [API CHANGES]
  - Will now clone of the official git repository, if there is one.
 
- [BUG FIXES]
-
- [DOCUMENTATION]
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 13 files changed, 385 insertions(+), 64 deletions(-)
 
 1.3.1 2013-07-27
  [BUG FIXES]
@@ -53,7 +46,7 @@ Revision history for Git::CPAN::Patch
 1.1.1 2013-04-01
  [BUG FIXES]
  - changes in latest MooseX::App broke Git::CPAN::Patch  (RT#84349,
-   reported by Peter Valdemar MÃ¸rch)
+   reported by Peter Valdemar Mørch)
 
  [STATISTICS]
  - code churn: 8 files changed, 47 insertions(+), 18 deletions(-)

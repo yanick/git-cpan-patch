@@ -1,5 +1,8 @@
 package Git::CPAN::Patch::Role::Patch;
-
+BEGIN {
+  $Git::CPAN::Patch::Role::Patch::AUTHORITY = 'cpan:YANICK';
+}
+$Git::CPAN::Patch::Role::Patch::VERSION = '2.0.0';
 use 5.10.0;
 
 use strict;

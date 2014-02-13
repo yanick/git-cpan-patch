@@ -1,6 +1,9 @@
 package Git::CPAN::Patch::Role::Git;
+BEGIN {
+  $Git::CPAN::Patch::Role::Git::AUTHORITY = 'cpan:YANICK';
+}
 #ABSTRACT: provides access to Git repository
-
+$Git::CPAN::Patch::Role::Git::VERSION = '2.0.0';
 use strict;
 use warnings;
 
