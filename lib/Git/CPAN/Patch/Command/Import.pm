@@ -115,6 +115,13 @@ method get_releases_from_cpan($dist_or_module) {
         }
     }
 
+    if ( $self->latest ) {
+        my $rel = $self->metacpan->release( distribution => $dist);
+        return Git::CPAN::Patch::Release->new(
+            map { $_ => $rel->{$_} } qw/ name author date download_url version /
+        );
+    }
+
     my $releases = eval { $self->metacpan->release( search => {
         q => "distribution:$dist",
         fields => 'name,author,date,download_url,version',
@@ -199,7 +206,7 @@ method import_release($release) {
 
         my $write_tree_repo = Git::Repository->new( work_tree => $CWD );
 
-        $write_tree_repo->run( qw(add -v --force .) );
+        $write_tree_repo->run( qw(add -v --all --force .) );
         $write_tree_repo->run( "write-tree" );
     };
 
@@ -221,6 +228,7 @@ method import_release($release) {
             ( $self->first_import ? 'initial import of' : 'import' ),
             $release->dist_name, $release->dist_version;
 
+        no warnings 'uninitialized';
         $message .= <<"END";
 
 git-cpan-module:   @{[ $release->dist_name ]}
@@ -237,9 +245,9 @@ END
 
         print $self->git_run('update-ref', '-m' => "import " . $release->dist_name, 'refs/remotes/cpan/master', $commit );
 
-        print $self->git_run( tag => $release->dist_version->normal, $commit );
+        print $self->git_run( tag => 'v'.$release->dist_version, $commit );
 
-        say "created tag '@{[ $release->dist_version->normal ]}' ($commit)";
+        say "created tag '@{[ 'v'.$release->dist_version ]}' ($commit)";
     }
 
 }

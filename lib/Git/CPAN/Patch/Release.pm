@@ -144,11 +144,9 @@ has dist_version => (
     is => 'ro',
     lazy => 1,
     default => method {
-        version->parse(
             $self->meta_info 
                 ? $self->meta_info->{version} 
                 : $self->cpan_parse->distversion
-        );
     },
 );
 
