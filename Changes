@@ -2,6 +2,7 @@ Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
  [API CHANGES]
+ - Will now clone of the official git repository, if there is one.
 
  [BUG FIXES]
 
