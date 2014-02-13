@@ -30,4 +30,6 @@ t/00-compile.t
 t/00-load.t
 t/000-report-versions-tiny.t
 t/corpus/Git-CPAN-Patch-0.4.5.tar.gz
+t/import-cpan.t
+t/import-file.t
 xt/release/unused-vars.t

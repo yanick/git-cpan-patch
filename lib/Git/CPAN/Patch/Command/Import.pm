@@ -28,11 +28,11 @@ use experimental qw(smartmatch);
 our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
 our $BackPAN_URL = "http://backpan.perl.org/";
 
-option 'repository' => (
+option 'norepository' => (
     is => 'ro',
     isa => 'Bool',
-    default => 1,
-    documentation => "clone git repository (if available)",
+    default => 0,
+    documentation => "don't clone git repository",
 );
 
 option 'latest' => (
@@ -105,7 +105,7 @@ method get_releases_from_cpan($dist_or_module) {
             "clone perl from $PERL_GIT_URL instead.\n";
     }
 
-    if( my $latest_release = $self->repository && $self->metacpan->release( distribution => $dist)) {
+    if( my $latest_release = !$self->norepository && $self->metacpan->release( distribution => $dist)) {
         my $repo = $latest_release->{metadata}{resources}{repository};
         if( $repo and $repo->{type} eq 'git' ) {
             say "Git repository found: ", $repo->{url};
