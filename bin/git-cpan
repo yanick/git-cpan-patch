@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 
+#PODNAME: git-cpan
 use Git::CPAN::Patch;
 
 Git::CPAN::Patch->new_with_command->run;

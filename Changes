@@ -4,6 +4,8 @@ Revision history for Git::CPAN::Patch
  [API CHANGES]
 
  [BUG FIXES]
+ - Added dependency to Git::Repository::Plugin::AUTOLOAD.
+ - Re-introduced Pod::Weaver (spotted by Neil Bowers).
 
  [DOCUMENTATION]
 
