@@ -1,19 +1,12 @@
 Revision history for Git::CPAN::Patch
 
-{{$NEXT}}
- [API CHANGES]
-
+2.0.1 2014-02-15
  [BUG FIXES]
  - Added dependency to Git::Repository::Plugin::AUTOLOAD.
  - Re-introduced Pod::Weaver (spotted by Neil Bowers).
 
- [DOCUMENTATION]
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 3 files changed, 14 insertions(+), 4 deletions(-)
 
 2.0.0 2014-02-12
  [API CHANGES]
@@ -61,7 +54,7 @@ Revision history for Git::CPAN::Patch
 1.1.1 2013-04-01
  [BUG FIXES]
  - changes in latest MooseX::App broke Git::CPAN::Patch  (RT#84349,
-   reported by Peter Valdemar MÃ¸rch)
+   reported by Peter Valdemar Mørch)
 
  [STATISTICS]
  - code churn: 8 files changed, 47 insertions(+), 18 deletions(-)
