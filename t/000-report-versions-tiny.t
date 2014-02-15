@@ -66,6 +66,7 @@ eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('File::chdir','any version') };
 eval { $v .= pmver('File::chmod','any version') };
 eval { $v .= pmver('Git::Repository','any version') };
+eval { $v .= pmver('Git::Repository::Plugin::AUTOLOAD','any version') };
 eval { $v .= pmver('IO::Handle','any version') };
 eval { $v .= pmver('IPC::Open3','any version') };
 eval { $v .= pmver('LWP::Simple','any version') };

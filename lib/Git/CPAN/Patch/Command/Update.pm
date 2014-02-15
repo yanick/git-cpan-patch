@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Update::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: Import the latest version of a module and rebase the current branch
-$Git::CPAN::Patch::Command::Update::VERSION = '2.0.0';
+$Git::CPAN::Patch::Command::Update::VERSION = '2.0.1';
 use 5.10.0;
 
 use strict;
@@ -44,6 +44,14 @@ __END__
 
 =pod
 
+=head1 NAME
+
+Git::CPAN::Patch::Command::Update - Import the latest version of a module and rebase the current branch
+
+=head1 VERSION
+
+version 2.0.1
+
 =head1 SYNOPSIS
 
     % git-cpan update
@@ -64,5 +72,15 @@ Yanick Champoux C<< <yanick@cpan.org> >>
 
 L<Git::CPAN::Patch>, L<git-cpan-import>
 
-=cut
+=head1 AUTHOR
 
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

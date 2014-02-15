@@ -1,5 +1,13 @@
 Revision history for Git::CPAN::Patch
 
+2.0.1 2014-02-15
+ [BUG FIXES]
+ - Added dependency to Git::Repository::Plugin::AUTOLOAD.
+ - Re-introduced Pod::Weaver (spotted by Neil Bowers).
+
+ [STATISTICS]
+ - code churn: 3 files changed, 14 insertions(+), 4 deletions(-)
+
 2.0.0 2014-02-12
  [API CHANGES]
  - Will now clone of the official git repository, if there is one.

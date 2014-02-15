@@ -1,3 +1,11 @@
+# NAME
+
+Git::CPAN::Patch - Patch CPAN modules using Git
+
+# VERSION
+
+version 2.0.1
+
 # SYNOPSIS
 
     # import a module:
@@ -77,3 +85,14 @@ The set of scripts that would eventually become
 [Git::CPAN::Patch](http://search.cpan.org/perldoc?Git::CPAN::Patch) were first presented in the
 article _CPAN Patching with Git_, published in
 issue 5.1 of [The Perl Review](http://theperlreview.com).
+
+# AUTHOR
+
+Yanick Champoux <yanick@cpan.org> [![endorse](http://api.coderwall.com/yanick/endorsecount.png)](http://coderwall.com/yanick)
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.

@@ -18,7 +18,7 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Git-CPAN-Patch",
-  "dist_version" => "2.0.0",
+  "dist_version" => "2.0.1",
   "license" => "perl",
   "module_name" => "Git::CPAN::Patch",
   "recommends" => {},
@@ -41,6 +41,7 @@ my %module_build_args = (
     "File::chdir" => 0,
     "File::chmod" => 0,
     "Git::Repository" => 0,
+    "Git::Repository::Plugin::AUTOLOAD" => 0,
     "LWP::Simple" => 0,
     "LWP::UserAgent" => 0,
     "List::Pairwise" => 0,
