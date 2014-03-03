@@ -1,6 +1,9 @@
 package Git::CPAN::Patch::Command::Sources;
+BEGIN {
+  $Git::CPAN::Patch::Command::Sources::AUTHORITY = 'cpan:YANICK';
+}
 #ABSTRACT: lists sources for the module
-
+$Git::CPAN::Patch::Command::Sources::VERSION = '2.0.2';
 use 5.10.0;
 
 use strict;
@@ -109,6 +112,33 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
+=pod
+
+=head1 NAME
+
+Git::CPAN::Patch::Command::Sources - lists sources for the module
+
+=head1 VERSION
+
+version 2.0.2
+
+=head1 SYNOPSIS
+
+    % git-cpan sources Foo::Bar
+
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
 __END__
 
 
@@ -148,8 +178,3 @@ sub execute {
 
 1;
 
-=head1 SYNOPSIS
-
-    % git-cpan sources Foo::Bar
-
-=cut

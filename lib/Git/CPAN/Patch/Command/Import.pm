@@ -1,6 +1,9 @@
 package Git::CPAN::Patch::Command::Import;
+BEGIN {
+  $Git::CPAN::Patch::Command::Import::AUTHORITY = 'cpan:YANICK';
+}
 #ABSTRACT: Import a module into a git repository
-
+$Git::CPAN::Patch::Command::Import::VERSION = '2.0.2';
 use 5.10.0;
 
 use strict;
@@ -239,6 +242,13 @@ __END__
 
 =pod
 
+=head1 NAME
+
+Git::CPAN::Patch::Command::Import - Import a module into a git repository
+
+=head1 VERSION
+
+version 2.0.2
 
 =head1 SYNOPSIS
 
@@ -251,7 +261,6 @@ __END__
     # If the repository is already initialized, can be run with no arguments to
     # import the latest version
     git-cpan import
-
 
 =head1 DESCRIPTION
 
@@ -303,9 +312,19 @@ Yuval Kogman C<< <nothingmuch@woobling.org> >>
 
 Yanick Champoux C<< <yanick@cpan.org> >>
 
-
 =head1 SEE ALSO
 
 L<Git::CPAN::Patch>
+
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

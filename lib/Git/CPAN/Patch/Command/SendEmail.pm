@@ -1,6 +1,9 @@
 package Git::CPAN::Patch::Command::SendEmail;
+BEGIN {
+  $Git::CPAN::Patch::Command::SendEmail::AUTHORITY = 'cpan:YANICK';
+}
 #ABSTRACT: use C<git-send-email> to submit patches to CPAN RT
-
+$Git::CPAN::Patch::Command::SendEmail::VERSION = '2.0.2';
 use 5.10.0;
 
 use strict;
@@ -31,6 +34,14 @@ __END__
 
 =pod
 
+=head1 NAME
+
+Git::CPAN::Patch::Command::SendEmail - use C<git-send-email> to submit patches to CPAN RT
+
+=head1 VERSION
+
+version 2.0.2
+
 =head1 SYNOPSIS
 
     % git-cpan send_email
@@ -40,5 +51,15 @@ __END__
 This command provides a C<--to> parameter to C<git send-email> that corresponds
 to the RT queue of the imported module.
 
+=head1 AUTHOR
 
+Yanick Champoux <yanick@cpan.org>
 
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

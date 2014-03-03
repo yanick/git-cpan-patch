@@ -1,0 +1,21 @@
+
+# GIT-CPAN-PATCH CONTRIBUTORS #
+
+This is the (likely incomplete) list of people who have helped
+make this distribution what it is, either via code contributions, 
+patches, bug reports, help with troubleshooting, etc. A huge
+thank to all of them.
+
+	* 2shortplanks <mark@twoshortplanks.com>
+	* Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>
+	* Michael G. Schwern <schwern@pobox.com>
+	* Mike Doherty <doherty@cs.dal.ca>
+	* Mike Doherty <mike@mikedoherty.ca>
+	* Pedro Melo <melo@simplicidade.org>
+	* Peter Valdemar Mørch <peter@morch.com>
+	* Reini Urban <RURBAN@cpan.org>
+	* Slaven Rezic <srezic@cpan.org>
+	* Tim Bunce via RT <bug-Git-CPAN-Patch@rt.cpan.org>
+	* Yuval Kogman <nothingmuch@woobling.org>
+	* brian d foy <brian.d.foy@gmail.com>
+	* chocolateboy <chocolate@cpan.org>

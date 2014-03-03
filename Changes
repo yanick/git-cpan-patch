@@ -1,21 +1,16 @@
 Revision history for Git::CPAN::Patch
 
-{{$NEXT}}
- [API CHANGES]
-
+2.0.2 2014-03-03
  [BUG FIXES]
- - Author and date of release take precedence over the
-    GIT_* env variables. (RT#93481, reported by Slaven Rezic)
+ - Author and date of release take precedence over the GIT_* env variables.
+   (RT#93481, reported by Slaven Rezic)
 
  [DOCUMENTATION]
- - Remove mention of option '--backpan' for import.
-    (RT#93482, raised by Slaven Rezic)
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
+ - Remove mention of option '--backpan' for import. (RT#93482, raised by
+   Slaven Rezic)
 
  [STATISTICS]
+ - code churn: 4 files changed, 18 insertions(+), 42 deletions(-)
 
 2.0.1 2014-02-15
  [BUG FIXES]
@@ -71,7 +66,7 @@ Revision history for Git::CPAN::Patch
 1.1.1 2013-04-01
  [BUG FIXES]
  - changes in latest MooseX::App broke Git::CPAN::Patch  (RT#84349,
-   reported by Peter Valdemar MÃ¸rch)
+   reported by Peter Valdemar Mørch)
 
  [STATISTICS]
  - code churn: 8 files changed, 47 insertions(+), 18 deletions(-)
