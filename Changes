@@ -8,6 +8,8 @@ Revision history for Git::CPAN::Patch
     GIT_* env variables. (RT#93481, reported by Slaven Rezic)
 
  [DOCUMENTATION]
+ - Remove mention of option '--backpan' for import.
+    (RT#93482, raised by Slaven Rezic)
 
  [ENHANCEMENTS]
 
