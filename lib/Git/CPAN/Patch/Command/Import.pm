@@ -26,7 +26,6 @@ with 'MooseX::Role::Tempdir' => {
 use experimental qw(smartmatch);
 
 our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
-our $BackPAN_URL = "http://backpan.perl.org/";
 
 option 'norepository' => (
     is => 'ro',
@@ -137,32 +136,6 @@ method get_releases_from_cpan($dist_or_module) {
            map { Git::CPAN::Patch::Release->new( %{$_->{fields}} ) }  
                 @releases;
                
-}
-
-method get_releases_from_backpan($dist_name) {
-    say "Loading BackPAN index (this may take a while)";
-    require BackPAN::Index;
-    my $backpan = BackPAN::Index->new;
-
-    my $dist =$backpan->dist($dist_name)
-        or die "couldn't find distribution '$dist_name' on BackPAN";
-
-    return
-        map {
-            my $archive_file = $self->tmpdir . '/' . $_->filename;
-            my $release_url = $BackPAN_URL . "/" . $_->prefix;
-            say "fetching $release_url";
-            my $okay = not LWP::Simple::is_error(
-                LWP::Simple::mirror( $release_url =>
-                $archive_file ) );
-
-            warn unless $okay;
-
-            $okay ? Git::CPAN::Patch::Release->new( tarball => $archive_file ) : ();
-        }
-        grep { $_->filename !~ m{\.ppm\b} }
-        $dist->releases->search( undef, { order_by => "date" } )->all;
-
 }
 
 method releases_to_import {
@@ -299,11 +272,6 @@ you have pending work.
 =head1 OPTIONS
 
 =over
-
-=item  --backpan
-
-Enables Backpan index fetching (to get the author and release date).
-
 
 =item --check, --nocheck
 
