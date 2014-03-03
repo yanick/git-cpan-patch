@@ -2,7 +2,7 @@ package Git::CPAN::Patch::Release;
 BEGIN {
   $Git::CPAN::Patch::Release::AUTHORITY = 'cpan:YANICK';
 }
-$Git::CPAN::Patch::Release::VERSION = '2.0.1';
+$Git::CPAN::Patch::Release::VERSION = '2.0.2';
 use strict;
 use warnings;
 
@@ -176,7 +176,7 @@ Git::CPAN::Patch::Release
 
 =head1 VERSION
 
-version 2.0.1
+version 2.0.2
 
 =head1 AUTHOR
 

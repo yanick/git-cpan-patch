@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Import::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: Import a module into a git repository
-$Git::CPAN::Patch::Command::Import::VERSION = '2.0.1';
+$Git::CPAN::Patch::Command::Import::VERSION = '2.0.2';
 use 5.10.0;
 
 use strict;
@@ -29,7 +29,6 @@ with 'MooseX::Role::Tempdir' => {
 use experimental qw(smartmatch);
 
 our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
-our $BackPAN_URL = "http://backpan.perl.org/";
 
 option 'norepository' => (
     is => 'ro',
@@ -142,32 +141,6 @@ method get_releases_from_cpan($dist_or_module) {
                
 }
 
-method get_releases_from_backpan($dist_name) {
-    say "Loading BackPAN index (this may take a while)";
-    require BackPAN::Index;
-    my $backpan = BackPAN::Index->new;
-
-    my $dist =$backpan->dist($dist_name)
-        or die "couldn't find distribution '$dist_name' on BackPAN";
-
-    return
-        map {
-            my $archive_file = $self->tmpdir . '/' . $_->filename;
-            my $release_url = $BackPAN_URL . "/" . $_->prefix;
-            say "fetching $release_url";
-            my $okay = not LWP::Simple::is_error(
-                LWP::Simple::mirror( $release_url =>
-                $archive_file ) );
-
-            warn unless $okay;
-
-            $okay ? Git::CPAN::Patch::Release->new( tarball => $archive_file ) : ();
-        }
-        grep { $_->filename !~ m{\.ppm\b} }
-        $dist->releases->search( undef, { order_by => "date" } )->all;
-
-}
-
 method releases_to_import {
     given ( $self->thing_to_import ) {
         when ( qr/^(?:https?|file|ftp)::/ ) {
@@ -221,9 +194,9 @@ method import_release($release) {
         # TODO authors and author_date
 
         # create the commit object
-        $ENV{GIT_AUTHOR_NAME}  ||= $release->author_name;
-        $ENV{GIT_AUTHOR_EMAIL} ||= $release->author_email;
-        $ENV{GIT_AUTHOR_DATE} ||= $release->date;
+        $ENV{GIT_AUTHOR_NAME}  = $release->author_name  if $release->author_name;
+        $ENV{GIT_AUTHOR_EMAIL} = $release->author_email if $release->author_email;
+        $ENV{GIT_AUTHOR_DATE}  = $release->date         if $release->date;
 
         my @parents = grep { $_ } $self->last_commit, @{ $self->parent };
 
@@ -275,7 +248,7 @@ Git::CPAN::Patch::Command::Import - Import a module into a git repository
 
 =head1 VERSION
 
-version 2.0.1
+version 2.0.2
 
 =head1 SYNOPSIS
 
@@ -308,10 +281,6 @@ you have pending work.
 =head1 OPTIONS
 
 =over
-
-=item --backpan
-
-Enables Backpan index fetching (to get the author and release date).
 
 =item --check, --nocheck
 

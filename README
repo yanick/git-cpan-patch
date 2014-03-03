@@ -2,7 +2,7 @@ NAME
     Git::CPAN::Patch - Patch CPAN modules using Git
 
 VERSION
-    version 2.0.1
+    version 2.0.2
 
 SYNOPSIS
         # import a module:

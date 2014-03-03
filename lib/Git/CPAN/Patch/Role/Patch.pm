@@ -2,7 +2,7 @@ package Git::CPAN::Patch::Role::Patch;
 BEGIN {
   $Git::CPAN::Patch::Role::Patch::AUTHORITY = 'cpan:YANICK';
 }
-$Git::CPAN::Patch::Role::Patch::VERSION = '2.0.1';
+$Git::CPAN::Patch::Role::Patch::VERSION = '2.0.2';
 use 5.10.0;
 
 use strict;
@@ -67,7 +67,7 @@ Git::CPAN::Patch::Role::Patch
 
 =head1 VERSION
 
-version 2.0.1
+version 2.0.2
 
 =head1 AUTHOR
 

@@ -1,5 +1,17 @@
 Revision history for Git::CPAN::Patch
 
+2.0.2 2014-03-03
+ [BUG FIXES]
+ - Author and date of release take precedence over the GIT_* env variables.
+   (RT#93481, reported by Slaven Rezic)
+
+ [DOCUMENTATION]
+ - Remove mention of option '--backpan' for import. (RT#93482, raised by
+   Slaven Rezic)
+
+ [STATISTICS]
+ - code churn: 4 files changed, 18 insertions(+), 42 deletions(-)
+
 2.0.1 2014-02-15
  [BUG FIXES]
  - Added dependency to Git::Repository::Plugin::AUTOLOAD.

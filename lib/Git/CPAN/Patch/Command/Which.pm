@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Which::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: reports the repository's module
-$Git::CPAN::Patch::Command::Which::VERSION = '2.0.1';
+$Git::CPAN::Patch::Command::Which::VERSION = '2.0.2';
 use 5.10.0;
 
 use strict;
@@ -33,7 +33,7 @@ Git::CPAN::Patch::Command::Which - reports the repository's module
 
 =head1 VERSION
 
-version 2.0.1
+version 2.0.2
 
 =head1 SYNOPSIS
 

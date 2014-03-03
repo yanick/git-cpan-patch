@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::SendPatch::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: create patch files and submit them to RT
-$Git::CPAN::Patch::Command::SendPatch::VERSION = '2.0.1';
+$Git::CPAN::Patch::Command::SendPatch::VERSION = '2.0.2';
 use 5.10.0;
 
 use strict;
@@ -45,7 +45,7 @@ Git::CPAN::Patch::Command::SendPatch - create patch files and submit them to RT
 
 =head1 VERSION
 
-version 2.0.1
+version 2.0.2
 
 =head1 SYNOPSIS
 
