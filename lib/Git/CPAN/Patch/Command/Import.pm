@@ -218,9 +218,9 @@ method import_release($release) {
         # TODO authors and author_date
 
         # create the commit object
-        $ENV{GIT_AUTHOR_NAME}  ||= $release->author_name;
-        $ENV{GIT_AUTHOR_EMAIL} ||= $release->author_email;
-        $ENV{GIT_AUTHOR_DATE} ||= $release->date;
+        $ENV{GIT_AUTHOR_NAME}  = $release->author_name  if $release->author_name;
+        $ENV{GIT_AUTHOR_EMAIL} = $release->author_email if $release->author_email;
+        $ENV{GIT_AUTHOR_DATE}  = $release->date         if $release->date;
 
         my @parents = grep { $_ } $self->last_commit, @{ $self->parent };
 
