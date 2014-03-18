@@ -1,0 +1,176 @@
+{
+   "abstract" : "Patch CPAN modules using Git",
+   "author" : [
+      "Yanick Champoux <yanick@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 5.013, CPAN::Meta::Converter version 2.140640",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Git-CPAN-Patch",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "version" : "0.9901"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Archive::Any" : "0",
+            "Archive::Extract" : "0",
+            "BackPAN::Index" : "0",
+            "CLASS" : "0",
+            "CPAN::Meta" : "0",
+            "CPAN::ParseDistribution" : "0",
+            "CPANPLUS" : "0",
+            "Cwd" : "0",
+            "DateTime" : "0",
+            "File::Basename" : "0",
+            "File::Copy" : "0",
+            "File::Find" : "0",
+            "File::Path" : "0",
+            "File::Spec::Functions" : "0",
+            "File::Temp" : "0",
+            "File::chdir" : "0",
+            "File::chmod" : "0",
+            "Git::Repository" : "0",
+            "Git::Repository::Plugin::AUTOLOAD" : "0",
+            "LWP::Simple" : "0",
+            "LWP::UserAgent" : "0",
+            "List::Pairwise" : "0",
+            "MetaCPAN::API" : "0",
+            "Method::Signatures::Simple" : "1.07",
+            "Moose" : "0",
+            "Moose::Role" : "0",
+            "MooseX::App" : "1.21",
+            "MooseX::App::Command" : "0",
+            "MooseX::App::Role" : "0",
+            "MooseX::Role::Tempdir" : "0",
+            "MooseX::SemiAffordanceAccessor" : "0",
+            "Path::Class" : "0",
+            "Pod::Usage" : "0",
+            "autodie" : "0",
+            "experimental" : "0",
+            "perl" : "v5.10.1",
+            "strict" : "0",
+            "version" : "0",
+            "warnings" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "File::Spec" : "0",
+            "IO::Handle" : "0",
+            "IPC::Open3" : "0",
+            "Test::MockObject" : "0",
+            "Test::More" : "0.88"
+         }
+      }
+   },
+   "provides" : {
+      "Git::CPAN::Patch" : {
+         "file" : "lib/Git/CPAN/Patch.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::Clone" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Clone.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::FormatPatch" : {
+         "file" : "lib/Git/CPAN/Patch/Command/FormatPatch.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::Import" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Import.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::SendEmail" : {
+         "file" : "lib/Git/CPAN/Patch/Command/SendEmail.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::SendPatch" : {
+         "file" : "lib/Git/CPAN/Patch/Command/SendPatch.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::Sources" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Sources.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::Squash" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Squash.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::Update" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Update.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Command::Which" : {
+         "file" : "lib/Git/CPAN/Patch/Command/Which.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Import" : {
+         "file" : "lib/Git/CPAN/Patch/Import.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Release" : {
+         "file" : "lib/Git/CPAN/Patch/Release.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Role::Git" : {
+         "file" : "lib/Git/CPAN/Patch/Role/Git.pm",
+         "version" : "v2.0.3"
+      },
+      "Git::CPAN::Patch::Role::Patch" : {
+         "file" : "lib/Git/CPAN/Patch/Role/Patch.pm",
+         "version" : "v2.0.3"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/yanick/git-cpan-patch/issues"
+      },
+      "homepage" : "http://search.cpan.org/dist/Git-CPAN-Patch/",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/yanick/git-cpan-patch.git",
+         "web" : "https://github.com/yanick/git-cpan-patch"
+      }
+   },
+   "version" : "2.0.3",
+   "x_author_pledge" : {
+      "version" : 1
+   },
+   "x_authority" : "cpan:YANICK",
+   "x_contributors" : [
+      "2shortplanks <mark@twoshortplanks.com>",
+      "Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>",
+      "Michael G. Schwern <schwern@pobox.com>",
+      "Mike Doherty <doherty@cs.dal.ca>",
+      "Mike Doherty <mike@mikedoherty.ca>",
+      "Pedro Melo <melo@simplicidade.org>",
+      "Peter Valdemar Mørch <peter@morch.com>",
+      "Reini Urban <RURBAN@cpan.org>",
+      "Slaven Rezic <srezic@cpan.org>",
+      "Tim Bunce via RT <bug-Git-CPAN-Patch@rt.cpan.org>",
+      "Yuval Kogman <nothingmuch@woobling.org>",
+      "brian d foy <brian.d.foy@gmail.com>",
+      "chocolateboy <chocolate@cpan.org>"
+   ]
+}
+
