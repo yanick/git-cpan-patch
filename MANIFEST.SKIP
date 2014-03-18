@@ -1,3 +1,4 @@
+test_distributions
 ^Git-CPAN-Patch-
 contrib/gitpan
 ^dist\.ini$

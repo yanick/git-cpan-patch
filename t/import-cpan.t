@@ -14,9 +14,9 @@ my $metacpan = Test::MockObject->new
         return { hits => { 
             hits => [
                 { 
-                    fields => {
+                    _source => {
                     name => 'Git-CPAN-Patch',
-                    author => 'YANICK',
+                    author => 'Yanick Champoux <yanick@cpan.org>',
                     date => '2011-03-06T01:02:03',
                     download_url => './t/corpus/Git-CPAN-Patch-0.4.5.tar.gz',
                     version => '0.4.4',

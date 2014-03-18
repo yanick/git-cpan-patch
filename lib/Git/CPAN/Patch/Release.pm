@@ -5,6 +5,7 @@ use warnings;
 
 use Method::Signatures::Simple;
 use File::chdir;
+use Archive::Any;
 use File::Temp qw/ tempdir tempfile /;
 use version;
 
@@ -20,11 +21,13 @@ has author_name => (
     lazy => 1,
     default => sub {
         my $self = shift;
-        
-        if ( $self->has_meta_info ) {
-            return $1 if $self->meta_info->{author}[0] =~ /^\s*(.*?)\s*</;
+
+        if ( $self->meta_info ) {
+            my $author = $self->meta_info->{author};
+            $author = $author->[0] if ref $author;
+            return $1 if $author =~ /^\s*(.*?)\s*</;
         }
-        return undef;
+        return 'unknown';
     },
 );
 
@@ -35,9 +38,10 @@ has author_cpan => (
     default => sub {
         my $self = shift;
         
+        no warnings 'uninitialized';
         return uc $1 if $self->author_email =~ /(.*)\@cpan\.org$/;
 
-        return undef;
+        return 'unknown@cpan.org';
     },
 );
 
@@ -49,8 +53,10 @@ has author_email => (
     default => sub {
         my $self = shift;
         
-        if ( $self->has_meta_info ) {
-            return $1 if $self->meta_info->{author}[0] =~ /<(.*?)>\s*$/;
+        if ( $self->meta_info ) {
+            my $author = $self->meta_info->{author};
+            $author = $author->[0] if ref $author;
+            return $1 if $author =~ /<(.*?)>\s*$/;
         }
         return undef;
     },
@@ -65,12 +71,21 @@ sub author_sig {
 has download_url => (
     is => 'ro',
     isa => 'Str',
-    predicate => 'has_download_url',
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+        return $self->meta_info && $self->meta_info->{download_url};
+    },
 );
 
 has date => (
     is => 'ro',
-    isa => 'Str',
+    isa => 'Maybe[Str]',
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+        return $self->meta_info && $self->meta_info->{date};
+    },
 );
 
 has version => (
@@ -84,7 +99,8 @@ has tarball => (
     lazy => 1,
     default => sub {
         my $self = shift;
-        if ( $self->has_download_url ) {
+        if ( $self->download_url ) {
+            
             my( undef, $file ) = tempfile();
             $file .= ".tar.gz";
 
@@ -111,10 +127,17 @@ has extracted_dir => (
     lazy => 1,
     default => method {
 
-        my $archive = Archive::Extract->new( archive => $self->tarball );
-        $archive->extract( to => $self->tmpdir );
+        my $archive = Archive::Any->new( $self->tarball );
+        my $tmpdir = $self->tmpdir;
+        $archive->extract( $tmpdir );
 
-        return $archive->extract_path || die "extraction failed\n";
+        return $tmpdir if $archive->is_impolite;
+
+        my $dir;
+        opendir $dir, $tmpdir;
+        my( $sub ) = grep { !/^\.\.?$/ } readdir $dir;
+
+        return join '/', $tmpdir, $sub;
     },
 );
 
@@ -131,9 +154,9 @@ has cpan_parse => (
 has meta_info => (
     is => 'ro',
     lazy => 1,
-    predicate => 'has_meta_info',
     default => method {
         require CPAN::Meta;
+        
         local $CWD = $self->extracted_dir;
         return eval { CPAN::Meta->load_file('META.json') } 
             || eval { CPAN::Meta->load_file('META.yml')  }; 
@@ -155,7 +178,7 @@ has dist_name => (
     lazy => 1,
     default => method {
         $self->meta_info 
-            ? $self->meta_info->{name}
+            ? $self->meta_info->{distribution} || $self->meta_info->{name}
             : $self->cpan_parse->dist
             ;
     },

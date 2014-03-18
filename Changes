@@ -4,6 +4,8 @@ Revision history for Git::CPAN::Patch
  [API CHANGES]
 
  [BUG FIXES]
+ - Deal with any archives and other fixes. (RT#92928, reported
+    by Alexandr Ciornii)
 
  [DOCUMENTATION]
 

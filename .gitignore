@@ -10,3 +10,4 @@ Git-CPAN-Patch-*
 MYMETA.yml
 .build
 .watsonrc
+test_distributions

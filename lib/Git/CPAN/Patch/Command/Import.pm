@@ -108,8 +108,10 @@ method get_releases_from_cpan($dist_or_module) {
         my $repo = $latest_release->{metadata}{resources}{repository};
         if( $repo and $repo->{type} eq 'git' ) {
             say "Git repository found: ", $repo->{url};
-            $self->clone_git_repo(Git::CPAN::Patch::Release->new( dist_name =>
-                    $dist),$repo->{url});
+            $self->clone_git_repo(Git::CPAN::Patch::Release->new( 
+                dist_name => $dist,
+                meta_info => $latest_release,
+            ),$repo->{url});
             return;
         }
     }
@@ -117,13 +119,15 @@ method get_releases_from_cpan($dist_or_module) {
     if ( $self->latest ) {
         my $rel = $self->metacpan->release( distribution => $dist);
         return Git::CPAN::Patch::Release->new(
+            meta_info => $rel,
             map { $_ => $rel->{$_} } qw/ name author date download_url version /
         );
     }
 
     my $releases = eval { $self->metacpan->release( search => {
         q => "distribution:$dist",
-        fields => 'name,author,date,download_url,version',
+        # fields => 'name,dist_name,author,date,download_url,version',
+        size => 100,
         ( filter => 'status:latest' ) x $self->latest
     }) }
     or die "could not find release for '$dist_or_module' on metacpan\n";
@@ -133,7 +137,9 @@ method get_releases_from_cpan($dist_or_module) {
     $_->{author_cpan} = delete $_->{author} for @releases;
 
     return sort { $a->date cmp $b->date } 
-           map { Git::CPAN::Patch::Release->new( %{$_->{fields}} ) }  
+           map { Git::CPAN::Patch::Release->new( meta_info =>
+           $_->{_source} ) }
+#                        %{$_->{fields}} ) }  
                 @releases;
                
 }
@@ -228,7 +234,12 @@ END
 method run {
     my @releases = $self->releases_to_import;
 
-    $self->import_release($_) for @releases;
+    for my $r ( @releases ) {
+        eval { $self->import_release($r) };
+        if ( $@ ) {
+            warn "failed to import release, skipping...\n$@\n";
+        }
+    }
 }
 
 __PACKAGE__->meta->make_immutable;
