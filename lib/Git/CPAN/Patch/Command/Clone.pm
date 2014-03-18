@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Clone::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: Clone a CPAN module's history into a new git repository
-$Git::CPAN::Patch::Command::Clone::VERSION = '2.0.2';
+$Git::CPAN::Patch::Command::Clone::VERSION = '2.0.3';
 use 5.10.0;
 
 use strict;
@@ -52,13 +52,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Git::CPAN::Patch::Command::Clone - Clone a CPAN module's history into a new git repository
 
 =head1 VERSION
 
-version 2.0.2
+version 2.0.3
 
 =head1 SYNOPSIS
 

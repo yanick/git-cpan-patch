@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Sources::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: lists sources for the module
-$Git::CPAN::Patch::Command::Sources::VERSION = '2.0.2';
+$Git::CPAN::Patch::Command::Sources::VERSION = '2.0.3';
 use 5.10.0;
 
 use strict;
@@ -114,13 +114,15 @@ __PACKAGE__->meta->make_immutable;
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Git::CPAN::Patch::Command::Sources - lists sources for the module
 
 =head1 VERSION
 
-version 2.0.2
+version 2.0.3
 
 =head1 SYNOPSIS
 

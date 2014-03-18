@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Role::Git::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: provides access to Git repository
-$Git::CPAN::Patch::Role::Git::VERSION = '2.0.2';
+$Git::CPAN::Patch::Role::Git::VERSION = '2.0.3';
 use strict;
 use warnings;
 
@@ -73,13 +73,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Git::CPAN::Patch::Role::Git - provides access to Git repository
 
 =head1 VERSION
 
-version 2.0.2
+version 2.0.3
 
 =head1 AUTHOR
 

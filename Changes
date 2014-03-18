@@ -1,5 +1,13 @@
 Revision history for Git::CPAN::Patch
 
+2.0.3 2014-03-17
+ [BUG FIXES]
+ - Deal with any archives and other fixes. (RT#92928, reported by Alexandr
+   Ciornii)
+
+ [STATISTICS]
+ - code churn: 7 files changed, 79 insertions(+), 26 deletions(-)
+
 2.0.2 2014-03-03
  [BUG FIXES]
  - Author and date of release take precedence over the GIT_* env variables.

@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::Command::Update::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: Import the latest version of a module and rebase the current branch
-$Git::CPAN::Patch::Command::Update::VERSION = '2.0.2';
+$Git::CPAN::Patch::Command::Update::VERSION = '2.0.3';
 use 5.10.0;
 
 use strict;
@@ -44,13 +44,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Git::CPAN::Patch::Command::Update - Import the latest version of a module and rebase the current branch
 
 =head1 VERSION
 
-version 2.0.2
+version 2.0.3
 
 =head1 SYNOPSIS
 

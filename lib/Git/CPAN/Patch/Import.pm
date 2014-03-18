@@ -2,7 +2,7 @@ package Git::CPAN::Patch::Import;
 BEGIN {
   $Git::CPAN::Patch::Import::AUTHORITY = 'cpan:YANICK';
 }
-$Git::CPAN::Patch::Import::VERSION = '2.0.2';
+$Git::CPAN::Patch::Import::VERSION = '2.0.3';
 use 5.10.0;
 
 use strict;
@@ -533,13 +533,15 @@ END
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Git::CPAN::Patch::Import
 
 =head1 VERSION
 
-version 2.0.2
+version 2.0.3
 
 =head1 DESCRIPTION
 

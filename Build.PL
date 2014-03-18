@@ -18,12 +18,13 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "Git-CPAN-Patch",
-  "dist_version" => "2.0.2",
+  "dist_version" => "2.0.3",
   "license" => "perl",
   "module_name" => "Git::CPAN::Patch",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "Archive::Any" => 0,
     "Archive::Extract" => 0,
     "BackPAN::Index" => 0,
     "CLASS" => 0,

@@ -3,7 +3,7 @@ BEGIN {
   $Git::CPAN::Patch::AUTHORITY = 'cpan:YANICK';
 }
 #ABSTRACT: Patch CPAN modules using Git
-$Git::CPAN::Patch::VERSION = '2.0.2';
+$Git::CPAN::Patch::VERSION = '2.0.3';
 use 5.10.1;
 
 use strict;
@@ -87,13 +87,15 @@ __PACKAGE__->meta->make_immutable;
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Git::CPAN::Patch - Patch CPAN modules using Git
 
 =head1 VERSION
 
-version 2.0.2
+version 2.0.3
 
 =head1 SYNOPSIS
 

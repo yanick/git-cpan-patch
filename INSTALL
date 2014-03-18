@@ -25,20 +25,6 @@ Alternatively, if your CPAN shell is set up, you should just be able to do:
 As a last resort, you can manually install it. Download the tarball, untar it,
 then build it:
 
-    % perl Makefile.PL
-    % make && make test
-
-Then install it:
-
-    % make install
-
-If you are installing into a system-wide directory, you may need to run:
-
-    % sudo make install
-
-As a last resort, you can manually install it. Download the tarball, untar it,
-then build it:
-
     % perl Build.PL
     % ./Build && ./Build test
 
