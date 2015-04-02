@@ -10,10 +10,10 @@ use Test::MockObject;
 
 my $metacpan = Test::MockObject->new
     ->set_false( 'module' )
-    ->mock( 'release', sub { 
-        return { hits => { 
+    ->mock( 'release', sub {
+        return { hits => {
             hits => [
-                { 
+                {
                     fields => {
                     name => 'Git-CPAN-Patch',
                     author => 'YANICK',
@@ -49,23 +49,17 @@ my $command = Git::CPAN::Patch::Command::Import->new(
 
 $command->run;
 
-is_deeply [ $git->branch( '-a' ) ] => [ '  remotes/cpan/master' ], 
+is_deeply [ $git->branch( '-a' ) ] => [ '  remotes/cpan/master' ],
     "branch is there";
 
 is_deeply [ $git->tag ] => [ 'v0.4.4' ], "tag is there";
 
 my $log = join "\n", $git->log( 'cpan/master' );
 
-like $log => qr/Author: Yanick Champoux <yanick\@cpan.org>/, 'author';
+like $log => qr/Author:\s+Yanick\s+Champoux\s+<yanick\@cpan.org>/, 'author';
 
 like $log => qr/initial import of Git-CPAN-Patch 0\.4\.4/, "main message";
 
 like $log => qr/git-cpan-module:\s*Git-CPAN-Patch/, 'git-cpan-module';
 like $log => qr/git-cpan-version:\s*0.4.4/, 'git-cpan-version';
 like $log => qr/git-cpan-authorid:\s*YANICK/, 'git-cpan-authorid';
-
-
-
-
-
-

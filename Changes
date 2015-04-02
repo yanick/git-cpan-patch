@@ -4,6 +4,7 @@ Revision history for Git::CPAN::Patch
  [API CHANGES]
 
  [BUG FIXES]
+ - Tests were failing because of space-sensitivity. (lharey, GH#21)
 
  [DOCUMENTATION]
 
