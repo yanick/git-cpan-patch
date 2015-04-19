@@ -22,7 +22,6 @@ has author_name => (
     lazy => 1,
     default => sub {
         my $self = shift;
-        $DB::single = 1;
 
         if ( $self->meta_info ) {
             my $author = $self->meta_info->{metadata}{author} || $self->meta_info->{author};
