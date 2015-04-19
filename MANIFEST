@@ -1,5 +1,4 @@
 AUTHOR_PLEDGE
-Build.PL
 CONTRIBUTORS
 Changes
 INSTALL
@@ -8,10 +7,13 @@ MANIFEST
 META.json
 META.yml
 Makefile.PL
+Makefile.PL
 README
 README.mkdn
 SIGNATURE
 bin/git-cpan
+cpanfile
+doap.xml
 lib/Git/CPAN/Patch.pm
 lib/Git/CPAN/Patch/Command/Clone.pm
 lib/Git/CPAN/Patch/Command/FormatPatch.pm
@@ -31,6 +33,6 @@ t/00-load.t
 t/000-report-versions-tiny.t
 t/clone.t
 t/corpus/Git-CPAN-Patch-0.4.5.tar.gz
-t/import-cpan.t
-t/import-file.t
+xauth/clone-from-github.t
+xauth/clone-from-module.t
 xt/release/unused-vars.t
