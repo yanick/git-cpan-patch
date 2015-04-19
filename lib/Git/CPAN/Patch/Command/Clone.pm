@@ -19,11 +19,16 @@ parameter target => (
     required => 0,
 );
 
+has _seen_imports => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 0,
+);
+
 
 before [ qw/import_release clone_git_repo /] => method($release) {
-    state $first = 1;
-
-    return unless $first;
+    return if $self->_seen_imports;
+    $self->_set_seen_imports(1);
 
     my $target = $self->target || $release->dist_name;
 
@@ -32,13 +37,10 @@ before [ qw/import_release clone_git_repo /] => method($release) {
     dir($target)->mkpath;
     Git::Repository->run( init => $target );
     $self->set_root($target);
-
-    $first = 0;
 };
 
 after [ qw/ clone_git_repo import_release /] => method {
     $self->git_run( 'reset', '--hard', $self->last_commit );    
-    #$self->git_run( 'checkout', '-b', 'master', 'cpan/master' );
 };
 
 __PACKAGE__->meta->make_immutable;
