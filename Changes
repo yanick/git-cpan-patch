@@ -9,6 +9,7 @@ Revision history for Git::CPAN::Patch
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - Move to MetaCPAN::Client. (GH#19)
 
  [NEW FEATURES]
 

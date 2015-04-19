@@ -13,6 +13,9 @@ use Git::CPAN::Patch::Import;
 use File::chdir;
 use Git::CPAN::Patch::Release;
 use Path::Class qw/ dir /;
+use MetaCPAN::Client;
+
+# TODO Path::Class => Path::Tiny
 
 use MooseX::App::Command;
 
@@ -64,8 +67,7 @@ parameter thing_to_import => (
 has metacpan => (
     is => 'ro',
     default => sub {
-        require MetaCPAN::API;
-        return MetaCPAN::API->new;
+        MetaCPAN::Client->new;
     },
 );
 
@@ -80,11 +82,14 @@ method get_releases_from_url($url) {
 
     LWP::Simple::mirror( $url => $destination ) or die;
 
-    return Git::CPAN::Patch::Release->new( tarball => $destination );
+    return Git::CPAN::Patch::Release->new( 
+        metacpan => $self->metacpan,
+        tarball => $destination 
+    );
 }
 
 method get_releases_from_local_file($path) {
-    return Git::CPAN::Patch::Release->new( tarball => $path );
+    return Git::CPAN::Patch::Release->new( metacpan => $self->metacpan, tarball => $path );
 }
 
 method clone_git_repo($release,$url) {
@@ -93,10 +98,9 @@ method clone_git_repo($release,$url) {
 }
 
 method get_releases_from_cpan($dist_or_module) {
-    require MetaCPAN::API;
-
+    
     # is it a module belonging to a distribution?
-    my $dist = eval{ $self->metacpan->module($dist_or_module)->{distribution} 
+    my $dist = eval{ $self->metacpan->module($dist_or_module)->data->{distribution} 
     } || $dist_or_module;
 
      if ( $dist eq 'perl' ) {
@@ -104,11 +108,12 @@ method get_releases_from_cpan($dist_or_module) {
             "clone perl from $PERL_GIT_URL instead.\n";
     }
 
-    if( my $latest_release = !$self->norepository && $self->metacpan->release( distribution => $dist)) {
-        my $repo = $latest_release->{metadata}{resources}{repository};
+    if( my $latest_release = !$self->norepository && $self->metacpan->release($dist)) {
+        my $repo = $latest_release->data->{metadata}{resources}{repository};
         if( $repo and $repo->{type} eq 'git' ) {
             say "Git repository found: ", $repo->{url};
             $self->clone_git_repo(Git::CPAN::Patch::Release->new( 
+                metacpan => $self->metacpan,
                 dist_name => $dist,
                 meta_info => $latest_release,
             ),$repo->{url});
@@ -117,31 +122,28 @@ method get_releases_from_cpan($dist_or_module) {
     }
 
     if ( $self->latest ) {
-        my $rel = $self->metacpan->release( distribution => $dist);
+        my $rel = $self->metacpan->release($dist);
         return Git::CPAN::Patch::Release->new(
-            meta_info => $rel,
-            map { $_ => $rel->{$_} } qw/ name author date download_url version /
+                metacpan => $self->metacpan,
+            meta_info => $rel->data,
+            map { $_ => $rel->data->{$_} } qw/ name author date download_url version /
         );
     }
 
-    my $releases = eval { $self->metacpan->release( search => {
-        q => "distribution:$dist",
-        # fields => 'name,dist_name,author,date,download_url,version',
-        size => 100,
-        ( filter => 'status:latest' ) x $self->latest
-    }) }
-    or die "could not find release for '$dist_or_module' on metacpan\n";
+    my $releases = $self->metacpan->release( {
+        distribution => $dist
+    }) or die "could not find release for '$dist_or_module' on metacpan\n";
 
-    my @releases = @{ $releases->{hits}{hits} };
+    my @releases;
 
-    $_->{author_cpan} = delete $_->{author} for @releases;
+    while( my $r = $releases->next ) {
+        push @releases, Git::CPAN::Patch::Release->new(
+                metacpan => $self->metacpan,
+            meta_info => $r->data
+        );
+    }
 
-    return sort { $a->date cmp $b->date } 
-           map { Git::CPAN::Patch::Release->new( meta_info =>
-           $_->{_source} ) }
-#                        %{$_->{fields}} ) }  
-                @releases;
-               
+    return sort { $a->date cmp $b->date } @releases;
 }
 
 method releases_to_import {

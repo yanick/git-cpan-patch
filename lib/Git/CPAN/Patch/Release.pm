@@ -6,6 +6,7 @@ use warnings;
 use Method::Signatures::Simple;
 use File::chdir;
 use Archive::Any;
+use Path::Tiny;
 use File::Temp qw/ tempdir tempfile /;
 use version;
 
@@ -23,7 +24,7 @@ has author_name => (
         my $self = shift;
 
         if ( $self->meta_info ) {
-            my $author = $self->meta_info->{author};
+            my $author = $self->meta_info->{metadata}{author} || $self->meta_info->{author};
             $author = $author->[0] if ref $author;
             return $1 if $author =~ /^\s*(.*?)\s*</;
         }
@@ -36,12 +37,10 @@ has author_cpan => (
     isa => 'Maybe[Str]',
     lazy => 1,
     default => sub {
-        my $self = shift;
-        
-        no warnings 'uninitialized';
-        return uc $1 if $self->author_email =~ /(.*)\@cpan\.org$/;
-
-        return 'unknown@cpan.org';
+        my $author = eval{$_[0]->meta_info->{author}};
+        $author = ref $author ? $author->[0] : $author;
+        $author = uc($1) if $author =~ /<?(\S+)\@cpan\.org/i;
+        return $author;
     },
 );
 
@@ -54,7 +53,7 @@ has author_email => (
         my $self = shift;
         
         if ( $self->meta_info ) {
-            my $author = $self->meta_info->{author};
+            my $author = $self->meta_info->{metadata}{author} || $self->meta_info->{author};
             $author = $author->[0] if ref $author;
             return $1 if $author =~ /<(.*?)>\s*$/;
         }
@@ -151,15 +150,42 @@ has cpan_parse => (
     },
 );
 
+has metacpan => (
+    is => 'ro',
+    lazy => 1,
+    default => sub { 
+        require MetaCPAN::Client;
+        MetaCPAN::Client->new;
+    }
+);
+
 has meta_info => (
     is => 'ro',
     lazy => 1,
+    predicate => 'has_meta_info',
     default => method {
+        require MetaCPAN::Client;
+
+        if( my $release = $self->metacpan->release({ all => 
+                    [
+                        { distribution => $self->dist_name },
+                        { version => $self->dist_version },
+                    ]
+                }) ) {
+                $release = $release->next;
+                return $release->meta if $release;
+            }
+
+        # TODO check on cpan if the info is not there
+
         require CPAN::Meta;
         
-        local $CWD = $self->extracted_dir;
-        return eval { CPAN::Meta->load_file('META.json') } 
-            || eval { CPAN::Meta->load_file('META.yml')  }; 
+        my( $result ) = map { CPAN::Meta->load_file($_) }
+                        grep { $_->exists }
+                        map { path( $self->extracted_dir )->child( "META.$_" ) } qw/ json yml /;
+
+        return $result;
+
     },
 );
 
@@ -167,7 +193,7 @@ has dist_version => (
     is => 'ro',
     lazy => 1,
     default => method {
-            $self->meta_info 
+            $self->has_meta_info 
                 ? $self->meta_info->{version} 
                 : $self->cpan_parse->distversion
     },
@@ -177,7 +203,7 @@ has dist_name => (
     is => 'ro',
     lazy => 1,
     default => method {
-        $self->meta_info 
+        $self->has_meta_info 
             ? $self->meta_info->{distribution} || $self->meta_info->{name}
             : $self->cpan_parse->dist
             ;
