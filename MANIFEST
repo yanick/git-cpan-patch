@@ -7,7 +7,6 @@ MANIFEST
 META.json
 META.yml
 Makefile.PL
-Makefile.PL
 README
 README.mkdn
 SIGNATURE
