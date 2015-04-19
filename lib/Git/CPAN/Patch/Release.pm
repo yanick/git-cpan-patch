@@ -24,11 +24,17 @@ has author_name => (
         my $self = shift;
 
         if ( $self->meta_info ) {
-            my $author = $self->meta_info->{metadata}{author} || $self->meta_info->{author};
+            my $author = $self->meta_info->{metadata}{author};
             $author = $author->[0] if ref $author;
-            return $1 if $author =~ /^\s*(.*?)\s*</;
+
+            if ( !$author or  $author eq 'unknown' ) {
+                $author = $self->meta_info->{author};
+            }
+            
+            return $author =~ /^\s*(.*?)\s*</ ? $1 : $author if $author;
         }
-        return 'unknown';
+
+        return $self->author_cpan || 'unknown';
     },
 );
 
@@ -57,7 +63,7 @@ has author_email => (
             $author = $author->[0] if ref $author;
             return $1 if $author =~ /<(.*?)>\s*$/;
         }
-        return undef;
+        return $self->author_cpan . '@cpan.org';
     },
 );
 
@@ -173,7 +179,7 @@ has meta_info => (
                     ]
                 }) ) {
                 $release = $release->next;
-                return $release->meta if $release;
+                return $release->data if $release;
             }
 
         # TODO check on cpan if the info is not there
