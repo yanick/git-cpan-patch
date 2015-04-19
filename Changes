@@ -4,16 +4,24 @@ Revision history for Git::CPAN::Patch
  [API CHANGES]
 
  [BUG FIXES]
- - Tests were failing because of space-sensitivity. (lharey, GH#21)
 
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
- - Move to MetaCPAN::Client. (GH#19)
 
  [NEW FEATURES]
 
  [STATISTICS]
+
+2.0.4 2015-04-19
+ [BUG FIXES]
+ - Tests were failing because of space-sensitivity. (lharey, GH#21)
+
+ [ENHANCEMENTS]
+ - Move to MetaCPAN::Client. (GH#19)
+
+ [STATISTICS]
+ - code churn: 14 files changed, 233 insertions(+), 210 deletions(-)
 
 2.0.3 2014-03-17
  [BUG FIXES]
