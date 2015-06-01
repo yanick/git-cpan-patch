@@ -8,6 +8,7 @@ Revision history for Git::CPAN::Patch
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - Be a little more clever about finding out if the META repo is git-based.
 
  [NEW FEATURES]
 

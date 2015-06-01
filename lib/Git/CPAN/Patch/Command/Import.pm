@@ -97,6 +97,14 @@ method clone_git_repo($release,$url) {
     $self->git_run( 'fetch', 'cpan' );
 }
 
+sub looks_like_git {
+    my $repo = shift or return;
+
+    return 1 if $repo->{type} eq 'git';
+
+    return $repo->{url} =~ /github\.com|\.git$/;
+}
+
 method get_releases_from_cpan($dist_or_module) {
     
     # is it a module belonging to a distribution?
@@ -110,7 +118,7 @@ method get_releases_from_cpan($dist_or_module) {
 
     if( my $latest_release = !$self->norepository && $self->metacpan->release($dist)) {
         my $repo = $latest_release->data->{metadata}{resources}{repository};
-        if( $repo and $repo->{type} eq 'git' ) {
+        if ( looks_like_git($repo) ) {
             say "Git repository found: ", $repo->{url};
             $self->clone_git_repo(Git::CPAN::Patch::Release->new( 
                 metacpan => $self->metacpan,
