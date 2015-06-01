@@ -29,7 +29,8 @@ lib/Git/CPAN/Patch/Role/Git.pm
 lib/Git/CPAN/Patch/Role/Patch.pm
 t/00-compile.t
 t/00-load.t
-t/000-report-versions-tiny.t
+t/00-report-prereqs.dd
+t/00-report-prereqs.t
 t/clone.t
 t/corpus/Git-CPAN-Patch-0.4.5.tar.gz
 xauth/clone-from-github.t
