@@ -44,7 +44,7 @@ has module_name => (
         my $last = join "\n", $self->git->run( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
         $last =~ /git-cpan-module: \s+ (.*?) \s+ git-cpan-version: \s+ (.*?) \s*$/sx
-            or die "Couldn't parse message:\n$last\n";
+            or die "Couldn't parse message (not cloned via git cpan import?):\n$last\n";
 
         $self->git->run('config', 'cpan.module-name', $1);
 

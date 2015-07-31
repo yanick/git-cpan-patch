@@ -44,7 +44,7 @@ method last_imported_version {
     my $last = join "\n", $self->git_run( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
     $last =~ /git-cpan-module:\ (.*?) \s+ git-cpan-version: \s+ (\S+)/sx
-        or die "Couldn't parse message:\n$last\n";
+        or die "Couldn't parse message (not cloned via git cpan import?):\n$last\n";
 
     return version->parse($2);
 }
@@ -55,7 +55,7 @@ method tracked_distribution {
     my $last = join "\n", $self->git_run( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
     $last =~ /git-cpan-module:\s+ (.*?) \s+ git-cpan-version: \s+ (\S+)/sx
-        or die "Couldn't parse message:\n$last\n";
+        or die "Couldn't parse message (not cloned via git cpan import?):\n$last\n";
 
     return $1;
 }
