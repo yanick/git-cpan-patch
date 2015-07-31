@@ -55,8 +55,7 @@ has module_name => (
 method send_emails(@patches) {
     my $to = 'bug-' . $self->module_name . '@rt.cpan.org';
 
-    say for $self->git_run("send-email", '--no-chain-reply-to', "--to", $to,
-    @patches );
+    system 'git', "send-email", '--no-chain-reply-to', "--to", $to, @patches;
 }
 
 1;
