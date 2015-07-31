@@ -4,6 +4,9 @@ Revision history for Git::CPAN::Patch
   [ API CHANGES ]
 
   [ BUG FIXES ]
+    - Allow git to prompt user when calling sendemail
+      (Arthur Axel fREW Schmidt)
+
 
   [ DOCUMENTATION ]
 
