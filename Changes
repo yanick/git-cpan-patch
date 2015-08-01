@@ -10,6 +10,7 @@ Revision history for Git::CPAN::Patch
   [ ENHANCEMENTS ]
 
   [ NEW FEATURES ]
+    - Store module name in config instead of relying on commit messages
 
   [ STATISTICS ]
 

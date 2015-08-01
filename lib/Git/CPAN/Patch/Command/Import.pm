@@ -95,6 +95,7 @@ method get_releases_from_local_file($path) {
 method clone_git_repo($release,$url) {
     $self->git_run( 'remote', 'add', 'cpan', $url );
     $self->git_run( 'fetch', 'cpan' );
+    $self->git_run( config => 'cpan.module-name', $release->dist_name );
 }
 
 sub looks_like_git {
@@ -239,6 +240,7 @@ END
         say "created tag '@{[ 'v'.$release->dist_version ]}' ($commit)";
     }
 
+    $self->git_run( config => 'cpan.module-name', $release->dist_name );
 }
 
 method run {

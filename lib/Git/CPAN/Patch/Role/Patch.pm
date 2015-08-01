@@ -34,12 +34,19 @@ has module_name => (
     isa => 'Str',
     lazy => 1,
     default => method {
+
+        if (my $module = $self->git->run('config', 'cpan.module-name')) {
+            return $module
+        }
+
         my $last_commit = $self->git->run('rev-parse', '--verify', 'cpan/master');
 
         my $last = join "\n", $self->git->run( log => '--pretty=format:%b', '-n', 1, $last_commit );
 
         $last =~ /git-cpan-module: \s+ (.*?) \s+ git-cpan-version: \s+ (.*?) \s*$/sx
             or die "Couldn't parse message:\n$last\n";
+
+        $self->git->run('config', 'cpan.module-name', $1);
 
         return $1;
     },
