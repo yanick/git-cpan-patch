@@ -11,6 +11,7 @@ Revision history for Git::CPAN::Patch
 
   [ NEW FEATURES ]
     - Store module name in config instead of relying on commit messages
+      (frioux, GH#26)
 
   [ STATISTICS ]
 
