@@ -6,7 +6,8 @@ Revision history for Git::CPAN::Patch
   [ BUG FIXES ]
     - Allow git to prompt user when calling sendemail
       (GH#25, Arthur Axel fREW Schmidt)
-
+    - Tags were printed with the warning "at line blah".
+        (GH#22)
 
   [ DOCUMENTATION ]
 
