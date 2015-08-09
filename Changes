@@ -112,7 +112,7 @@ Revision history for Git::CPAN::Patch
 1.1.1 2013-04-01
   [ BUG FIXES ]
     - changes in latest MooseX::App broke Git::CPAN::Patch  (RT#84349,
-      reported by Peter Valdemar Mørch)
+      reported by Peter Valdemar Morch)
 
   [ STATISTICS ]
     - code churn: 8 files changed, 47 insertions(+), 18 deletions(-)
