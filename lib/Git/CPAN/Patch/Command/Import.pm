@@ -94,7 +94,13 @@ method get_releases_from_local_file($path) {
 
 method clone_git_repo($release,$url) {
     $self->git_run( 'remote', 'add', 'cpan', $url );
-    $self->git_run( 'fetch', 'cpan' );
+    {
+        # git will output the tags on STDERR
+        local *STDERR;
+        open STDERR, '>', \my $err;
+        $self->git_run( 'fetch', 'cpan' );
+        say $err;
+    }
     $self->git_run( config => 'cpan.module-name', $release->dist_name );
 }
 
