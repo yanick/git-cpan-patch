@@ -8,6 +8,7 @@ Revision history for Git::CPAN::Patch
   [ DOCUMENTATION ]
 
   [ ENHANCEMENTS ]
+   - Improve error message. (GH#24, frioux)
 
   [ NEW FEATURES ]
     - Store module name in config instead of relying on commit messages
