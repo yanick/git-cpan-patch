@@ -1,6 +1,7 @@
 package Git::CPAN::Patch::Command::SendPatch;
+our $AUTHORITY = 'cpan:YANICK';
 #ABSTRACT: create patch files and submit them to RT
-
+$Git::CPAN::Patch::Command::SendPatch::VERSION = '2.2.1';
 use 5.10.0;
 
 use strict;
@@ -34,6 +35,18 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Git::CPAN::Patch::Command::SendPatch - create patch files and submit them to RT
+
+=head1 VERSION
+
+version 2.2.1
+
 =head1 SYNOPSIS
 
     % git-cpan send-patch
@@ -46,3 +59,15 @@ runs C<git-cpan send-email>.
 Multiple patches are not sent because C<git send-email> creates a separate
 message for each patch file, resulting in multiple tickets.
 
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2016 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
