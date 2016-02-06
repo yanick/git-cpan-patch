@@ -71,7 +71,7 @@ sub test_clone {
 
     $command->run;
 
-    is_deeply [ $git->branch( '-a' ) ] => [ '  remotes/cpan/master' ],
+    like $git->branch( '-a', '--no-color' ) => qr#remotes/cpan/master#,
         "branch is there";
 
     like $git->tag => qr[v0.4.], "tag is there";

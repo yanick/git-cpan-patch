@@ -4,6 +4,7 @@ Revision history for Git::CPAN::Patch
   [ API CHANGES ]
 
   [ BUG FIXES ]
+  - Test was failing if color.ui was set to always. (GH#29, reported by grinnz)
 
   [ DOCUMENTATION ]
 
