@@ -2,7 +2,7 @@ package Git::CPAN::Patch::Release;
 
 use strict;
 use warnings;
-
+use Carp; 
 use Method::Signatures::Simple;
 use File::chdir;
 use Archive::Any;
@@ -30,7 +30,7 @@ has author_name => (
             if ( !$author or  $author eq 'unknown' ) {
                 $author = $self->meta_info->{author};
             }
-            
+
             return $author =~ /^\s*(.*?)\s*</ ? $1 : $author if $author;
         }
 
@@ -57,7 +57,7 @@ has author_email => (
     lazy => 1,
     default => sub {
         my $self = shift;
-        
+
         if ( $self->meta_info ) {
             my $author = $self->meta_info->{metadata}{author} || $self->meta_info->{author};
             $author = $author->[0] if ref $author;
@@ -105,14 +105,14 @@ has tarball => (
     default => sub {
         my $self = shift;
         if ( $self->download_url ) {
-            
+
             my( undef, $file ) = tempfile();
             $file .= ".tar.gz";
 
             if ( $self->download_url =~ /^(?:ht|f)tp/ ) {
                 require LWP::Simple;
                 LWP::Simple::getstore( $self->download_url => $file )
-                    or die "could not retrieve ", $self->download_url;
+                    or croak "could not retrieve ", $self->download_url;
             }
             else {
                 require File::Copy;
@@ -159,7 +159,7 @@ has cpan_parse => (
 has metacpan => (
     is => 'ro',
     lazy => 1,
-    default => sub { 
+    default => sub {
         require MetaCPAN::Client;
         MetaCPAN::Client->new;
     }
@@ -172,7 +172,7 @@ has meta_info => (
     default => method {
         require MetaCPAN::Client;
 
-        if( my $release = $self->metacpan->release({ all => 
+        if( my $release = $self->metacpan->release({ all =>
                     [
                         { distribution => $self->dist_name },
                         { version => $self->dist_version },
@@ -185,7 +185,7 @@ has meta_info => (
         # TODO check on cpan if the info is not there
 
         require CPAN::Meta;
-        
+
         my( $result ) = map { CPAN::Meta->load_file($_) }
                         grep { $_->exists }
                         map { path( $self->extracted_dir )->child( "META.$_" ) } qw/ json yml /;
@@ -199,8 +199,8 @@ has dist_version => (
     is => 'ro',
     lazy => 1,
     default => method {
-            $self->has_meta_info 
-                ? $self->meta_info->{version} 
+            $self->has_meta_info
+                ? $self->meta_info->{version}
                 : $self->cpan_parse->distversion
     },
 );
@@ -209,7 +209,7 @@ has dist_name => (
     is => 'ro',
     lazy => 1,
     default => method {
-        $self->has_meta_info 
+        $self->has_meta_info
             ? $self->meta_info->{distribution} || $self->meta_info->{name}
             : $self->cpan_parse->dist
             ;

@@ -5,7 +5,7 @@ use 5.10.0;
 use strict;
 use warnings;
 
-{ 
+{
     no warnings;
 use 5.010;
 
@@ -334,7 +334,7 @@ my $mcpan = MetaCPAN::API->new;
 sub find_release {
     my $input = shift;
 
-    return eval { $mcpan->release( 
+    return eval { $mcpan->release(
                         distribution => $mcpan->module($input)->{distribution}
                   ) }
         || eval { $mcpan->release( distribution => $input ) }
@@ -387,12 +387,12 @@ sub main {
         my $will_import = version->new($release->{version});
 
         die "$name has already been imported\n" if $imported == $will_import;
-    
+
         die "imported version $imported is more recent than $will_import, can't import\n"
           if $imported > $will_import;
 
         say "updating $prettyname from $imported to $will_import";
-    
+
     } else {
         say "importing $prettyname";
     }
@@ -408,7 +408,7 @@ sub main {
 
     my $tarball = file( $tmp_dir, $release->{archive} );
 
-    $ua->mirror( 
+    $ua->mirror(
         $release->{download_url} => $tarball
     ) or die "couldn't fetch tarball\n";
 
@@ -417,7 +417,7 @@ sub main {
     my $archive = Archive::Extract->new( archive => $tarball );
     $archive->extract( to => $tmp_dir );
 
-    my $dist_dir = $archive->extract_path 
+    my $dist_dir = $archive->extract_path
         or die "extraction failed\n";
 
     # create a tree object for the CPAN module
@@ -458,7 +458,7 @@ sub main {
 
             # CPAN::Checksums makes YYYY-MM-DD dates, but GIT_AUTHOR_DATE
             # doesn't support that. 
-            $mtime .= 'T00:00::00' 
+            $mtime .= 'T00:00::00'
                 if $mtime =~ m/\A (\d\d\d\d) - (\d\d?) - (\d\d?) \z/x;
 
             if ( $mtime ) {
@@ -497,8 +497,8 @@ sub main {
 
         my @parents = ( grep { $_ } $last_commit, @{ $opts->{parent} || [] } );
 
-        my $message = join ' ', 
-            ( $last_version ? "import" : "initial import of" ), 
+        my $message = join ' ',
+            ( $last_version ? "import" : "initial import of" ),
             "$name $version from CPAN\n";
         $message .= <<"END";
 
