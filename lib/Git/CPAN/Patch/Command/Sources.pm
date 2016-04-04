@@ -6,7 +6,7 @@ use 5.10.0;
 
 use strict;
 use warnings;
-
+use Carp;
 use Method::Signatures::Simple;
 use List::Pairwise qw/ mapp /;
 
@@ -64,7 +64,7 @@ has release_meta => (
 
         my $thingy = $self->thingy;
 
-        eval { $mcpan->release( 
+        eval { $mcpan->release(
                 distribution => $mcpan->module($thingy)->{distribution}
         ) }
         || eval { $mcpan->release( distribution => $thingy ) }
@@ -98,9 +98,9 @@ method run {
     if ( $self->backpan ) {
         say "backpan:";
         my $dist = $self->backpan_index->dist($self->thingy)
-            or die "could not find distribution on BackPAN";
+            or croak "could not find distribution on BackPAN";
 
-        say "  - ", $BackPAN_URL . "/" . $_->prefix 
+        say "  - ", $BackPAN_URL . "/" . $_->prefix
             for $dist->releases->search( undef, { order_by => "date" } )->all;
     }
 }

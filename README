@@ -26,6 +26,10 @@ DESCRIPTION
     stuffing it in a local git repository and, once gleeful hacking has
     been perpetrated, sending back patches to its maintainer.
 
+    NOTE: This module is supported in Linux, BSD, and the like. This 
+    module is *not* supported in Microsoft Windows (Cygwin, Strawberry Perl). 
+    See CPAN Testers Matrix for currently supported operating systems.
+
 GIT-CPAN COMMANDS
 
     clone
