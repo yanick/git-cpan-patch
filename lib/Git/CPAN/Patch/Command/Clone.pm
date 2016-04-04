@@ -41,7 +41,7 @@ before [ qw/import_release clone_git_repo /] => method($release) {
 };
 
 after [ qw/ clone_git_repo import_release /] => method {
-    $self->git_run( 'reset', '--hard', $self->last_commit );    
+    $self->git_run( 'reset', '--hard', $self->last_commit );
 };
 
 __PACKAGE__->meta->make_immutable;
