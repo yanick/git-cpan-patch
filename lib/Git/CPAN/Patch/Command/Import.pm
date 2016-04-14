@@ -5,7 +5,6 @@ use 5.10.0;
 
 use strict;
 use warnings;
-
 use File::Temp qw/ tempdir /;
 use Method::Signatures::Simple;
 use Git::Repository;
@@ -80,11 +79,12 @@ method get_releases_from_url($url) {
 
     say "copying '$url' to '$destination'";
 
-    LWP::Simple::mirror( $url => $destination ) or die;
+    LWP::Simple::mirror( $url => $destination ) 
+        or die "Failed to mirror $url\n";
 
-    return Git::CPAN::Patch::Release->new( 
+    return Git::CPAN::Patch::Release->new(
         metacpan => $self->metacpan,
-        tarball => $destination 
+        tarball => $destination
     );
 }
 
@@ -113,9 +113,9 @@ sub looks_like_git {
 }
 
 method get_releases_from_cpan($dist_or_module) {
-    
+
     # is it a module belonging to a distribution?
-    my $dist = eval{ $self->metacpan->module($dist_or_module)->data->{distribution} 
+    my $dist = eval{ $self->metacpan->module($dist_or_module)->data->{distribution}
     } || $dist_or_module;
 
      if ( $dist eq 'perl' ) {
@@ -127,7 +127,7 @@ method get_releases_from_cpan($dist_or_module) {
         my $repo = $latest_release->data->{metadata}{resources}{repository};
         if ( looks_like_git($repo) ) {
             say "Git repository found: ", $repo->{url};
-            $self->clone_git_repo(Git::CPAN::Patch::Release->new( 
+            $self->clone_git_repo(Git::CPAN::Patch::Release->new(
                 metacpan => $self->metacpan,
                 dist_name => $dist,
                 meta_info => $latest_release,

@@ -24,13 +24,13 @@ option man => (
     isa => 'Bool',
     default => 0,
     lazy => 1,
-    trigger => sub { 
+    trigger => sub {
         require Pod::Usage;
         my $name = $_[0]->meta->name . '.pm';
         $name =~ s#::#/#g;
 
         exit Pod::Usage::pod2usage(
-            -verbose => 2, 
+            -verbose => 2,
             -input => $INC{$name}
         );
     },
@@ -117,6 +117,11 @@ any distribution off CPAN, stuffing it
 in a local git repository and, once gleeful
 hacking has been perpetrated, sending back
 patches to its maintainer.
+
+NOTE: This module is supported in Linux, BSD, and the like. This 
+module is B<not> supported in Microsoft Windows (Cygwin, Strawberry Perl). 
+See L<CPAN Testers Matrix|http://matrix.cpantesters.org/?dist=Git-CPAN-Patch>
+for currently supported operating systems.
 
 =head1 GIT-CPAN COMMANDS
 
