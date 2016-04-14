@@ -118,6 +118,11 @@ in a local git repository and, once gleeful
 hacking has been perpetrated, sending back
 patches to its maintainer.
 
+NOTE: This module is supported in Linux, BSD, and the like. This 
+module is B<not> supported in Microsoft Windows (Cygwin, Strawberry Perl). 
+See L<CPAN Testers Matrix|http://matrix.cpantesters.org/?dist=Git-CPAN-Patch>
+for currently supported operating systems.
+
 =head1 GIT-CPAN COMMANDS
 
 =over
