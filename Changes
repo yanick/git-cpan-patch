@@ -1,6 +1,9 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
+    - perlcritic tweaks, add documentation, better die messages.
+        (GH#32, temp0)
+
   [ API CHANGES ]
 
   [ BUG FIXES ]
