@@ -5,7 +5,6 @@ use 5.10.0;
 
 use strict;
 use warnings;
-use Carp;
 use Method::Signatures::Simple;
 use List::Pairwise qw/ mapp /;
 
@@ -97,7 +96,7 @@ method run {
     if ( $self->backpan ) {
         say "backpan:";
         my $dist = $self->backpan_index->dist($self->thingy)
-            or croak "could not find distribution on BackPAN";
+            or die "could not find distribution on BackPAN\n";
 
         say "  - ", $BackPAN_URL . "/" . $_->prefix
             for $dist->releases->search( undef, { order_by => "date" } )->all;

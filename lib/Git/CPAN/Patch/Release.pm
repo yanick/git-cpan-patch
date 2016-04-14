@@ -2,7 +2,6 @@ package Git::CPAN::Patch::Release;
 
 use strict;
 use warnings;
-use Carp; 
 use Method::Signatures::Simple;
 use File::chdir;
 use Archive::Any;
@@ -112,7 +111,7 @@ has tarball => (
             if ( $self->download_url =~ /^(?:ht|f)tp/ ) {
                 require LWP::Simple;
                 LWP::Simple::getstore( $self->download_url => $file )
-                    or croak "could not retrieve ", $self->download_url;
+                    or die "could not retrieve ", $self->download_url, "\n";
             }
             else {
                 require File::Copy;

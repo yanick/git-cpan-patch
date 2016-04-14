@@ -5,7 +5,6 @@ use 5.10.0;
 
 use strict;
 use warnings;
-use Carp;
 use File::Temp qw/ tempdir /;
 use Method::Signatures::Simple;
 use Git::Repository;
@@ -80,7 +79,8 @@ method get_releases_from_url($url) {
 
     say "copying '$url' to '$destination'";
 
-    LWP::Simple::mirror( $url => $destination ) or croak "Failed to mirror $url";
+    LWP::Simple::mirror( $url => $destination ) 
+        or die "Failed to mirror $url\n";
 
     return Git::CPAN::Patch::Release->new(
         metacpan => $self->metacpan,
