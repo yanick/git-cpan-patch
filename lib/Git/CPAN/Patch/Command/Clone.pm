@@ -1,6 +1,7 @@
 package Git::CPAN::Patch::Command::Clone;
+our $AUTHORITY = 'cpan:YANICK';
 #ABSTRACT: Clone a CPAN module's history into a new git repository
-
+$Git::CPAN::Patch::Command::Clone::VERSION = '2.3.0';
 use 5.10.0;
 
 use strict;
@@ -49,6 +50,18 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Git::CPAN::Patch::Command::Clone - Clone a CPAN module's history into a new git repository
+
+=head1 VERSION
+
+version 2.3.0
+
 =head1 SYNOPSIS
 
   # from a specific tarball
@@ -72,7 +85,6 @@ history will be created using the CPAN releases.
 If the target
 directory is omitted, then the "humanish" part of the distribution is used.
 
-  
 =head1 AUTHORS
 
 Mike Doherty C<< <doherty@cpan.org> >>
@@ -82,5 +94,16 @@ Yanick Champoux C<< <yanick@cpan.org> >>
 =head1 SEE ALSO
 
 L<Git::CPAN::Patch>, L<git-cpan-init>, L<git-cpan-import>
+
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2016 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

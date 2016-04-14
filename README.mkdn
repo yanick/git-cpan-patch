@@ -1,0 +1,103 @@
+# NAME
+
+Git::CPAN::Patch - Patch CPAN modules using Git
+
+# VERSION
+
+version 2.3.0
+
+# SYNOPSIS
+
+    # import a module:
+
+    % git-cpan clone Foo::Bar
+    % cd Foo-Bar
+
+    # hack and submit to RT
+
+    # it's probably best to work in a branch
+    % git checkout -b blah
+
+    ... hack lib/Foo/Bar.pm ...
+
+    % git commit -am "blah"
+    % git-cpan sendpatch 
+
+    # update the module
+    # this automatically rebases the current branch
+    % git-cpan update
+
+# DESCRIPTION
+
+[Git::CPAN::Patch](https://metacpan.org/pod/Git::CPAN::Patch) provides a suite of git commands
+aimed at making trivially
+easy the process of  grabbing
+any distribution off CPAN, stuffing it
+in a local git repository and, once gleeful
+hacking has been perpetrated, sending back
+patches to its maintainer.
+
+NOTE: This module is supported in Linux, BSD, and the like. This 
+module is **not** supported in Microsoft Windows (Cygwin, Strawberry Perl). 
+See [CPAN Testers Matrix](http://matrix.cpantesters.org/?dist=Git-CPAN-Patch)
+for currently supported operating systems.
+
+# GIT-CPAN COMMANDS
+
+- [clone](https://metacpan.org/pod/Git::CPAN::Patch::Command::Clone)
+
+    Clone a CPAN module's history into a new git repository
+
+- [import](https://metacpan.org/pod/Git::CPAN::Patch::Command::Import)
+
+    Import a module into a git repository.
+
+- [send-email](https://metacpan.org/pod/Git::CPAN::Patch::Command::SendEmail)
+
+    Use `git-send-email` to submit patches to CPAN RT
+
+- [send-patch](https://metacpan.org/pod/Git::CPAN::Patch::Command::SendPatch)
+
+    Create patch files and submit then to RT
+
+- [update](https://metacpan.org/pod/Git::CPAN::Patch::Command::Update)
+
+    Import the latest version of a module and rebase the current branch
+
+- [format-patch](https://metacpan.org/pod/Git::CPAN::Patch::Command::FormatPatch)
+
+    Format patches using `cpan/master` as the origin reference
+
+- [squash](https://metacpan.org/pod/Git::CPAN::Patch::Command::Squash)
+
+    Combine multiple commits into one patch
+
+- [which](https://metacpan.org/pod/Git::CPAN::Patch::Command::Which)
+
+    Report upon the managed module
+
+# AUTHORS
+
+Yanick Champoux `<yanick@cpan.org>` [![endorse](http://api.coderwall.com/yanick/endorsecount.png)](http://coderwall.com/yanick)
+
+Yuval Kogman `<nothingmuch@woobling.org>`
+
+# SEE ALSO
+
+## Articles
+
+The set of scripts that would eventually become
+[Git::CPAN::Patch](https://metacpan.org/pod/Git::CPAN::Patch) were first presented in the
+article _CPAN Patching with Git_, published in
+issue 5.1 of [The Perl Review](http://theperlreview.com).
+
+# AUTHOR
+
+Yanick Champoux <yanick@cpan.org> [![endorse](http://api.coderwall.com/yanick/endorsecount.png)](http://coderwall.com/yanick)
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2016 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.

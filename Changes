@@ -1,22 +1,15 @@
 Revision history for Git::CPAN::Patch
 
-{{$NEXT}}
-    - perlcritic tweaks, add documentation, better die messages.
-        (GH#32, temp0)
-
-  [ API CHANGES ]
-
-  [ BUG FIXES ]
-
-  [ DOCUMENTATION ]
+2.3.0 2016-04-13
+  - perlcritic tweaks, add documentation, better die messages. (GH#32,
+    temp0)
 
   [ ENHANCEMENTS ]
-  - 'git cpan import' now has options '--author_name' and '--author_email' to
-    force author to those values. (GH#31)
-
-  [ NEW FEATURES ]
+    - 'git cpan import' now has options '--author_name' and
+      '--author_email' to force author to those values. (GH#31)
 
   [ STATISTICS ]
+    - code churn: 8 files changed, 78 insertions(+), 45 deletions(-)
 
 2.2.1 2016-02-06
   [ BUG FIXES ]
@@ -277,10 +270,10 @@ Revision history for Git::CPAN::Patch
     Schwern.
   - Use File::chmod instead of shell chmod to avoid shell quoting problems.
     Thanks to Schwern.
-  - Don't try to tag releases with no versions. 	Thanks to Schwern.
+  - Don't try to tag releases with no versions.     Thanks to Schwern.
   - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
   - Skip empty tarballs.  Thanks to Schwern.
-  - Skip bad archives.			    Thanks to Schwern.
+  - Skip bad archives.				    Thanks to Schwern.
 
 0.2.1 Thur Sept 3 2009
   - git-cpan-import is working with new version of Git.     Thanks to
