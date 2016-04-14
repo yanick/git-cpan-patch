@@ -70,6 +70,15 @@ has metacpan => (
     },
 );
 
+option author_name => (
+    is => 'ro',
+    documentation => "explicitly set the author's name",
+);
+
+option author_email => (
+    is => 'ro',
+    documentation => "explicitly set the author's email",
+);
 
 method get_releases_from_url($url) {
     require LWP::Simple;
@@ -214,9 +223,9 @@ method import_release($release) {
         # TODO authors and author_date
 
         # create the commit object
-        $ENV{GIT_AUTHOR_NAME}  = $release->author_name  if $release->author_name;
-        $ENV{GIT_AUTHOR_EMAIL} = $release->author_email if $release->author_email;
-        $ENV{GIT_AUTHOR_DATE}  = $release->date         if $release->date;
+        $ENV{GIT_AUTHOR_NAME}  = $self->author_name  || $release->author_name  || $ENV{GIT_AUTHOR_NAME};
+        $ENV{GIT_AUTHOR_EMAIL} = $self->author_email || $release->author_email || $ENV{GIT_AUTHOR_EMAIL};
+        $ENV{GIT_AUTHOR_DATE}  = $release->date if $release->date;
 
         my @parents = grep { $_ } $self->last_commit, @{ $self->parent };
 
@@ -323,6 +332,16 @@ the imported CPAN package:
     $ git-cpan import --parent HEAD My-Module
 
 More than one '--parent' can be specified.
+
+=item --author_name
+
+Forces the author name to the given value, instead of trying to resolve it from
+the release metadata.
+
+=item --author_email
+
+Forces the author email to the given value, instead of trying to resolve it from
+the release metadata.
 
 =back
 

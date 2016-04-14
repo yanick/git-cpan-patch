@@ -11,6 +11,8 @@ Revision history for Git::CPAN::Patch
   [ DOCUMENTATION ]
 
   [ ENHANCEMENTS ]
+  - 'git cpan import' now has options '--author_name' and '--author_email' to
+    force author to those values. (GH#31)
 
   [ NEW FEATURES ]
 
