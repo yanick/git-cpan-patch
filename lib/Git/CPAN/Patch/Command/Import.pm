@@ -21,9 +21,14 @@ use MooseX::App::Command;
 extends 'Git::CPAN::Patch';
 with 'Git::CPAN::Patch::Role::Git';
 
-with 'MooseX::Role::Tempdir' => {
-    tmpdir_opts => { CLEANUP => 1 },
-};
+has tmpdir => (
+  is => 'ro',
+  isa => 'Path::Tiny',
+  lazy => 1,
+  default => sub {
+    return Path::Tiny->tempdir();
+  }
+);
 
 use experimental qw(smartmatch);
 
@@ -88,7 +93,7 @@ method get_releases_from_url($url) {
 
     say "copying '$url' to '$destination'";
 
-    LWP::Simple::mirror( $url => $destination ) 
+    LWP::Simple::mirror( $url => $destination )
         or die "Failed to mirror $url\n";
 
     return Git::CPAN::Patch::Release->new(

@@ -4,6 +4,8 @@ Revision history for Git::CPAN::Patch
   [ API CHANGES ]
 
   [ BUG FIXES ]
+  - Remove dependency on MooseX::Role::Tempdir.
+    (GH#33, Sebastien Deseille)
 
   [ DOCUMENTATION ]
 
