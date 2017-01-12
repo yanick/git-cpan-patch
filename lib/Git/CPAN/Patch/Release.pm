@@ -12,9 +12,14 @@ use version;
 
 use Moose;
 
-with 'MooseX::Role::Tempdir' => {
-    tmpdir_opts => { CLEANUP => 1 },
-};
+has tmpdir => (
+  is => 'ro',
+  isa => 'Path::Tiny',
+  lazy => 1,
+  default => sub {
+    return Path::Tiny->tempdir();
+  }
+);
 
 has author_name => (
     is => 'ro',

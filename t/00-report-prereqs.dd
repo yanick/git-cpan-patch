@@ -43,7 +43,6 @@ do { my $x = {
                                       'MooseX::App' => '1.21',
                                       'MooseX::App::Command' => '0',
                                       'MooseX::App::Role' => '0',
-                                      'MooseX::Role::Tempdir' => '0',
                                       'MooseX::SemiAffordanceAccessor' => '0',
                                       'Path::Class' => '0',
                                       'Path::Tiny' => '0',
