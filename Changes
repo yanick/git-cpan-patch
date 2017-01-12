@@ -4,8 +4,6 @@ Revision history for Git::CPAN::Patch
   [ API CHANGES ]
 
   [ BUG FIXES ]
-  - Remove dependency on MooseX::Role::Tempdir.
-    (GH#33, Sebastien Deseille)
 
   [ DOCUMENTATION ]
 
@@ -14,6 +12,14 @@ Revision history for Git::CPAN::Patch
   [ NEW FEATURES ]
 
   [ STATISTICS ]
+
+2.3.1 2017-01-12
+  [ BUG FIXES ]
+    - Remove dependency on MooseX::Role::Tempdir. (GH#33, Sebastien
+      Deseille)
+
+  [ STATISTICS ]
+    - code churn: 3 files changed, 32 insertions(+), 14 deletions(-)
 
 2.3.0 2016-04-13
   - perlcritic tweaks, add documentation, better die messages. (GH#32,
@@ -288,7 +294,8 @@ Revision history for Git::CPAN::Patch
   - Don't try to tag releases with no versions.     Thanks to Schwern.
   - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
   - Skip empty tarballs.  Thanks to Schwern.
-  - Skip bad archives.				    Thanks to Schwern.
+  - Skip bad archives.					    Thanks to
+    Schwern.
 
 0.2.1 Thur Sept 3 2009
   - git-cpan-import is working with new version of Git.     Thanks to
