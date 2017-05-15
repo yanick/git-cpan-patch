@@ -453,7 +453,11 @@ sub main {
             my $mtime = eval {
                 DateTime->from_epoch( epoch => $release->{stat}{mtime})->ymd;
             };
-
+			
+			# CPAN::Checksums makes YYYY-MM-DD dates, but GIT_AUTHOR_DATE
+			# doesn't support that. It does support YYYY.MM.DD though.
+			$mtime =~ s/\A (\d\d\d\d) - (\d\d?) - (\d\d?) \z/./x;
+			
             warn $@ if $@;
 
             # CPAN::Checksums makes YYYY-MM-DD dates, but GIT_AUTHOR_DATE
