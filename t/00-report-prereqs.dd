@@ -1,0 +1,74 @@
+do { my $x = {
+       'configure' => {
+                        'requires' => {
+                                        'ExtUtils::MakeMaker' => '0'
+                                      }
+                      },
+       'develop' => {
+                      'requires' => {
+                                      'Test::More' => '0.96',
+                                      'Test::Vars' => '0'
+                                    }
+                    },
+       'runtime' => {
+                      'requires' => {
+                                      'Archive::Any' => '0',
+                                      'Archive::Extract' => '0',
+                                      'BackPAN::Index' => '0',
+                                      'CLASS' => '0',
+                                      'CPAN::Meta' => '0',
+                                      'CPAN::ParseDistribution' => '0',
+                                      'CPANPLUS' => '0',
+                                      'Cwd' => '0',
+                                      'DateTime' => '0',
+                                      'File::Basename' => '0',
+                                      'File::Copy' => '0',
+                                      'File::Find' => '0',
+                                      'File::Path' => '0',
+                                      'File::Spec::Functions' => '0',
+                                      'File::Temp' => '0',
+                                      'File::chdir' => '0',
+                                      'File::chmod' => '0',
+                                      'Git::Repository' => '0',
+                                      'Git::Repository::Plugin::AUTOLOAD' => '0',
+                                      'LWP::Simple' => '0',
+                                      'LWP::UserAgent' => '0',
+                                      'List::Pairwise' => '0',
+                                      'MetaCPAN::API' => '0',
+                                      'MetaCPAN::Client' => '0',
+                                      'Method::Signatures::Simple' => '1.07',
+                                      'Moose' => '0',
+                                      'Moose::Role' => '0',
+                                      'MooseX::App' => '1.21',
+                                      'MooseX::App::Command' => '0',
+                                      'MooseX::App::Role' => '0',
+                                      'MooseX::SemiAffordanceAccessor' => '0',
+                                      'Path::Class' => '0',
+                                      'Path::Tiny' => '0',
+                                      'Pod::Usage' => '0',
+                                      'autodie' => '0',
+                                      'experimental' => '0',
+                                      'perl' => 'v5.10.1',
+                                      'strict' => '0',
+                                      'version' => '0',
+                                      'warnings' => '0'
+                                    }
+                    },
+       'test' => {
+                   'recommends' => {
+                                     'CPAN::Meta' => '2.120900'
+                                   },
+                   'requires' => {
+                                   'Carp' => '0',
+                                   'DDP' => '0',
+                                   'ExtUtils::MakeMaker' => '0',
+                                   'File::Spec' => '0',
+                                   'IO::Handle' => '0',
+                                   'IPC::Open3' => '0',
+                                   'Test::MockObject' => '0',
+                                   'Test::More' => '0'
+                                 }
+                 }
+     };
+  $x;
+ }

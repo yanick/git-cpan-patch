@@ -1,6 +1,7 @@
 package Git::CPAN::Patch::Role::Git;
+our $AUTHORITY = 'cpan:YANICK';
 #ABSTRACT: provides access to Git repository
-
+$Git::CPAN::Patch::Role::Git::VERSION = '2.3.2';
 use strict;
 use warnings;
 
@@ -65,3 +66,30 @@ method first_import {
 }
 
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Git::CPAN::Patch::Role::Git - provides access to Git repository
+
+=head1 VERSION
+
+version 2.3.2
+
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
