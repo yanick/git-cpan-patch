@@ -4,7 +4,6 @@ Revision history for Git::CPAN::Patch
   [ API CHANGES ]
 
   [ BUG FIXES ]
-  - source command was erroneously using 'vcs' attribute. (GH#35, ilmari)
 
   [ DOCUMENTATION ]
 
@@ -13,6 +12,13 @@ Revision history for Git::CPAN::Patch
   [ NEW FEATURES ]
 
   [ STATISTICS ]
+
+2.3.2 2017-12-22
+  [ BUG FIXES ]
+    - source command was erroneously using 'vcs' attribute. (GH#35, ilmari)
+
+  [ STATISTICS ]
+    - code churn: 5 files changed, 97 insertions(+), 8 deletions(-)
 
 2.3.1 2017-01-12
   [ BUG FIXES ]
@@ -295,8 +301,8 @@ Revision history for Git::CPAN::Patch
   - Don't try to tag releases with no versions.     Thanks to Schwern.
   - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
   - Skip empty tarballs.  Thanks to Schwern.
-  - Skip bad archives.					    Thanks to
-    Schwern.
+  - Skip bad archives.						    Thanks
+    to Schwern.
 
 0.2.1 Thur Sept 3 2009
   - git-cpan-import is working with new version of Git.     Thanks to
