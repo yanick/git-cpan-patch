@@ -4,6 +4,7 @@ Revision history for Git::CPAN::Patch
   [ API CHANGES ]
 
   [ BUG FIXES ]
+  - source command was erroneously using 'vcs' attribute. (GH#35, ilmari)
 
   [ DOCUMENTATION ]
 
