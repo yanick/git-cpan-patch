@@ -17,7 +17,7 @@ option repository => (
     isa     => 'Bool',
     default => 1,
     trigger => method {
-        return unless $self->vcs;
+        return unless $self->repository;
         $self->set_cpan(0);
         $self->set_backpan(0);
     },
@@ -30,7 +30,7 @@ option cpan => (
     default => 1,
     trigger => method {
         return unless $self->cpan;
-        $self->set_vcs(0);
+        $self->set_repository(0);
         $self->set_backpan(0);
     },
     documentation => 'show cpan information',
@@ -42,7 +42,7 @@ option backpan => (
     default => 0,
     trigger => method {
         return unless $self->backpan;
-        $self->set_vcs(0);
+        $self->set_repository(0);
         $self->set_cpan(0);
     },
     documentation => 'show backpan information',

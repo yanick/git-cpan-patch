@@ -1,0 +1,19 @@
+---
+before_install:
+  - export HARNESS_OPTIONS=j10:c HARNESS_TIMER=1
+  - rm .travis.yml
+  - git config --global user.name "Dist Zilla Plugin TravisCI"
+  - git config --global user.email $HOSTNAME":not-for-mail@travis-ci.org"
+install:
+  - cpanm --installdeps -n .
+language: perl
+perl:
+  - '5.14'
+  - '5.16'
+  - '5.18'
+  - '5.20'
+  - '5.22'
+  - '5.24'
+  - '5.26'
+script:
+  - prove -l t

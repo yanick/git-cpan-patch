@@ -7,7 +7,6 @@ MANIFEST
 META.json
 META.yml
 Makefile.PL
-README
 README.mkdn
 SIGNATURE
 bin/git-cpan
@@ -35,5 +34,4 @@ t/clone.t
 t/corpus/Git-CPAN-Patch-0.4.5.tar.gz
 xauth/clone-from-github.t
 xauth/clone-from-module.t
-xt/release/pause-permissions.t
 xt/release/unused-vars.t
