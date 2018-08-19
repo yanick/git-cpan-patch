@@ -6,15 +6,12 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures::Simple;
 use MooseX::App::Command;
 
 with 'Git::CPAN::Patch::Role::Git';
 with 'Git::CPAN::Patch::Role::Patch';
 
-method run {
-    say $self->module_name;
-}
+sub run { say $_[0]->module_name }
 
 __PACKAGE__->meta->make_immutable;
 

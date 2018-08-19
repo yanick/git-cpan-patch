@@ -6,12 +6,16 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures::Simple;
 use Git::Repository;
 
 use MooseX::App::Command;
 
 with 'Git::CPAN::Patch::Role::Git';
+
+use experimental qw/
+    signatures
+    postderef
+/;
 
 has first_arg => (
     is => 'ro',
@@ -23,12 +27,12 @@ has branch => (
     is => 'ro',
     isa => 'Str',
     lazy => 1,
-    default => method {
+    default => sub ($self) {
         $self->first_arg || 'patch';
     },
 );
 
-method run {
+sub run ($self) {
     my $head = $self->git_run("rev-parse", "--verify", "HEAD");
 
     say for $self->git_run("checkout", "-b", $self->branch, "cpan/master");

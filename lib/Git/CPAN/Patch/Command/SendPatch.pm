@@ -6,14 +6,17 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures::Simple;
-
 use MooseX::App::Command;
 
 with 'Git::CPAN::Patch::Role::Git';
 with 'Git::CPAN::Patch::Role::Patch';
 
-method run {
+use experimental qw/
+    signatures
+    postderef
+/;
+
+sub run ($self) {
     $self->format_patch;
 
     if ( $self->nbr_patches > 1 ) {

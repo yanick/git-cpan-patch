@@ -6,8 +6,6 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures::Simple;
-
 use MooseX::App::Command;
 
 with 'Git::CPAN::Patch::Role::Git';
@@ -19,9 +17,7 @@ parameter extra_arg => (
     required => 0,
 );
 
-method run {
-    $self->send_emails($self->extra_arg);
-}
+sub run { $_[0]->send_emails($self->extra_arg) }
 
 __PACKAGE__->meta->make_immutable;
 

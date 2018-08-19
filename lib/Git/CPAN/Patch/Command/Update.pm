@@ -6,13 +6,16 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures::Simple;
 use Git::Repository;
 
 use MooseX::App::Command;
 
 extends 'Git::CPAN::Patch::Command::Import';
 
+use experimental qw/
+    signatures
+    postderef
+/;
 
 #TODO check for versions before download
 
@@ -20,18 +23,17 @@ has last_import_before_run => (
     is => 'rw',
 );
 
-before run => method {
+before run => sub ($self) {
     eval { $self->set_last_import_before_run($self->last_commit) }
         or die "branch 'cpan/master' doesn't exist yet (import first)\n";
     $self->set_thing_to_import( $self->tracked_distribution );
 };
 
-after run => method {
+after run => sub ($self) {
     return if $self->last_import_before_run eq $self->last_commit;
 
     $self->git_run( rebase => 'cpan/master' );
 };
-
 
 __PACKAGE__->meta->make_immutable;
 

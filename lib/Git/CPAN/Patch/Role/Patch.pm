@@ -5,9 +5,12 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use Method::Signatures::Simple;
-
 use Moose::Role;
+
+use experimental qw/
+    signatures
+    postderef
+/;
 
 requires 'git_run';
 
@@ -15,7 +18,7 @@ has patches => (
     is => 'rw',
     traits => [ 'Array' ],
     isa => 'ArrayRef',
-    default => method { [
+    default => sub ($self) { [
         $self->git_run( 'format-patch', 'cpan/master' )
     ] },
     handles => {
@@ -25,7 +28,7 @@ has patches => (
     },
 );
 
-method format_patch {
+sub format_patch ($self) {
     say for $self->all_patches;
 }
 
@@ -33,7 +36,7 @@ has module_name => (
     is => 'ro',
     isa => 'Str',
     lazy => 1,
-    default => method {
+    default => sub ($self) {
 
         if (my $module = $self->git->run('config', 'cpan.module-name')) {
             return $module
@@ -52,7 +55,7 @@ has module_name => (
     },
 );
 
-method send_emails(@patches) {
+sub send_emails($self,@patches) {
     my $to = 'bug-' . $self->module_name . '@rt.cpan.org';
 
     system 'git', "send-email", '--no-chain-reply-to', "--to", $to, @patches;

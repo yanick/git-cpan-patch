@@ -4,7 +4,6 @@ package Git::CPAN::Patch::Role::Git;
 use strict;
 use warnings;
 
-use Method::Signatures::Simple;
 use version;
 
 use Moose::Role;
@@ -12,6 +11,11 @@ use MooseX::App::Role;
 use MooseX::SemiAffordanceAccessor;
 
 use Git::Repository;
+
+use experimental qw/
+    signatures
+    postderef
+/;
 
 option root => (
     is => 'rw',
@@ -24,7 +28,7 @@ has git => (
     is => 'ro',
     isa => 'Git::Repository',
     lazy => 1,
-    default => method {
+    default => sub ($self) {
         Git::Repository->new(
             work_tree => $self->root
         );
@@ -34,11 +38,11 @@ has git => (
     },
 );
 
-method last_commit {
+sub last_commit ($self) {
     eval { $self->git_run('rev-parse', '--verify', 'cpan/master') }
 }
 
-method last_imported_version {
+sub last_imported_version  ($self) {
     my $last_commit = $self->last_commit or return version->parse(0);
 
     my $last = join "\n", $self->git_run( log => '--pretty=format:%b', '-n', 1, $last_commit );
@@ -49,7 +53,7 @@ method last_imported_version {
     return version->parse($2);
 }
 
-method tracked_distribution {
+sub tracked_distribution ($self) {
     my $last_commit = $self->last_commit or return;
 
     my $last = join "\n", $self->git_run( log => '--pretty=format:%b', '-n', 1, $last_commit );
@@ -60,8 +64,6 @@ method tracked_distribution {
     return $1;
 }
 
-method first_import {
-    return !$self->last_commit;
-}
+sub first_import { return !$_[0]->last_commit }
 
 1;
