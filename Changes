@@ -6,6 +6,7 @@ Revision history for Git::CPAN::Patch
   [ BUG FIXES ]
 
   [ DOCUMENTATION ]
+    - Fix sendpatch typo in POD. (GH#36, Racke)
 
   [ ENHANCEMENTS ]
 
