@@ -102,7 +102,7 @@ __END__
     ... hack lib/Foo/Bar.pm ...
 
     % git commit -am "blah"
-    % git-cpan sendpatch 
+    % git-cpan send-patch
 
     # update the module
     # this automatically rebases the current branch
