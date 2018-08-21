@@ -1,22 +1,24 @@
 package Git::CPAN::Patch::Command::FormatPatch;
 #ABSTRACT: Format patches using C<cpan/master> as the origin reference
 
-use 5.10.0;
+use 5.20.0;
 
 use strict;
 use warnings;
 
-use Method::Signatures::Simple;
 
 use MooseX::App::Command;
 
 with 'Git::CPAN::Patch::Role::Git';
 with 'Git::CPAN::Patch::Role::Patch';
 
+use experimental qw/
+    signatures
+    postderef
+/;
 
-method run {
-    $self->format_patch;
-}
+
+sub run ($self) { $self->format_patch }
 
 __PACKAGE__->meta->make_immutable;
 

@@ -2,7 +2,6 @@ package Git::CPAN::Patch::Release;
 
 use strict;
 use warnings;
-use Method::Signatures::Simple;
 use File::chdir;
 use Archive::Any;
 use Path::Tiny;
@@ -10,6 +9,11 @@ use File::Temp qw/ tempdir tempfile /;
 use version;
 
 use Moose;
+
+use experimental qw/
+    signatures
+    postderef
+/;
 
 has tmpdir => (
   is => 'ro',
@@ -134,7 +138,7 @@ has tarball => (
 has extracted_dir => (
     is => 'ro',
     lazy => 1,
-    default => method {
+    default => sub($self) {
 
         my $archive = Archive::Any->new( $self->tarball );
         my $tmpdir = $self->tmpdir;
@@ -154,7 +158,7 @@ has cpan_parse => (
     is => 'ro',
     predicate => 'has_cpan_parse',
     lazy => 1,
-    default => method {
+    default => sub($self) {
         require CPAN::ParseDistribution;
         CPAN::ParseDistribution->new( $self->tarball );
     },
@@ -173,7 +177,7 @@ has meta_info => (
     is => 'ro',
     lazy => 1,
     predicate => 'has_meta_info',
-    default => method {
+    default => sub($self) {
         require MetaCPAN::Client;
 
         if( my $release = $self->metacpan->release({ all =>
@@ -202,7 +206,7 @@ has meta_info => (
 has dist_version => (
     is => 'ro',
     lazy => 1,
-    default => method {
+    default => sub($self) {
             $self->has_meta_info
                 ? $self->meta_info->{version}
                 : $self->cpan_parse->distversion
@@ -212,7 +216,7 @@ has dist_version => (
 has dist_name => (
     is => 'ro',
     lazy => 1,
-    default => method {
+    default => sub($self) {
         $self->has_meta_info
             ? $self->meta_info->{distribution} || $self->meta_info->{name}
             : $self->cpan_parse->dist

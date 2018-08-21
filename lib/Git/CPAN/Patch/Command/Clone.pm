@@ -1,17 +1,18 @@
 package Git::CPAN::Patch::Command::Clone;
 #ABSTRACT: Clone a CPAN module's history into a new git repository
 
-use 5.10.0;
+use 5.20.0;
 
 use strict;
 use warnings;
 
 use autodie;
 use Path::Class;
-use Method::Signatures::Simple;
 
 use MooseX::App::Command;
 extends 'Git::CPAN::Patch::Command::Import';
+
+use experimental 'signatures';
 
 parameter target => (
     is       => 'rw',
@@ -26,7 +27,7 @@ has _seen_imports => (
 );
 
 
-before [ qw/import_release clone_git_repo /] => method($release) {
+before [ qw/import_release clone_git_repo /] => sub($self,$release) {
     return if $self->_seen_imports;
     $self->_set_seen_imports(1);
 
@@ -39,7 +40,7 @@ before [ qw/import_release clone_git_repo /] => method($release) {
     $self->set_root($target);
 };
 
-after [ qw/ clone_git_repo import_release /] => method {
+after [ qw/ clone_git_repo import_release /] => sub($self) {
     $self->git_run( 'reset', '--hard', $self->last_commit );
 };
 

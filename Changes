@@ -8,7 +8,9 @@ Revision history for Git::CPAN::Patch
   [ DOCUMENTATION ]
     - Fix sendpatch typo in POD. (GH#36, Racke)
 
-  [ ENHANCEMENTS ]
+  [ MISC ]
+    - Use native signatures instead of Method::Signatures::Simple, which
+        also mean minimal perl version is now 5.20.0.
 
   [ NEW FEATURES ]
 
