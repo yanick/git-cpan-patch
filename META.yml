@@ -1,0 +1,133 @@
+---
+abstract: 'Patch CPAN modules using Git'
+author:
+  - 'Yanick Champoux <yanick@cpan.org>'
+build_requires:
+  Carp: '0'
+  DDP: '0'
+  ExtUtils::MakeMaker: '0'
+  File::Spec: '0'
+  IO::Handle: '0'
+  IPC::Open3: '0'
+  Test::MockObject: '0'
+  Test::More: '0'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 6.011, CPAN::Meta::Converter version 2.150010'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: Git-CPAN-Patch
+provides:
+  Git::CPAN::Patch:
+    file: lib/Git/CPAN/Patch.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::Clone:
+    file: lib/Git/CPAN/Patch/Command/Clone.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::FormatPatch:
+    file: lib/Git/CPAN/Patch/Command/FormatPatch.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::Import:
+    file: lib/Git/CPAN/Patch/Command/Import.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::SendEmail:
+    file: lib/Git/CPAN/Patch/Command/SendEmail.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::SendPatch:
+    file: lib/Git/CPAN/Patch/Command/SendPatch.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::Sources:
+    file: lib/Git/CPAN/Patch/Command/Sources.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::Squash:
+    file: lib/Git/CPAN/Patch/Command/Squash.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::Update:
+    file: lib/Git/CPAN/Patch/Command/Update.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Command::Which:
+    file: lib/Git/CPAN/Patch/Command/Which.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Import:
+    file: lib/Git/CPAN/Patch/Import.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Release:
+    file: lib/Git/CPAN/Patch/Release.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Role::Git:
+    file: lib/Git/CPAN/Patch/Role/Git.pm
+    version: v2.3.3
+  Git::CPAN::Patch::Role::Patch:
+    file: lib/Git/CPAN/Patch/Role/Patch.pm
+    version: v2.3.3
+requires:
+  Archive::Any: '0'
+  Archive::Extract: '0'
+  BackPAN::Index: '0'
+  CLASS: '0'
+  CPAN::Meta: '0'
+  CPAN::ParseDistribution: '0'
+  CPANPLUS: '0'
+  Cwd: '0'
+  DateTime: '0'
+  File::Basename: '0'
+  File::Copy: '0'
+  File::Find: '0'
+  File::Path: '0'
+  File::Spec::Functions: '0'
+  File::Temp: '0'
+  File::chdir: '0'
+  File::chmod: '0'
+  Git::Repository: '0'
+  Git::Repository::Plugin::AUTOLOAD: '0'
+  LWP::Simple: '0'
+  LWP::UserAgent: '0'
+  List::Pairwise: '0'
+  MetaCPAN::API: '0'
+  MetaCPAN::Client: '0'
+  Moose: '0'
+  Moose::Role: '0'
+  MooseX::App: '1.21'
+  MooseX::App::Command: '0'
+  MooseX::App::Role: '0'
+  MooseX::SemiAffordanceAccessor: '0'
+  Path::Class: '0'
+  Path::Tiny: '0'
+  Pod::Usage: '0'
+  autodie: '0'
+  experimental: '0'
+  perl: v5.20.0
+  strict: '0'
+  version: '0'
+  warnings: '0'
+resources:
+  bugtracker: https://github.com/yanick/git-cpan-patch/issues
+  homepage: https://github.com/yanick/git-cpan-patch
+  repository: https://github.com/yanick/git-cpan-patch.git
+version: 2.3.3
+x_author_pledge:
+  version: 1
+x_authority: cpan:YANICK
+x_contributor_covenant:
+  version: 0.01
+x_contributors:
+  - '2shortplanks <mark@twoshortplanks.com>'
+  - "Arthur Axel 'fREW' Schmidt <frioux@gmail.com>"
+  - 'brian d foy <brian.d.foy@gmail.com>'
+  - 'chocolateboy <chocolate@cpan.org>'
+  - 'Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>'
+  - 'Lisa Hare <lhare@inview.co.uk>'
+  - 'Michael G. Schwern <schwern@pobox.com>'
+  - 'Mike Doherty <doherty@cs.dal.ca>'
+  - 'Mike Doherty <mike@mikedoherty.ca>'
+  - 'Pedro Melo <melo@simplicidade.org>'
+  - 'sdeseille <sebastien.deseille@gmail.com>'
+  - 'Slaven Rezic <srezic@cpan.org>'
+  - 'Stefan Hornburg (Racke) <racke@linuxia.de>'
+  - 'temp0 <temp@temp.com>'
+  - 'Tim Bunce via RT <bug-Git-CPAN-Patch@rt.cpan.org>'
+  - 'Yuval Kogman <nothingmuch@woobling.org>'
+x_serialization_backend: 'YAML::Tiny version 1.67'

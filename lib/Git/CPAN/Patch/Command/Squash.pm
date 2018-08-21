@@ -1,6 +1,7 @@
 package Git::CPAN::Patch::Command::Squash;
+our $AUTHORITY = 'cpan:YANICK';
 #ABSTRACT: Combine multiple commits into one patch
-
+$Git::CPAN::Patch::Command::Squash::VERSION = '2.3.3';
 use 5.10.0;
 
 use strict;
@@ -52,6 +53,16 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
+=head1 NAME
+
+Git::CPAN::Patch::Command::Squash - Combine multiple commits into one patch
+
+=head1 VERSION
+
+version 2.3.3
+
 =head1 SYNOPSIS
 
     % git-cpan squash temp_submit_branch
@@ -71,3 +82,15 @@ C<git merge --squash> against your head revision. This stages all the files for
 the branch and allows you to create a combined commit in order to send a single
 patch easily.
 
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

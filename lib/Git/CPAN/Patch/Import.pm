@@ -1,5 +1,6 @@
 package Git::CPAN::Patch::Import;
-
+our $AUTHORITY = 'cpan:YANICK';
+$Git::CPAN::Patch::Import::VERSION = '2.3.3';
 use 5.10.0;
 
 use strict;
@@ -525,17 +526,41 @@ END
 
 1;
 
-__END__
+=pod
+
+=encoding UTF-8
 
 =head1 NAME
 
-Git::CPAN::Patch::Import - The meat of git-cpan-import
+Git::CPAN::Patch::Import
+
+=head1 VERSION
+
+version 2.3.3
 
 =head1 DESCRIPTION
 
 This is the guts of Git::CPAN::Patch::Import moved here to make it callable
 as a function so git-backpan-init goes faster.
 
+=head1 NAME
+
+Git::CPAN::Patch::Import - The meat of git-cpan-import
+
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
 =cut
+
+__END__
+
 
 1;
