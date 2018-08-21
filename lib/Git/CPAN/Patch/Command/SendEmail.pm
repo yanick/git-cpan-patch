@@ -17,7 +17,7 @@ parameter extra_arg => (
     required => 0,
 );
 
-sub run { $_[0]->send_emails($self->extra_arg) }
+sub run { $_[0]->send_emails($_[0]->extra_arg) }
 
 __PACKAGE__->meta->make_immutable;
 
