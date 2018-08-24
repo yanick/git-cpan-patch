@@ -27,7 +27,7 @@ has _seen_imports => (
 );
 
 
-before [ qw/import_release clone_git_repo /] => sub($self,$release) {
+before [ qw/import_release clone_git_repo /] => sub($self,$release,@) {
     return if $self->_seen_imports;
     $self->_set_seen_imports(1);
 
@@ -40,7 +40,7 @@ before [ qw/import_release clone_git_repo /] => sub($self,$release) {
     $self->set_root($target);
 };
 
-after [ qw/ clone_git_repo import_release /] => sub($self) {
+after [ qw/ clone_git_repo import_release /] => sub($self,@) {
     $self->git_run( 'reset', '--hard', $self->last_commit );
 };
 

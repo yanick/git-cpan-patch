@@ -4,6 +4,7 @@ Revision history for Git::CPAN::Patch
   [ API CHANGES ]
 
   [ BUG FIXES ]
+  - fix signatures in ::Command::Clone.  (GH#38)
 
   [ DOCUMENTATION ]
 
