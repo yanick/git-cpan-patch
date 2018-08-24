@@ -1,18 +1,11 @@
 Revision history for Git::CPAN::Patch
 
-{{$NEXT}}
-  [ API CHANGES ]
-
+2.3.4 2018-08-24
   [ BUG FIXES ]
-  - fix signatures in ::Command::Clone.  (GH#38)
-
-  [ DOCUMENTATION ]
-
-  [ ENHANCEMENTS ]
-
-  [ NEW FEATURES ]
+    - fix signatures in ::Command::Clone.  (GH#38)
 
   [ STATISTICS ]
+    - code churn: 2 files changed, 16 insertions(+), 7 deletions(-)
 
 2.3.3 2018-08-21
   [ DOCUMENTATION ]
@@ -314,7 +307,7 @@ Revision history for Git::CPAN::Patch
   - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
   - Skip empty tarballs.  Thanks to Schwern.
   - Skip bad archives.							   
-    Thanks to Schwern.
+	Thanks to Schwern.
 
 0.2.1 Thur Sept 3 2009
   - git-cpan-import is working with new version of Git.     Thanks to
