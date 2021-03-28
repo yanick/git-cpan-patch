@@ -254,9 +254,10 @@ END
 
         print $self->git_run('update-ref', '-m' => "import " . $release->dist_name, 'refs/remotes/cpan/master', $commit );
 
-        print $self->git_run( tag => 'v'.$release->dist_version, $commit );
+        my $tag_name = $release->dist_version =~ /^v/ ? $release->dist_version : 'v'.$release->dist_version;
+        print $self->git_run( tag => $tag_name, $commit );
 
-        say "created tag '@{[ 'v'.$release->dist_version ]}' ($commit)";
+        say "created tag '@{[ $tag_name ]}' ($commit)";
     }
 
     $self->git_run( config => 'cpan.module-name', $release->dist_name );
