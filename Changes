@@ -8,6 +8,7 @@ Revision history for Git::CPAN::Patch
   [ DOCUMENTATION ]
 
   [ ENHANCEMENTS ]
+  -  Only prefix tag with 'v' if needed. (GH#42, zmughal)
 
   [ NEW FEATURES ]
 
@@ -256,7 +257,7 @@ Revision history for Git::CPAN::Patch
 
 0.4.4 2010-06-07
   - Small doc fix for git-backpan-init. Thanks to chocolateboy.
-  - Fix "Can't use string as an ARRAY ref" error introduced in 0.3.2. 
+  - Fix "Can't use string as an ARRAY ref" error introduced in 0.3.2.
     Thanks to chocolateboy.
   - Fix repo initialization as per the documentation.  Thanks to
     chocolateboy.
@@ -319,7 +320,7 @@ Revision history for Git::CPAN::Patch
   - Don't try to tag releases with no versions.     Thanks to Schwern.
   - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
   - Skip empty tarballs.  Thanks to Schwern.
-  - Skip bad archives.							   
+  - Skip bad archives.
 	Thanks to Schwern.
 
 0.2.1 Thur Sept 3 2009
