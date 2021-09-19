@@ -9,6 +9,7 @@ Revision history for Git::CPAN::Patch
 
   [ ENHANCEMENTS ]
   -  Only prefix tag with 'v' if needed. (GH#42, zmughal)
+  - Add a --nocheck negation version of --check. (GH#41, zmughal)
 
   [ NEW FEATURES ]
 

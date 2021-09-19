@@ -51,6 +51,7 @@ option check => (
     is => 'ro',
     isa => 'Bool',
     default => 1,
+    cmd_negate => 'nocheck',
     documentation => q{Verifies that the imported version is greater than what is already imported},
 );
 
