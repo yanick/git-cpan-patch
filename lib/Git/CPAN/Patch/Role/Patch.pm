@@ -1,5 +1,6 @@
 package Git::CPAN::Patch::Role::Patch;
-
+our $AUTHORITY = 'cpan:YANICK';
+$Git::CPAN::Patch::Role::Patch::VERSION = '2.4.0';
 use 5.10.0;
 
 use strict;
@@ -65,5 +66,27 @@ sub send_emails($self,@patches) {
 
 __END__
 
+=pod
 
+=encoding UTF-8
 
+=head1 NAME
+
+Git::CPAN::Patch::Role::Patch
+
+=head1 VERSION
+
+version 2.4.0
+
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2021, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
