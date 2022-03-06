@@ -26,7 +26,6 @@ use Path::Class qw/ file /;
 use Cwd qw/ getcwd /;
 use version;
 use Git::Repository;
-use CLASS;
 use DateTime;
 
 use CPANPLUS;
@@ -200,7 +199,7 @@ sub import_one_backpan_release {
     local %ENV = %ENV;
     $ENV{GIT_AUTHOR_DATE}  ||= $release->date;
 
-    my $author = $CLASS->cpanplus->author_tree($release->cpanid);
+    my $author = __PACKAGE__->cpanplus->author_tree($release->cpanid);
     $ENV{GIT_AUTHOR_NAME}  ||= $author->author;
     $ENV{GIT_AUTHOR_EMAIL} ||= $author->email;
 
@@ -263,7 +262,7 @@ sub import_from_backpan {
 
     local $CWD = $repo_dir;
 
-    my $backpan = $CLASS->backpan_index;
+    my $backpan = __PACKAGE__->backpan_index;
     my $dist = $backpan->dist($distname)
       or die "Error: no distributions found. ",
              "Are you sure you spelled the module name correctly?\n";
@@ -468,7 +467,7 @@ sub main {
 
                 if ( $opts->{backpan} ) {
                     # we need the backpan index for dates
-                    my $backpan = $CLASS->backpan_index;
+                    my $backpan = __PACKAGE__->backpan_index;
 
                     %dists = map { $_->filename => $_ }
                     $backpan->releases($release->{name});
