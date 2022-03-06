@@ -4,7 +4,6 @@
 requires "Archive::Any" => "0";
 requires "Archive::Extract" => "0";
 requires "BackPAN::Index" => "0";
-requires "CLASS" => "0";
 requires "CPAN::Meta" => "0";
 requires "CPAN::ParseDistribution" => "0";
 requires "CPANPLUS" => "0";

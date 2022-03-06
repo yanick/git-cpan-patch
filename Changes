@@ -8,6 +8,7 @@ Revision history for Git::CPAN::Patch
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - Remove dependency on CLASS module
 
  [NEW FEATURES]
 
