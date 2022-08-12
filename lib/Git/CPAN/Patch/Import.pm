@@ -233,7 +233,7 @@ END
         if( $repo->run( "tag", "-l" => $tag ) ) {
             say "Tag $tag already exists, overwriting";
         }
-        print $repo->run( "tag", "-f" => $tag, $commit );
+        print $repo->run( "tag", "-f" => $tag, '--no-sign', $commit );
         say "created tag '$tag' ($commit)";
     }
 }
@@ -515,7 +515,7 @@ END
 
         print $repo->run('update-ref', '-m' => "import $dist", 'refs/remotes/cpan/master', $commit );
 
-        print $repo->run( tag => $version, $commit );
+        print $repo->run( tag => $version, '--no-sign', $commit );
 
         say "created tag '$version' ($commit)";
     }

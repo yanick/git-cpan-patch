@@ -5,6 +5,7 @@ Revision history for Git::CPAN::Patch
  - NEW FEATURES
  - ENHANCEMENTS
  - BUG FIXES
+    * Never sign git tags (GH#44, mschout).
  - DOCUMENTATION
  - STATISTICS
 
