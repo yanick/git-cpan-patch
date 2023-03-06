@@ -7,7 +7,6 @@ use strict;
 use warnings;
 use File::Temp qw/ tempdir /;
 use Git::Repository;
-use Git::CPAN::Patch::Import;
 use File::chdir;
 use Git::CPAN::Patch::Release;
 use Path::Class qw/ dir /;

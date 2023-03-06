@@ -173,7 +173,6 @@ distro               Files=. {
   .perlcriticrc
   distrelease.yml
   MANIFEST.SKIP
-  blib/libdoc/Git::CPAN::Patch::Import.3
   blib/libdoc/Git::CPAN::Patch.3
   contrib/gitpan
   Build

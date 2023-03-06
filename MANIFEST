@@ -23,7 +23,6 @@ lib/Git/CPAN/Patch/Command/Sources.pm
 lib/Git/CPAN/Patch/Command/Squash.pm
 lib/Git/CPAN/Patch/Command/Update.pm
 lib/Git/CPAN/Patch/Command/Which.pm
-lib/Git/CPAN/Patch/Import.pm
 lib/Git/CPAN/Patch/Release.pm
 lib/Git/CPAN/Patch/Role/Git.pm
 lib/Git/CPAN/Patch/Role/Patch.pm
