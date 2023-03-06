@@ -6,7 +6,6 @@ use 5.20.0;
 use strict;
 use warnings;
 
-use autodie;
 use Path::Tiny qw(path);
 
 use MooseX::App::Command;

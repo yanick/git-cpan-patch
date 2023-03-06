@@ -27,7 +27,6 @@ requires "MooseX::App::Role" => "0";
 requires "MooseX::SemiAffordanceAccessor" => "0";
 requires "Path::Tiny" => "0";
 requires "Pod::Usage" => "0";
-requires "autodie" => "0";
 requires "experimental" => "0";
 requires "perl" => "v5.20.0";
 requires "strict" => "0";
