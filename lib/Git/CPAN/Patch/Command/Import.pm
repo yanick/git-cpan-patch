@@ -29,7 +29,7 @@ has tmpdir => (
 
 use experimental qw(signatures);
 
-our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
+our $PERL_GIT_URL = 'https://github.com/Perl/perl5.git';
 
 option 'norepository' => (
     is => 'ro',
