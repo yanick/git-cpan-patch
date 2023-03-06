@@ -5,7 +5,6 @@ use 5.20.0;
 
 use strict;
 use warnings;
-use File::Temp qw/ tempdir /;
 use Git::Repository;
 use Git::CPAN::Patch::Import;
 use File::chdir;
