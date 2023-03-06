@@ -4,7 +4,7 @@ use warnings;
 use Test::More tests => 2;
 
 use Git::CPAN::Patch::Command::Clone;
-use File::Temp qw/ tempdir /;
+use Path::Tiny;
 use Git::Repository;
 use Test::MockObject;
 
@@ -56,7 +56,7 @@ sub test_clone {
 
     plan tests => 7;
 
-    my $root = tempdir( 'repo_XXXX', CLEANUP => 1, DIR => './t' );
+    my $root = Path::Tiny->tempdir( 'repo_XXXX', CLEANUP => 1, DIR => './t' );
 
     Git::Repository->run( init => $root );
     my $git = Git::Repository->new( work_tree => $root );
