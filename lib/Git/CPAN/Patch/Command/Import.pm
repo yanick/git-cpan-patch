@@ -5,7 +5,6 @@ use 5.20.0;
 
 use strict;
 use warnings;
-use File::Temp qw/ tempdir /;
 use Git::Repository;
 use Git::CPAN::Patch::Release;
 use Path::Tiny qw/ path /;
