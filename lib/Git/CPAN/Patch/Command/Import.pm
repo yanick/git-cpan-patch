@@ -158,6 +158,8 @@ sub get_releases_from_cpan($self,$dist_or_module) {
 
     my $releases = $self->metacpan->release( {
         distribution => $dist
+    }, {
+        sort => [{ date => { order => 'asc' } }],
     }) or die "could not find release for '$dist_or_module' on metacpan\n";
 
     my @releases;
