@@ -3,7 +3,7 @@ package Git::CPAN::Patch::Release;
 use strict;
 use warnings;
 use File::chdir;
-use Archive::Any;
+use Archive::Extract;
 use Path::Tiny;
 use File::Temp qw/ tempdir tempfile /;
 use version;
@@ -140,17 +140,20 @@ has extracted_dir => (
     lazy => 1,
     default => sub($self) {
 
-        my $archive = Archive::Any->new( $self->tarball );
+        my $archive = Archive::Extract->new( $self->tarball );
         my $tmpdir = $self->tmpdir;
         $archive->extract( $tmpdir );
 
         return $tmpdir if $archive->is_impolite;
 
-        my $dir;
-        opendir $dir, $tmpdir;
-        my( $sub ) = grep { !/^\.\.?$/ } readdir $dir;
+        opendir my $dir, $tmpdir;
+        my @content = grep { !/^\.\.?$/ } readdir $dir;
+        closedir $dir;
 
-        return join '/', $tmpdir, $sub;
+        if (@content == 1) {
+            return join '/', $tmpdir, $content[0];
+        }
+        return $tempdir;
     },
 );
 
