@@ -18,7 +18,6 @@ requires "File::Temp" => "0";
 requires "File::chdir" => "0";
 requires "File::chmod" => "0";
 requires "Git::Repository" => "0";
-requires "Git::Repository::Plugin::AUTOLOAD" => "0";
 requires "HTTP::Tiny" => "0";
 requires "LWP::UserAgent" => "0";
 requires "List::Pairwise" => "0";
