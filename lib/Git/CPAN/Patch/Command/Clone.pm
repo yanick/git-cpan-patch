@@ -7,7 +7,7 @@ use strict;
 use warnings;
 
 use autodie;
-use Path::Class;
+use Path::Tiny qw(path);
 
 use MooseX::App::Command;
 extends 'Git::CPAN::Patch::Command::Import';
@@ -35,7 +35,7 @@ before [ qw/import_release clone_git_repo /] => sub($self,$release,@) {
 
     say "creating $target";
 
-    dir($target)->mkpath;
+    path($target)->mkdir;
     Git::Repository->run( init => $target );
     $self->set_root($target);
 };

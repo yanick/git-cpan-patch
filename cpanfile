@@ -27,7 +27,6 @@ requires "MooseX::App" => "1.21";
 requires "MooseX::App::Command" => "0";
 requires "MooseX::App::Role" => "0";
 requires "MooseX::SemiAffordanceAccessor" => "0";
-requires "Path::Class" => "0";
 requires "Path::Tiny" => "0";
 requires "Pod::Usage" => "0";
 requires "autodie" => "0";

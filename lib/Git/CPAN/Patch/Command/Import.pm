@@ -9,10 +9,8 @@ use File::Temp qw/ tempdir /;
 use Git::Repository;
 use File::chdir;
 use Git::CPAN::Patch::Release;
-use Path::Class qw/ dir /;
+use Path::Tiny qw/ path /;
 use MetaCPAN::Client;
-
-# TODO Path::Class => Path::Tiny
 
 use MooseX::App::Command;
 
@@ -208,7 +206,7 @@ sub import_release($self,$release) {
     my $tree = do {
         # don't overwrite the user's index
         local $ENV{GIT_INDEX_FILE} = $self->tmpdir . "/temp_git_index";
-        local $ENV{GIT_DIR} = dir($self->root . '/.git')->absolute->stringify;
+        local $ENV{GIT_DIR} = path($self->root, '.git')->absolute->stringify;
         local $ENV{GIT_WORK_TREE} = $release->extracted_dir;
 
         local $CWD = $release->extracted_dir;
