@@ -155,13 +155,13 @@ has extracted_dir => (
     },
 );
 
-has cpan_parse => (
+has name_info => (
     is => 'ro',
-    predicate => 'has_cpan_parse',
+    predicate => 'has_name_info',
     lazy => 1,
     default => sub($self) {
-        require CPAN::ParseDistribution;
-        CPAN::ParseDistribution->new( $self->tarball );
+        require CPAN::DistnameInfo;
+        CPAN::DistnameInfo->new( $self->download_url );
     },
 );
 
@@ -210,7 +210,7 @@ has dist_version => (
     default => sub($self) {
             $self->has_meta_info
                 ? $self->meta_info->{version}
-                : $self->cpan_parse->distversion
+                : $self->name_info->version
     },
 );
 
@@ -220,7 +220,7 @@ has dist_name => (
     default => sub($self) {
         $self->has_meta_info
             ? $self->meta_info->{distribution} || $self->meta_info->{name}
-            : $self->cpan_parse->dist
+            : $self->name_info->dist
             ;
     },
 );
