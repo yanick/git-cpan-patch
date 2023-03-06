@@ -7,7 +7,6 @@ use strict;
 use warnings;
 use File::Temp qw/ tempdir /;
 use Git::Repository;
-use File::chdir;
 use Git::CPAN::Patch::Release;
 use Path::Tiny qw/ path /;
 use MetaCPAN::Client;
@@ -205,10 +204,6 @@ sub import_release($self,$release) {
     my $tree = do {
         # don't overwrite the user's index
         local $ENV{GIT_INDEX_FILE} = $self->tmpdir . "/temp_git_index";
-        local $ENV{GIT_DIR} = path($self->root, '.git')->absolute->stringify;
-        local $ENV{GIT_WORK_TREE} = $release->extracted_dir;
-
-        local $CWD = $release->extracted_dir;
 
         my $write_tree_repo = Git::Repository->new( work_tree => $CWD );
 
