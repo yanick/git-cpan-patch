@@ -26,7 +26,7 @@ has tmpdir => (
   }
 );
 
-use experimental qw(smartmatch signatures);
+use experimental qw(signatures);
 
 our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
 
@@ -173,16 +173,15 @@ sub get_releases_from_cpan($self,$dist_or_module) {
 }
 
 sub releases_to_import ($self) {
-    given ( $self->thing_to_import ) {
-        when ( qr/^(?:https?|file|ftp)::/ ) {
-            return $self->get_releases_from_url( $_ );
-        }
-        when ( -f $_ ) {
-            return $self->get_releases_from_local_file( $_ );
-        }
-        default {
-            return $self->get_releases_from_cpan($_);
-        }
+    my $thing = $self->thing_to_import;
+    if ( $thing =~ /^(?:https?|file|ftp)::/ ) {
+        return $self->get_releases_from_url( $thing );
+    }
+    elsif ( -f $thing ) {
+        return $self->get_releases_from_local_file( $thing );
+    }
+    else {
+        return $self->get_releases_from_cpan( $thing );
     }
 }
 
