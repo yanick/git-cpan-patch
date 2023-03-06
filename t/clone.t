@@ -5,7 +5,7 @@ use Test::More tests => 2;
 
 use Git::CPAN::Patch::Command::Clone;
 use File::Temp qw/ tempdir /;
-use Git::Repository 'AUTOLOAD';
+use Git::Repository;
 use Test::MockObject;
 
 my $data = {
@@ -71,12 +71,12 @@ sub test_clone {
 
     $command->run;
 
-    like $git->branch( '-a', '--no-color' ) => qr#remotes/cpan/master#,
+    like $git->run('branch', '-a', '--no-color') => qr#remotes/cpan/master#,
         "branch is there";
 
-    like $git->tag => qr[v0.4.], "tag is there";
+    like $git->run('tag') => qr[v0.4.], "tag is there";
 
-    my $log = join "\n", $git->log( 'cpan/master' );
+    my $log = join "\n", $git->run('log', 'cpan/master' );
 
     like $log => qr/Author:\s+Yanick\s+Champoux\s+<yanick\@cpan.org>/, 'author';
 
