@@ -17,7 +17,6 @@ requires "File::chmod" => "0";
 requires "Git::Repository" => "0";
 requires "LWP::Simple" => "0";
 requires "List::Pairwise" => "0";
-requires "MetaCPAN::API" => "0";
 requires "MetaCPAN::Client" => "0";
 requires "Moose" => "0";
 requires "Moose::Role" => "0";
