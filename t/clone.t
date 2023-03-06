@@ -6,7 +6,7 @@ use Test::More tests => 2;
 use Git::CPAN::Patch::Command::Clone;
 use Path::Tiny;
 use Git::Repository;
-use Test::MockObject;
+use Carp;
 
 my $data = {
                     name => 'Git-CPAN-Patch',
@@ -16,37 +16,47 @@ my $data = {
                     version => '0.4.4',
                 }; 
 
-my $metacpan = Test::MockObject->new
-    ->set_false( 'module' )
-    ->mock( 'release', sub {
-            return Test::MockObject->new->set_always( data => $data ) 
-                if $_[1] eq 'Git-CPAN-Patch';
 
-            return Test::MockObject->new->set_series( next => 
-                Test::MockObject->new->set_always( data => {
-                    'status' => 'cpan',
-                    'distribution' => 'Git-CPAN-Patch',
-                    author => 'YANICK',
-                    date => '2011-03-06T01:02:03',
-                    download_url => './t/corpus/Git-CPAN-Patch-0.4.5.tar.gz',
-                    version => '0.4.4',
-                    metadata => {
-                          'author' => [
-                                        'Yanick Champoux <yanick@cpan.org>'
-                                      ],
-                    },
-                })->set_always( meta => {               
-                          'author' => [
-                                        'Yanick Champoux <yanick@cpan.org>'
-                                      ], })
-            ) if ref $_[1];
-
-            use Carp;
-            use DDP;
-            warn p $_[1];
-            confess;
+package FakeMetaCPAN {
+    sub module { !!0 }
+    sub release {
+        if ($_[1] eq 'Git-CPAN-Patch') {
+            return bless { data => $data }, 'FakeMetaCPAN::Release';
         }
-    );
+        elsif (ref $_[1]) {
+            return bless { items => [
+                bless {
+                    data => {
+                        status => 'cpan',
+                        %$data,
+                        metadata => {
+                            author => [
+                                'Yanick Champoux <yanick@cpan.org>'
+                            ],
+                        },
+                    },
+                }, 'FakeMetaCPAN::Release'
+            ] };
+        }
+        else {
+            local $Carp::RefArgFormatter = sub {
+                $Data::Dumper::Indent = 1;
+                $Data::Dumper::Terse = 1;
+                Data::Dumper::Dumper($_[0]);
+            };
+            Carp::confess "Unexpected test input!";
+        }
+    }
+}
+package FakeMetaCPAN::ResultSet {
+    sub next { shift @{ $_[0]->{items} } }
+}
+package FakeMetaCPAN::Release {
+    sub data { $_[0]->{data} }
+    sub meta { $_[0]->{data}{metadata} }
+}
+
+my $metacpan = bless {}, 'FakeMetaCPAN';
 
 subtest $_ => sub { test_clone($_) } for
     qw[ Git-CPAN-Patch ./t/corpus/Git-CPAN-Patch-0.4.5.tar.gz ];
