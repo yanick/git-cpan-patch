@@ -6,7 +6,6 @@ use 5.20.0;
 use strict;
 use warnings;
 use Git::Repository;
-use Git::CPAN::Patch::Import;
 use File::chdir;
 use Git::CPAN::Patch::Release;
 use Path::Tiny qw/ path /;
