@@ -5,7 +5,6 @@ use warnings;
 use File::chdir;
 use Archive::Extract;
 use Path::Tiny;
-use File::Temp qw/ tempdir tempfile /;
 use version;
 
 use Moose;
@@ -112,20 +111,23 @@ has tarball => (
     lazy => 1,
     default => sub {
         my $self = shift;
-        if ( $self->download_url ) {
+        if ( my $url = $self->download_url ) {
+            my $base = $url =~ s{.*/}{}r;
+            my ($bare, $suffix) = split /\./, $base, 2
+            $base ||= 'git-cpan-download';
+            $suffix ||= 'tar.gz';
+            my $file = Path::Tiny->tempfile(
+                TEMPLATE => $bare.'-XXXXXX',
+                SUFFIX => ".$suffix";
+            );
 
-            my( undef, $file ) = tempfile();
-            $file .= ".tar.gz";
-
-            if ( $self->download_url =~ /^(?:ht|f)tp/ ) {
+            if ( $url =~ /^(?:ht|f)tp/ ) {
                 require LWP::Simple;
-                LWP::Simple::getstore( $self->download_url => $file )
-                    or die "could not retrieve ", $self->download_url, "\n";
+                LWP::Simple::getstore( $url => $file )
+                    or die "could not retrieve $url\n";
             }
             else {
-                require File::Copy;
-
-                File::Copy::copy( $self->download_url => $file );
+                path($url)->copy($file);
             }
 
             return $file;
