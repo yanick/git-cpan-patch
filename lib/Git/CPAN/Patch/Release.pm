@@ -122,9 +122,10 @@ has tarball => (
             );
 
             if ( $url =~ /^(?:ht|f)tp/ ) {
-                require LWP::Simple;
-                LWP::Simple::getstore( $url => $file )
-                    or die "could not retrieve $url\n";
+                require HTTP::Tiny;
+                my $resp = HTTP::Tiny->new->mirror( $self->download_url => $file);
+                die "could not retrieve ", $self->download_url, "\n"
+                    if !$resp->{success};
             }
             else {
                 path($url)->copy($file);
