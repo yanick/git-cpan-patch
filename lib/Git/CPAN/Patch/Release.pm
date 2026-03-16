@@ -118,9 +118,10 @@ has tarball => (
             $file .= ".tar.gz";
 
             if ( $self->download_url =~ /^(?:ht|f)tp/ ) {
-                require LWP::Simple;
-                LWP::Simple::getstore( $self->download_url => $file )
-                    or die "could not retrieve ", $self->download_url, "\n";
+                require HTTP::Tiny;
+                my $resp = HTTP::Tiny->new->mirror( $self->download_url => $file);
+                die "could not retrieve ", $self->download_url, "\n"
+                    if !$resp->{success};
             }
             else {
                 require File::Copy;

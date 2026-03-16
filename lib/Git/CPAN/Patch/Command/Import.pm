@@ -83,15 +83,16 @@ option author_email => (
 );
 
 sub get_releases_from_url($self,$url) {
-    require LWP::Simple;
+    require HTTP::Tiny;
 
     ( my $name = $url ) =~ s#^.*/##;
     my $destination = $self->tmpdir . '/'.$name;
 
     say "copying '$url' to '$destination'";
 
-    LWP::Simple::mirror( $url => $destination )
-        or die "Failed to mirror $url\n";
+    my $response = HTTP::Tiny->new->mirror($url => $destination);
+    die "Failed to mirror $url\n"
+        if !$response->{success};
 
     return Git::CPAN::Patch::Release->new(
         metacpan => $self->metacpan,
