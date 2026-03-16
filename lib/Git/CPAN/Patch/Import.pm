@@ -327,16 +327,16 @@ sub fixup_repository {
     }
 }
 
-use MetaCPAN::API;
-my $mcpan = MetaCPAN::API->new;
+use MetaCPAN::Client;
+my $mcpan = MetaCPAN::Client->new;
 
 sub find_release {
     my $input = shift;
 
     return eval { $mcpan->release(
-                        distribution => $mcpan->module($input)->{distribution}
+                        $mcpan->module($input)->{distribution}
                   ) }
-        || eval { $mcpan->release( distribution => $input ) }
+        || eval { $mcpan->release( $input ) }
         || die "could not find release for '$input' on metacpan\n";
 
 }

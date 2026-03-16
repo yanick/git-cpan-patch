@@ -61,15 +61,15 @@ has release_meta => (
     is => 'ro',
     lazy => 1,
     default => sub ($self) {
-        require MetaCPAN::API;
-        my $mcpan = MetaCPAN::API->new;
+        require MetaCPAN::Client;
+        my $mcpan = MetaCPAN::Client->new;
 
         my $thingy = $self->thingy;
 
         eval { $mcpan->release(
-                distribution => $mcpan->module($thingy)->{distribution}
+                $mcpan->module($thingy)->{distribution}
         ) }
-        || eval { $mcpan->release( distribution => $thingy ) }
+        || eval { $mcpan->release( $thingy ) }
         || die "could not find release for '$thingy' on metacpan\n";
     },
 );

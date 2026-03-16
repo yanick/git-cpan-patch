@@ -9,7 +9,7 @@ use warnings;
 use MooseX::App 1.21;
 use MooseX::SemiAffordanceAccessor;
 
-use MetaCPAN::API;
+use MetaCPAN::Client;
 
 app_base 'git-cpan';
 app_namespace 'Git::CPAN::Patch::Command';
@@ -71,15 +71,15 @@ sub _build_distribution_name ($self){
 
     $target =~ s/-/::/g;
 
-    my $mcpan = MetaCPAN::API->new;
+    my $mcpan = MetaCPAN::Client->new;
 
     return  $mcpan->module( $target )->{distribution};
 }
 
 sub _build_distribution_meta ($self) {
-    my $mcpan = MetaCPAN::API->new;
+    my $mcpan = MetaCPAN::Client->new;
 
-    $mcpan->release( distribution => $self->distribution_name );
+    $mcpan->release( $self->distribution_name );
 }
 
 __PACKAGE__->meta->make_immutable;
