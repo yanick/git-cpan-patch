@@ -4,6 +4,8 @@ Revision history for Git::CPAN::Patch
  [API CHANGES]
 
  [BUG FIXES]
+ - Prereq cleanup, lots of prereq simplified and/or moved to 
+    better alternatives. (GH#46, haarg)
 
  [DOCUMENTATION]
 
