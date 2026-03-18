@@ -5,9 +5,15 @@ Revision history for Git::CPAN::Patch
  - NEW FEATURES
  - ENHANCEMENTS
  - BUG FIXES
-    * Never sign git tags (GH#44, mschout).
  - DOCUMENTATION
  - STATISTICS
+
+2.5.2 2026-03-18
+ [BUG FIXES]
+ - Never sign git tags (GH#44, mschout).
+
+ [STATISTICS]
+ - code churn: 3 files changed, 18 insertions(+), 22 deletions(-)
 
 2.5.1 2026-03-18
  [BUG FIXES]
