@@ -1,9 +1,11 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;                      # last test to print
+use Test2::V1 -Pip;
 
-BEGIN {
-    use_ok 'Git::CPAN::Patch';
-    use_ok 'Git::CPAN::Patch::Import';
-}
+use Git::CPAN::Patch;
+use Git::CPAN::Patch::Import;
+
+pass "can load the main modules";
+
+done_testing;

@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test2::V1 -Pip;
 
 use Git::CPAN::Patch::Command::Clone;
 use File::Temp qw/ tempdir /;
@@ -86,3 +86,5 @@ sub test_clone {
     like $log => qr/git-cpan-version:\s*0.4./, 'git-cpan-version';
     like $log => qr/git-cpan-authorid:\s*YANICK/, 'git-cpan-authorid';
 }
+
+done_testing;
