@@ -5,15 +5,12 @@ use 5.20.0;
 
 use strict;
 use warnings;
-use File::Temp qw/ tempdir /;
 use Git::Repository;
 use Git::CPAN::Patch::Import;
 use File::chdir;
 use Git::CPAN::Patch::Release;
-use Path::Class qw/ dir /;
+use Path::Tiny qw/ path /;
 use MetaCPAN::Client;
-
-# TODO Path::Class => Path::Tiny
 
 use MooseX::App::Command;
 
@@ -29,9 +26,9 @@ has tmpdir => (
   }
 );
 
-use experimental qw(smartmatch signatures);
+use experimental qw(signatures);
 
-our $PERL_GIT_URL = 'git://perl5.git.perl.org/perl.git';
+our $PERL_GIT_URL = 'https://github.com/Perl/perl5.git';
 
 option 'norepository' => (
     is => 'ro',
@@ -86,15 +83,16 @@ option author_email => (
 );
 
 sub get_releases_from_url($self,$url) {
-    require LWP::Simple;
+    require HTTP::Tiny;
 
     ( my $name = $url ) =~ s#^.*/##;
     my $destination = $self->tmpdir . '/'.$name;
 
     say "copying '$url' to '$destination'";
 
-    LWP::Simple::mirror( $url => $destination )
-        or die "Failed to mirror $url\n";
+    my $response = HTTP::Tiny->new->mirror($url => $destination);
+    die "Failed to mirror $url\n"
+        if !$response->{success};
 
     return Git::CPAN::Patch::Release->new(
         metacpan => $self->metacpan,
@@ -161,6 +159,8 @@ sub get_releases_from_cpan($self,$dist_or_module) {
 
     my $releases = $self->metacpan->release( {
         distribution => $dist
+    }, {
+        sort => [{ date => { order => 'asc' } }],
     }) or die "could not find release for '$dist_or_module' on metacpan\n";
 
     my @releases;
@@ -176,17 +176,15 @@ sub get_releases_from_cpan($self,$dist_or_module) {
 }
 
 sub releases_to_import ($self) {
-    given ( $self->thing_to_import ) {
-        when ( qr/^(?:https?|file|ftp)::/ ) {
-            return $self->get_releases_from_url( $_ );
-        }
-        when ( -f $_ ) {
-            return $self->get_releases_from_local_file( $_ );
-        }
-        default {
-            return $self->get_releases_from_cpan($_);
-        }
-    }
+    my $thing = $self->thing_to_import;
+
+    return $self->get_releases_from_url( $thing )
+        if  $thing =~ /^(?:https?|file|ftp)::/;
+
+    return $self->get_releases_from_local_file( $thing ) 
+        if -f $thing;
+
+    return $self->get_releases_from_cpan( $thing );
 }
 
 sub import_release($self,$release) {
@@ -209,7 +207,7 @@ sub import_release($self,$release) {
     my $tree = do {
         # don't overwrite the user's index
         local $ENV{GIT_INDEX_FILE} = $self->tmpdir . "/temp_git_index";
-        local $ENV{GIT_DIR} = dir($self->root . '/.git')->absolute->stringify;
+        local $ENV{GIT_DIR} = path($self->root, '.git')->absolute->stringify;
         local $ENV{GIT_WORK_TREE} = $release->extracted_dir;
 
         local $CWD = $release->extracted_dir;
