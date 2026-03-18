@@ -1,22 +1,23 @@
 Revision history for Git::CPAN::Patch
 
 {{$NEXT}}
- [API CHANGES]
+ - API CHANGES
+ - NEW FEATURES
+ - ENHANCEMENTS
+ - BUG FIXES
+ - DOCUMENTATION
+ - STATISTICS
 
+2.5.1 2026-03-18
  [BUG FIXES]
- - Prereq cleanup, lots of prereq simplified and/or moved to 
-    better alternatives. (GH#46, haarg)
+ - Prereq cleanup, lots of prereq simplified and/or moved to better
+   alternatives. (GH#46, haarg)
 
  [MAINTENANCE]
  - Migrate to Test2::V1.
 
- [DOCUMENTATION]
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 12 files changed, 262 insertions(+), 126 deletions(-)
 
 2.5.0 2022-03-06
  [ENHANCEMENTS]
@@ -66,9 +67,6 @@ Revision history for Git::CPAN::Patch
  - code churn: 3 files changed, 32 insertions(+), 14 deletions(-)
 
 2.3.0 2016-04-13
- - perlcritic tweaks, add documentation, better die messages. (GH#32,
-   temp0)
-
  [ENHANCEMENTS]
  - 'git cpan import' now has options '--author_name' and '--author_email'
    to force author to those values. (GH#31)
@@ -239,8 +237,6 @@ Revision history for Git::CPAN::Patch
  - code churn: 38 files changed, 1594 insertions(+), 1244 deletions(-)
 
 0.8.0 2012-05-22
- - code churn: 1 files changed, 4 insertions(+), 86 deletions(-)
-
  [ENHANCEMENTS]
  - Added new command 'cpan-clone', which operates like git-clone [Mike
    Doherty]
@@ -334,15 +330,14 @@ Revision history for Git::CPAN::Patch
    Schwern.
  - Use File::chmod instead of shell chmod to avoid shell quoting problems.
    Thanks to Schwern.
- - Don't try to tag releases with no versions.		    Thanks to
-   Schwern.
+ - Don't try to tag releases with no versions.		    Thanks to Schwern.
  - Tag .1 as 0.1.  git doesn't like a tag named .1 Thanks to Schwern.
  - Skip empty tarballs.  Thanks to Schwern.
  - Skip bad archives. Thanks to Schwern.
 
 0.2.1 Thur Sept 3 2009
- - git-cpan-import is working with new version of Git.		    Thanks
-   to Alexandr Ciornii. (rt#48713)
+ - git-cpan-import is working with new version of Git.		    Thanks to
+   Alexandr Ciornii. (rt#48713)
  - Require CPANPLUS 0.84 or higher. Thanks to Alexandr Ciornii. (rt#48713)
 
 0.2.0 2009-07-11
