@@ -61,7 +61,7 @@ sub release_meta ($self, $thingy) {
     require MetaCPAN::Client;
     my $mcpan = MetaCPAN::Client->new;
 
-    eval { $mcpan->release( $mcpan->module($thingy)->distribution )
+    eval { $mcpan->release( $mcpan->module($thingy)->distribution ) }
     || eval { $mcpan->release( $thingy ) }
     || die "could not find release for '$thingy' on metacpan\n";
 }
@@ -74,12 +74,12 @@ sub run ($self) {
         my $mcpan = MetaCPAN::Client->new;
 
         my $releases = $mcpan->release(
-            { distribution => $thingy },
+            { distribution => $self->thingy },
             { sort => [{ date => { order => 'asc' } }] },
         );
 
         if (!$releases->total) {
-            die "could not find releases for '$thingy' on metacpan\n";
+            die "could not find releases for '$self->thingy' on metacpan\n";
         }
 
         while (my $release = $releases->next) {
