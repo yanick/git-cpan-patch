@@ -6,7 +6,6 @@ use Test2::V1 -Pip;
 use Git::CPAN::Patch::Command::Clone;
 use File::Temp qw/ tempdir /;
 use Git::Repository 'AUTOLOAD';
-use Test::MockObject;
 
 my $data = {
                     name => 'Git-CPAN-Patch',
@@ -16,37 +15,50 @@ my $data = {
                     version => '0.4.4',
                 }; 
 
-my $metacpan = Test::MockObject->new
-    ->set_false( 'module' )
-    ->mock( 'release', sub {
-            return Test::MockObject->new->set_always( data => $data ) 
+my $metacpan = mock {} => (
+    add => [
+        module => sub { 0 },
+        release => sub {
+            return mock { data => $data }
                 if $_[1] eq 'Git-CPAN-Patch';
 
-            return Test::MockObject->new->set_series( next => 
-                Test::MockObject->new->set_always( data => {
-                    'status' => 'cpan',
-                    'distribution' => 'Git-CPAN-Patch',
-                    author => 'YANICK',
-                    date => '2011-03-06T01:02:03',
-                    download_url => './t/corpus/Git-CPAN-Patch-0.4.5.tar.gz',
-                    version => '0.4.4',
-                    metadata => {
-                          'author' => [
-                                        'Yanick Champoux <yanick@cpan.org>'
-                                      ],
+            if (ref $_[1]) {
+                my @releases = (
+                    mock {
+                        data => {
+                            'status' => 'cpan',
+                            'distribution' => 'Git-CPAN-Patch',
+                            author => 'YANICK',
+                            date => '2011-03-06T01:02:03',
+                            download_url => './t/corpus/Git-CPAN-Patch-0.4.5.tar.gz',
+                            version => '0.4.4',
+                            metadata => {
+                                'author' => [
+                                    'Yanick Champoux <yanick@cpan.org>'
+                                ],
+                            },
+                        },
+                        meta => {
+                            'author' => [
+                                'Yanick Champoux <yanick@cpan.org>'
+                            ],
+                        },
                     },
-                })->set_always( meta => {               
-                          'author' => [
-                                        'Yanick Champoux <yanick@cpan.org>'
-                                      ], })
-            ) if ref $_[1];
+                );
+                return mock {} => (
+                    add => [
+                        next => sub {
+                            return shift @releases;
+                        },
+                    ],
+                );
+            }
 
-            use Carp;
-            use DDP;
-            warn p $_[1];
-            confess;
-        }
-    );
+            require Carp;
+            Carp::confess "Unhandled release: $_[1]";
+        },
+    ],
+);
 
 subtest $_ => sub { test_clone($_) } for
     qw[ Git-CPAN-Patch ./t/corpus/Git-CPAN-Patch-0.4.5.tar.gz ];

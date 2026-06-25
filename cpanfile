@@ -42,13 +42,11 @@ requires "warnings" => "0";
 
 on 'test' => sub {
   requires "Carp" => "0";
-  requires "DDP" => "0";
   requires "ExtUtils::MakeMaker" => "0";
   requires "File::Spec" => "0";
   requires "IO::Handle" => "0";
   requires "IPC::Open3" => "0";
   requires "Test2::V1" => "0";
-  requires "Test::MockObject" => "0";
   requires "Test::More" => "0";
 };
 
